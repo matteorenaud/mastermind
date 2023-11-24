@@ -12,8 +12,8 @@ package model
         currentLine : Integer
         NextLine()
         VerifyCurrentLine() : Boolean
-        GetCellColor(int line, int column)
-        SetCellColor(int line, int column)
+        GetCellColor(int line, int column) : Color
+        SetCellColor(Color color,int line, int column)
         GenerateSecretCombination()
     }
     enum "<<enum>>\nColor" as Color
