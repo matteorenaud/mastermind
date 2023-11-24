@@ -1,0 +1,17 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+package model
+{
+}
+
+package view
+{
+}
+
+package controller
+{
+}
+@enduml
