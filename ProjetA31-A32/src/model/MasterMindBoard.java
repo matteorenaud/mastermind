@@ -34,7 +34,7 @@ public class MasterMindBoard
 
         return true;
     }
-    public boolean VerifyCurrentLine(Info)
+    public boolean VerifyCurrentLine(/*Info*/)//c quoi  le Info ?????
     {
         int nbWellPlaced = 0;
 
