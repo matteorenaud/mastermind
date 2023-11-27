@@ -5,13 +5,55 @@ skinparam classFontStyle Bold
 
 package model
 {
+    class MasterMindBoard
+    {
+        -lineCount : Integer
+        -lineSize : Integer
+        -currentLine : Integer
+        +nextLine()
+        +verifyCurrentLine() : Boolean
+        +getCellColor( line:Integer,  column:Integer)
+        +setCellColor(line:Integer,  column:Integer)
+        +generateSecretCombination()
+    }
+    enum "<<enum>>\nColor" as Color
+    {
+        RED
+        GREEN
+        BLUE
+        YELLOW
+        ORANGE
+        PINK
+        GREY
+        WHITE
+    }
+
+    MasterMindBoard ----> "-[]\nsecretCombination" Color : very secret
+    MasterMindBoard ----> "-[][]\nboard" Color : has
 }
 
 package view
 {
+    class StartWindow
+    {
+    }
+    class GameWindow
+    {
+    }
+    class EndWindow
+    {
+    }
 }
 
 package controller
 {
+    class GameMasterController
+    {
+
+    }
+
+    GameMasterController --> "-1\nstartWindow" StartWindow : print
+    GameMasterController --> "-1\ngameWindow" GameWindow : print
+    GameMasterController --> "-1\nendWindow" EndWindow : print
 }
 @enduml

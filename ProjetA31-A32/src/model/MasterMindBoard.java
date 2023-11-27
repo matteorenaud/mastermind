@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MasterMindBoard
@@ -8,19 +10,29 @@ public class MasterMindBoard
     private int lineCount;
     private int lineSize;
     private int currentLine;
-    private Color[] secretCombination;
-    private Color[][] board;
-    public MasterMindBoard(int lineSize, int lineCount)
+    private GameColor[] secretCombination;
+    private GameColor[][] board;
+    public MasterMindBoard(int lineSize, int lineCount,String playerName,int nbRound,int nbPieceOfCombinaison,int nbTry, int nbTotalPiece)
     {
         this.lineSize = lineSize;
         this.lineCount = lineCount;
 
+        this.playerName=playerName;
+        this.nbRound=nbRound;
+        this.nbTry=nbTry;
+        this.nbPieceOfCombinaison=nbPieceOfCombinaison;
+        this.nbTotalPiece=nbTotalPiece;
         this.currentLine = lineCount-1;
 
-        this.secretCombination = new Color[lineSize];
-        this.board = new Color[lineCount][lineSize];
+        this.secretCombination = new GameColor[lineSize];
+        this.board = new GameColor[lineCount][lineSize];
 
+        generateLstAvailableGameColor();
         GenerateSecretCombination();
+
+        PrintBoard();
+        PrintSecretCombination();
+        printGameInfo();
     }
 
     public boolean NextLine()
@@ -53,11 +65,11 @@ public class MasterMindBoard
 
         return false;
     }
-    public Color GetCellColor(int line, int column)
+    public GameColor GetCellColor(int line, int column)
     {
         return this.board[line][column];
     }
-    public void SetCellColor(Color color, int line, int column)
+    public void SetCellColor(GameColor color, int line, int column)
     {
         this.board[line][column] = color;
     }
@@ -67,8 +79,9 @@ public class MasterMindBoard
         Random rand = new Random();
         for(int i=0; i<this.lineSize; i++)
         {
-            value = rand.nextInt(Color.values().length);
-            this.secretCombination[i] = Color.values()[value];
+            //value = rand.nextInt(GameColor.values().length);
+            value= rand.nextInt(this.lstAvailableColor.size());
+            this.secretCombination[i] = GameColor.values()[value];
         }
     }
 
@@ -84,6 +97,14 @@ public class MasterMindBoard
             System.out.println();
         }
     }
+    public void printGameInfo()
+    {
+        System.out.println("Nom joueur : "+playerName);
+        System.out.println("Nb couleurs : "+nbTotalPiece);
+        System.out.println("Piece d'une combinaison : "+nbPieceOfCombinaison);
+        System.out.println("Nb manches : "+nbRound);
+        System.out.println("Nb Tentative : "+nbTry);
+    }
 
     public void PrintSecretCombination()
     {
@@ -93,5 +114,36 @@ public class MasterMindBoard
         }
 
         System.out.println();
+    }
+    /////////
+    private List<GameColor>lstAvailableColor=new ArrayList<>();
+    private String playerName;
+    private int nbRound;
+    private int nbPieceOfCombinaison;
+    private int nbTry;
+    private int nbTotalPiece;
+    public void generateLstAvailableGameColor()
+    {
+        Random rand = new Random();
+        for(int i=0;i<nbTotalPiece;i++)
+        {
+            boolean containsSameValue=true;
+            while(containsSameValue)
+            {
+                int value =rand.nextInt(GameColor.values().length);
+
+                if(!lstAvailableColor.contains(GameColor.values()[value]))
+                {
+                    this.lstAvailableColor.add(GameColor.values()[value]);
+                    containsSameValue=false;
+                }
+            }
+
+
+        }
+    }
+    public List<GameColor> getLstAvailableColor()
+    {
+        return this.lstAvailableColor;
     }
 }

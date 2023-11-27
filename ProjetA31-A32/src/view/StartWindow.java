@@ -1,5 +1,7 @@
 package view;
 
+import controller.GameMasterController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -65,19 +67,21 @@ public class StartWindow extends JFrame//evidemment faut hériter
         cboNbRound.setSelectedIndex(0);//Je mets sur la position 0 (le 3)
         cboNbRound.setAlignmentX(Component.CENTER_ALIGNMENT);
         cboNbRound.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        cboNbRound.setMaximumSize(new Dimension(100,50));
         panel.add(cboNbRound);
 
         panel.add(Box.createVerticalStrut(20));//Espace vertical vide
 
-        JLabel lblNbTotalPiece=new JLabel("Nombre de pions :");
+        JLabel lblNbTotalPiece=new JLabel("Nombre de couleurs :");
         lblNbTotalPiece.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblNbTotalPiece.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         panel.add(lblNbTotalPiece);
 
         JComboBox cboNbTotalPiece=new JComboBox(new String[]{"4", "5", "6","7","8"});
-        cboNbTotalPiece.setSelectedIndex(0);//Je mets sur la position 0 (le 4)
+        cboNbTotalPiece.setSelectedIndex(4);//Je mets sur la position 4 (le 8)
         cboNbTotalPiece.setAlignmentX(Component.CENTER_ALIGNMENT);
         cboNbTotalPiece.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        cboNbTotalPiece.setMaximumSize(new Dimension(100,50));
         panel.add(cboNbTotalPiece);
 
         panel.add(Box.createVerticalStrut(20));//Espace vertical vide
@@ -91,6 +95,7 @@ public class StartWindow extends JFrame//evidemment faut hériter
         cboNbPieceOfCombinaison.setSelectedIndex(0);//Je mets sur la position 0 (le 4)
         cboNbPieceOfCombinaison.setAlignmentX(Component.CENTER_ALIGNMENT);
         cboNbPieceOfCombinaison.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        cboNbPieceOfCombinaison.setMaximumSize(new Dimension(100,50));
         panel.add(cboNbPieceOfCombinaison);
 
         panel.add(Box.createVerticalStrut(20));//Espace vertical vide
@@ -104,6 +109,7 @@ public class StartWindow extends JFrame//evidemment faut hériter
         cboNbTry.setSelectedIndex(0);//Je mets sur la position 0 (le 10)
         cboNbTry.setAlignmentX(Component.CENTER_ALIGNMENT);
         cboNbTry.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
+        cboNbTry.setMaximumSize(new Dimension(100,50));
         panel.add(cboNbTry);
 
         panel.add(Box.createVerticalStrut(20));//Espace vertical vide
@@ -112,7 +118,7 @@ public class StartWindow extends JFrame//evidemment faut hériter
         btnLaunchGame.setCursor(new Cursor(Cursor.HAND_CURSOR));//main pour le bouton :)
         Color originalColorButton=btnLaunchGame.getBackground();
 
-        //classe anonyme voila
+        //Ici, c'est classe anonyme voila (il me faut 2 events)
         btnLaunchGame.addMouseListener(new MouseAdapter() {
                                            public void mouseEntered(MouseEvent e) {
                                                 btnLaunchGame.setBackground(new Color(245, 175, 175));
@@ -128,19 +134,14 @@ public class StartWindow extends JFrame//evidemment faut hériter
 
         //mais ici expression lambda
         btnLaunchGame.addActionListener(actionEvent -> {
-
             String playerName=txtPlayerName.getText();
             int nbRound=Integer.parseInt(cboNbRound.getSelectedItem().toString());
             int nbTotalPiece=Integer.parseInt(cboNbTotalPiece.getSelectedItem().toString());
             int nbPieceOfCombinaison= Integer.parseInt(cboNbPieceOfCombinaison.getSelectedItem().toString());
             int nbTry=Integer.parseInt(cboNbTry.getSelectedItem().toString());
 
-            //controller.launchGame(playerName,nbRound,nbPieceOfCombinaison,nbTry);
-
-
             if(!playerName.isEmpty())
-                 //temp
-                GameMasterController.launchGame(playerName,nbRound,nbTotalPiece,nbPieceOfCombinaison,nbTry);
+                controller.launchGame(playerName,nbRound,nbPieceOfCombinaison,nbTry,nbTotalPiece);
             else
                 JOptionPane.showMessageDialog(new JFrame(),
                         "Vous devez entrer un nom de joueur",
@@ -172,55 +173,14 @@ public class StartWindow extends JFrame//evidemment faut hériter
 
         panel.add(btnExit);
 
-        /*
-        avant de démarrer une partie, le joueur fixe ces paramètres qui seront les mêmes pour toutes ses manches :
-        le nombre de manches : 3 par défaut, 5 maximum
-        le nombre de pions disponibles : 8 par défaut
-        le nombre de pions d'une combinaison : 4 par défaut, 6 maximum
-        le nombre de tentatives maximum pour trouver la combinaison secrète : 10 par défaut, 12 maximum
-         */
-
         this.setContentPane(panel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
-        //boucle parce que
-        for(Component c : panel.getComponents())
-        {
-            if(c.getClass()==JComboBox.class)
-            {
-                System.out.println("oui");
-                c.setMaximumSize(new Dimension(100,50));
-            }
-        }
     }
 
     private void closeWindow()
     {
         this.dispose();
-    }
-    //------------------------------------------------------------
-
-    public static void main(String[] args)
-    {
-        StartWindow test=new StartWindow(null);
-    }
-    GameMasterController c=new GameMasterController();
-
-    /////////temp mais vrm temp de temp
-    public class GameMasterController
-    {
-        public GameMasterController()
-        {
-
-        }
-        public static void launchGame(String playerName,int nbRound,int nbTotalPiece,int nbPieceOfCombinaison,int nbTry)
-        {
-            System.out.println("Pseudo : "+playerName);
-            System.out.println("Nombre tour : "+nbRound);
-            System.out.println("Nombre de piece total : "+nbTotalPiece);
-            System.out.println("Nombre de piece par combinaison : "+nbPieceOfCombinaison);
-            System.out.println("Nombre de tentative : "+nbTry);
-        }
     }
 }
