@@ -60,7 +60,7 @@ en prenant en compte ces spécificités :
 - votre application doit disposer au maximum de **8 pions différents**
 - avant de démarrer une partie, le joueur fixe ces paramètres qui seront les mêmes pour toutes ses manches :
   - le **nombre de manches** : 3 par défaut, 5 maximum
-  - le **nombre de pions disponibles** : 8 par défaut
+  - le **nombre de pions disponibles** : 8 par défaut, 12 maximum
   - le **nombre de pions d'une combinaison** : 4 par défaut, 6 maximum
   - le **nombre de tentatives** maximum pour trouver la combinaison secrète : 10 par défaut, 12 maximum
 - le **score d'une manche** est calculé à partir de la dernière tentative du joueur comme la somme du nombre de pions mal placés, de trois fois celle du nombre de pions bien placés et de 4 points bonus si on est en mode classique.
