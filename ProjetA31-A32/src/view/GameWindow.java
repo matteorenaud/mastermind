@@ -20,7 +20,7 @@ public class GameWindow extends JFrame
     public GameWindow(GameMasterController gmc,String playerName,int nbRound,int nbPieceOfCombinaison,int nbTry, int nbTotalPiece)
     {
         super("MasterMind");
-        setSize(800,900);
+        setSize(1000,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
 
@@ -32,9 +32,35 @@ public class GameWindow extends JFrame
         this.nbTotalPiece=nbTotalPiece;
 
         JPanel mainPanel = new JPanel();
+        JPanel backPanel=new JPanel();
+        backPanel.setLayout(new BoxLayout(backPanel,BoxLayout.Y_AXIS));
+
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints=new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
+
+
+        JPanel pnlInfoPlayer=new JPanel(new FlowLayout());
+        JLabel lblPlayerName=new JLabel("Pseudo : "+playerName);
+        lblPlayerName.setMinimumSize(new Dimension(50,50));
+        lblPlayerName.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblPlayerName.setForeground(Color.BLACK);
+        lblPlayerName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        JLabel lblScore=new JLabel("Score : ");
+        lblScore.setMinimumSize(new Dimension(50,50));
+        lblScore.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        lblScore.setForeground(Color.BLACK);
+        lblScore.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        JLabel lblTitle=new JLabel("MasterMind");
+        lblTitle.setMinimumSize(new Dimension(50,50));
+        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTitle.setForeground(Color.RED);
+        lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        pnlInfoPlayer.add(lblPlayerName);
+        pnlInfoPlayer.add(lblTitle);
+        pnlInfoPlayer.add(lblScore);
+        backPanel.add(pnlInfoPlayer);
+        backPanel.add(mainPanel);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -45,15 +71,15 @@ public class GameWindow extends JFrame
         constructTry(pnlTry);
         mainPanel.add(pnlTry,constraints);
 
-        constraints.gridx = 1;
-        constraints.gridy = 0;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
         JPanel pnlIndice=new JPanel();
         JLabel l=new JLabel("indices");
         pnlIndice.add(l);
         mainPanel.add(pnlIndice,constraints);
 
         constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         JPanel pnlChoiceColor=new JPanel();
         pnlChoiceColor.setLayout(new FlowLayout());
         //JLabel d=new JLabel("choix couleur");
@@ -62,7 +88,7 @@ public class GameWindow extends JFrame
         mainPanel.add(pnlChoiceColor,constraints);
 
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         JPanel pnlModeIndice=new JPanel();
         pnlModeIndice.setLayout(new BoxLayout(pnlModeIndice,BoxLayout.Y_AXIS));
         JRadioButton rdbEasyMode=new JRadioButton("Mode facile");
@@ -74,7 +100,7 @@ public class GameWindow extends JFrame
         mainPanel.add(pnlModeIndice,constraints);
 
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         //JPanel pnlValidate=new JPanel();
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
@@ -83,7 +109,7 @@ public class GameWindow extends JFrame
         //mainPanel.add(pnlValidate);
 
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         //JPanel pnlReset=new JPanel();
         JButton btnReset=new JButton("Réinitialiser");
         btnReset.setMaximumSize(new Dimension(200,100));
@@ -91,6 +117,15 @@ public class GameWindow extends JFrame
         mainPanel.add(btnReset,constraints);
         //mainPanel.add(pnlReset);
 
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        JButton btnRestart=new JButton("Relancer une nouvelle partie");
+        mainPanel.add(btnRestart,constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        JButton btnPassTurn=new JButton("Abandonner la manche actulle");
+        mainPanel.add(btnPassTurn,constraints);
         /*
         choisir les couleurs de sa prochaine combinaison
         valider sa combinaison pour recevoir l'indice de l'ordinateur
@@ -105,7 +140,7 @@ public class GameWindow extends JFrame
         Bonus : pouvoir recommencer une partie sans relancer l'application.
          */
 
-        add(mainPanel);
+        add(backPanel);
         setVisible(true);
     }
 
