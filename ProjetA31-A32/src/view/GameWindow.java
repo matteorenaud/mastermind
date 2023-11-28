@@ -111,6 +111,10 @@ public class GameWindow extends JFrame
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
         btnValidate.addActionListener(ActionEvent->{
+
+            ArrayList<GameColor>lineColor=colorOfTheLine();
+            for(int i=0;i<lineColor.size();i++)
+                controller.getGame().getMasterMindBoard().getCurrentLine().setCellColor(lineColor.get(i),i);
             boolean find=controller.checkLine();
             updateCombBox();
         });
@@ -221,6 +225,27 @@ public class GameWindow extends JFrame
                 }
             }
         }
+    }
+    private ArrayList<GameColor>colorOfTheLine()
+    {
+        ArrayList<GameColor>lst=new ArrayList<>();
+        for(Component pnl:pnlTry.getComponents())
+        {
+            if(pnl.getClass()== TagComponent.class)
+            {
+                TagComponent pnlTheTry=(TagComponent) pnl;
+                if(pnlTheTry.getTag()==activeLine)
+                {
+                    for(Component c:pnlTheTry.getComponents())
+                    {
+                        JComboBox cbo=(JComboBox) c;
+                        lst.add(GameColor.values()[cbo.getSelectedIndex()]);
+                    }
+            }
+        }
+        }
+            return lst;
+
     }
 
 }

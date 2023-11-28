@@ -51,4 +51,9 @@ public class GameMasterController
         System.out.println(game.getMasterMindBoard().verifyCurrentLine());
         return game.getMasterMindBoard().verifyCurrentLine();
     }
+
+    public MasterMindGame getGame()
+    {
+        return this.game;
+    }
 }
