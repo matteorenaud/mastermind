@@ -24,6 +24,7 @@ public class MasterMindBoard
         this.board = new ArrayList<MasterMindLine>();
         this.secretCombination = new MasterMindLine(this.lineSize);
 
+        generateBoardLines();
         generateSecretCombination();
     }
 
@@ -36,9 +37,17 @@ public class MasterMindBoard
         return this.currentLine < this.lineCount;
     }
 
+    private void generateBoardLines()
+    {
+        for(int i=0; i<this.lineCount; i++)
+        {
+            this.board.add(new MasterMindLine(this.lineSize));
+        }
+    }
+
     //Method that fills the secretCombination with random colors
     //within the available colors list
-    public void generateSecretCombination()
+    private void generateSecretCombination()
     {
         int value;
 
@@ -49,6 +58,16 @@ public class MasterMindBoard
             value= rand.nextInt(this.availableColors.size());
             this.secretCombination.setCellColor(this.availableColors.get(value),i);
         }
+    }
+
+    public MasterMindLine getCurrentLine()
+    {
+        return this.board.get(this.currentLine);
+    }
+
+    public MasterMindLine getSecretCombination()
+    {
+        return this.secretCombination;
     }
 
     public void printBoard()
