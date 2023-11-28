@@ -7,9 +7,9 @@ public class MasterMindGame
 {
     private int nbRoud;
     private int score;
-    private int nbPieceOfCombinaison;
-    int nbTotalPiece;
-    int nbTry;
+    private int nbTry;
+    private int lineSize;
+    private int nbTotalPiece;
     private String playerName;
     private MasterMindBoard masterMindBoard;
     private ArrayList<GameColor> availableColors;
@@ -19,8 +19,9 @@ public class MasterMindGame
         this.nbRoud=nbRoud;
         this.score=0;
         this.playerName=playerName;
-        this.nbPieceOfCombinaison=nbPieceOfCombinaison;
-        this.nbTotalPiece=nbTotalPiece;
+        this.lineSize=nbPieceOfCombinaison;
+        this.nbTotalPiece = nbTotalPiece;
+
         this.nbTry=nbTry;
 
         this.availableColors = new ArrayList<GameColor>();
@@ -31,7 +32,7 @@ public class MasterMindGame
 
     public void generateNewRound()
     {
-        this.masterMindBoard=new MasterMindBoard(nbPieceOfCombinaison,nbTry,availableColors);
+        this.masterMindBoard=new MasterMindBoard(this.lineSize,nbTry,availableColors);
     }
 
     public MasterMindBoard getMasterMindBoard()
@@ -46,20 +47,9 @@ public class MasterMindGame
 
     public void generateListAvailableGameColor()
     {
-        Random rand = new Random();
         for(int i=0;i<nbTotalPiece;i++)
         {
-            boolean containsSameValue=true;
-            while(containsSameValue)
-            {
-                int value =rand.nextInt(GameColor.values().length);
-
-                if(!availableColors.contains(GameColor.values()[value]))
-                {
-                    this.availableColors.add(GameColor.values()[value]);
-                    containsSameValue=false;
-                }
-            }
+            this.availableColors.add(GameColor.values()[i]);
         }
     }
 
