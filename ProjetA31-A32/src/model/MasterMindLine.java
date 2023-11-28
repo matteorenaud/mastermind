@@ -65,11 +65,18 @@ public class MasterMindLine {
         this.cells.set(index,color);
     }
 
-    public int getWellPlaced() {
+    public int getWellPlaced()
+    {
         return wellPlaced;
     }
 
-    public int getWellChosen() {
+    public int getWellChosen()
+    {
         return wellChosen;
+    }
+
+    public ArrayList<GameColor> getCells()
+    {
+        return cells;
     }
 }
