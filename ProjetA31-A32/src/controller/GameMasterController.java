@@ -16,15 +16,6 @@ public class GameMasterController
     //private EndWindow endWindow;
     private MasterMindGame game;
 
-    public GameMasterController()
-    {}
-    public GameMasterController(StartWindow startWindow, GameWindow gameWindow/*, EndWindow endWindow*/)
-    {
-        this.startWindow=startWindow;
-        this.gameWindow=gameWindow;
-        //this.endWindow=endWindow;
-    }
-
     public void setStartWindow(StartWindow startWindow)
     {
         this.startWindow=startWindow;
