@@ -5,6 +5,13 @@ skinparam classFontStyle Bold
 
 package model
 {
+    enum "<<enum>>\nCluesMode" as ClesMode
+    {
+        EASY_MODE
+        CLASSIC_MODE
+        NUMERIC_MODE
+    }
+
     enum "<<enum>>\nGameColor" as GameColor
     {
         RED
@@ -28,7 +35,8 @@ package model
         +verifyCurrentLine() : Boolean
         +getCellColor( line:Integer,  column:Integer)
         +setCellColor(line:Integer,  column:Integer)
-        +generateSecretCombination()
+        -generateSecretCombination()
+        -generateBoardLines()
     }
 
 

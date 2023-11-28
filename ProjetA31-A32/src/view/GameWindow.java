@@ -3,13 +3,10 @@ package view;
 import controller.GameMasterController;
 import model.CluesMode;
 import model.GameColor;
-import model.LinePanel;
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameWindow extends JFrame
