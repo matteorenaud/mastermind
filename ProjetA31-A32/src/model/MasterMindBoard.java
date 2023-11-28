@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class MasterMindBoard
 {
-
     private int lineCount; //Number of lines in the board
     private int lineSize; //Size of a board line
     private int currentLine; //Index of the currentLine
@@ -62,32 +61,17 @@ public class MasterMindBoard
         }
     }
 
+    //Function used to verify the state of the current line
+    //returns true if the line is equal to the secret combination
     public boolean verifyCurrentLine()
     {
         return this.board.get(currentLine).verify(this.secretCombination);
     }
 
+    //Function that returns the current line of the board
     public MasterMindLine getCurrentLine()
     {
         return this.board.get(this.currentLine);
-    }
-
-    public MasterMindLine getSecretCombination()
-    {
-        return this.secretCombination;
-    }
-
-    public void printBoard()
-    {
-        for(int i=0; i<this.lineCount; i++)
-        {
-            System.out.println();
-            for(int j=0; j<this.lineSize; j++)
-            {
-                System.out.print("[ " + this.board.get(i).getCellColor(j) + " ]");
-            }
-            System.out.println();
-        }
     }
 
     public void printSecretCombination()

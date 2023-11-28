@@ -6,8 +6,7 @@ public class Main
 {
     public static void main(String args[])
     {
-        GameMasterController gmc=new GameMasterController();
-        StartWindow startWindow=new StartWindow(gmc);
-        gmc.setStartWindow(startWindow);
+        GameMasterController gmc = new GameMasterController();
+        gmc.startNewGame();
     }
 }
