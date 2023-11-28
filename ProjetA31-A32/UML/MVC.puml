@@ -5,18 +5,7 @@ skinparam classFontStyle Bold
 
 package model
 {
-    class MasterMindBoard
-    {
-        -lineCount : Integer
-        -lineSize : Integer
-        -currentLine : Integer
-        +nextLine()
-        +verifyCurrentLine() : Boolean
-        +getCellColor( line:Integer,  column:Integer)
-        +setCellColor(line:Integer,  column:Integer)
-        +generateSecretCombination()
-    }
-    enum "<<enum>>\GameColor" as GameColor
+    enum "<<enum>>\nGameColor" as GameColor
     {
         RED
         GREEN
@@ -26,10 +15,25 @@ package model
         PINK
         GREY
         WHITE
+        NONE
     }
 
-    MasterMindBoard o----> "-[]\nsecretCombination" GameColor : very secret
-    MasterMindBoard o----> "-[][]\nboard" GameColor : has
+    class MasterMindBoard
+    {
+        -lineCount : Integer
+        -lineSize : Integer
+        -currentLine : Integer
+        +MasterMindBoard( lineSize:Integer, lineCount:Integer)
+        +nextLine() : Boolean
+        +verifyCurrentLine() : Boolean
+        +getCellColor( line:Integer,  column:Integer)
+        +setCellColor(line:Integer,  column:Integer)
+        +generateSecretCombination()
+    }
+
+
+    MasterMindBoard o----> "-secretCombination\n\n* -board" MasterMindLine : very secret
+    MasterMindBoard o----> "* -availableColors" GameColor : very secret
 
     class MasterMindGame
     {

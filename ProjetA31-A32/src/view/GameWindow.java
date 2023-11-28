@@ -12,30 +12,30 @@ import java.util.List;
 public class GameWindow extends JFrame
 {
     private GameMasterController controller;
-    private String playerName;
+    private int lineSize;
+    private int lineCount;
+    private int colorCount;
     private int nbRound;
-    private int nbPieceOfCombinaison;
-    private int nbTry;
-    private int nbTotalPiece;
-    private int activeLine=0;
-    private JPanel pnlTry;
+    private int activeLine = 0;
+    private String playerName;
 
+    private JPanel boardPanel;
 
-    public GameWindow(GameMasterController gmc,String playerName,int nbRound,int nbPieceOfCombinaison,int nbTry, int nbTotalPiece)
+    public GameWindow(GameMasterController controller,String playerName,
+                      int nbRound,int lineSize,int lineCount, int colorCount)
     {
         super("MasterMind");
         setSize(1000,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
 
-        this.activeLine=nbTry-1;
-
-        this.controller=gmc;
+        this.activeLine=lineCount-1;
+        this.controller=controller;
         this.playerName=playerName;
         this.nbRound=nbRound;
-        this.nbTry=nbTry;
-        this.nbPieceOfCombinaison=nbPieceOfCombinaison;
-        this.nbTotalPiece=nbTotalPiece;
+        this.lineCount=lineCount;
+        this.lineSize=lineSize;
+        this.colorCount=colorCount;
 
         JPanel mainPanel = new JPanel();
         JPanel backPanel=new JPanel();
@@ -44,7 +44,6 @@ public class GameWindow extends JFrame
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints=new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
-
 
         JPanel pnlInfoPlayer=new JPanel(new FlowLayout());
         JLabel lblPlayerName=new JLabel("Pseudo : "+playerName);
@@ -70,12 +69,12 @@ public class GameWindow extends JFrame
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        pnlTry=new JPanel();
-        pnlTry.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
-        pnlTry.setSize(300,600);
-        pnlTry.setLayout(new BoxLayout(pnlTry,BoxLayout.Y_AXIS));
-        constructTry(pnlTry);
-        mainPanel.add(pnlTry,constraints);
+        boardPanel=new JPanel();
+        boardPanel.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
+        boardPanel.setSize(300,600);
+        boardPanel.setLayout(new BoxLayout(boardPanel,BoxLayout.Y_AXIS));
+        constructTry(boardPanel);
+        mainPanel.add(boardPanel,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -88,8 +87,7 @@ public class GameWindow extends JFrame
         constraints.gridy = 2;
         JPanel pnlChoiceColor=new JPanel();
         pnlChoiceColor.setLayout(new FlowLayout());
-        //JLabel d=new JLabel("choix couleur");
-        //pnlChoiceColor.add(d);
+
         constructAvailableColor(pnlChoiceColor);
         mainPanel.add(pnlChoiceColor,constraints);
 
@@ -111,11 +109,9 @@ public class GameWindow extends JFrame
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
         btnValidate.addActionListener(ActionEvent->{
-
-            ArrayList<GameColor>lineColor=colorOfTheLine();
-            for(int i=0;i<lineColor.size();i++)
-                controller.getGame().getMasterMindBoard().getCurrentLine().setCellColor(lineColor.get(i),i);
-            boolean find=controller.checkLine();
+            colorOfTheLine();
+            System.out.println(controller.verifyCurrentLine());
+            controller.nextLine();
             updateCombBox();
         });
         //pnlValidate.add(btnValidate);
@@ -140,19 +136,7 @@ public class GameWindow extends JFrame
         constraints.gridy = 4;
         JButton btnPassTurn=new JButton("Abandonner la manche actulle");
         mainPanel.add(btnPassTurn,constraints);
-        /*
-        choisir les couleurs de sa prochaine combinaison
-        valider sa combinaison pour recevoir l'indice de l'ordinateur
-        remettre à zéro sa combinaison
-        abandonner la manche courante pour passer à la suivante
-        modifier le mode d'affichage des indices :
 
-        soit en mode "facile" : les jetons noirs et blancs sont affichés en correspondance de la combinaison proposée par le joueur (i.e. à la même place)
-        soit en mode "classique" (mode par défaut) : les jetons noirs sont affichés en premier, puis les jetons blancs
-        soit en mode numérique : on affiche le nombre de pions bien placés et le nombre de pions mal placés.
-
-        Bonus : pouvoir recommencer une partie sans relancer l'application.
-         */
 
         add(backPanel);
         setVisible(true);
@@ -160,14 +144,14 @@ public class GameWindow extends JFrame
 
     private void constructTry(JPanel pnlTry)
     {
-        for(int i=0;i<nbTry;i++)
+        for(int i=0;i<this.lineCount;i++)
         {
             TagComponent pnlOneTry=new TagComponent();
-            pnlOneTry.setLayout(new GridLayout(1,this.nbPieceOfCombinaison+1));
+            pnlOneTry.setLayout(new GridLayout(1,this.lineSize+1));
             constructOneTryLine(pnlOneTry);
             pnlOneTry.setTag(i);
             //je mets en actif juste la 1ère ligne
-            if(i!=this.nbTry-1)
+            if(i!=this.lineCount-1)
                 for(Component cbo:pnlOneTry.getComponents())
                     cbo.setEnabled(false);
 
@@ -177,10 +161,10 @@ public class GameWindow extends JFrame
     private void constructOneTryLine(JPanel pnlOneTry)
     {
         List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
-        for(int i=0;i<nbPieceOfCombinaison;i++)
+        for(int i=0;i<this.lineSize;i++)
         {
             JComboBox cboOnePiece=new JComboBox<>();
-            for(int j=0;j<this.nbTotalPiece;j++)
+            for(int j=0;j<this.colorCount;j++)
             {
                 cboOnePiece.addItem(lstAvailableColor.get(j).toString());
             }
@@ -191,7 +175,7 @@ public class GameWindow extends JFrame
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
         List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
-        for(int i=0;i<this.nbTotalPiece;i++)
+        for(int i=0;i<this.colorCount;i++)
         {
             JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());
             pnlChoiceColor.add(lblOneColor);
@@ -200,7 +184,7 @@ public class GameWindow extends JFrame
     private void updateCombBox()
     {
 
-        for(Component pnl:pnlTry.getComponents())
+        for(Component pnl:boardPanel.getComponents())
         {
             if(pnl.getClass()==TagComponent.class)
             {
@@ -212,7 +196,7 @@ public class GameWindow extends JFrame
             }
         }
         this.activeLine--;
-        for(Component pnl:pnlTry.getComponents())
+        for(Component pnl:boardPanel.getComponents())
         {
             if(pnl.getClass()== TagComponent.class)
             {
@@ -226,26 +210,20 @@ public class GameWindow extends JFrame
             }
         }
     }
-    private ArrayList<GameColor>colorOfTheLine()
+    private void colorOfTheLine()
     {
-        ArrayList<GameColor>lst=new ArrayList<>();
-        for(Component pnl:pnlTry.getComponents())
-        {
-            if(pnl.getClass()== TagComponent.class)
-            {
-                TagComponent pnlTheTry=(TagComponent) pnl;
-                if(pnlTheTry.getTag()==activeLine)
-                {
-                    for(Component c:pnlTheTry.getComponents())
-                    {
-                        JComboBox cbo=(JComboBox) c;
-                        lst.add(GameColor.values()[cbo.getSelectedIndex()]);
+
+        for (Component pnl : boardPanel.getComponents()) {
+            if (pnl.getClass() == TagComponent.class) {
+                TagComponent pnlTheTry = (TagComponent) pnl;
+                if (pnlTheTry.getTag() == activeLine) {
+                    Component[] components = pnlTheTry.getComponents();
+                    for (int i = 0; i < components.length; i++) {
+                        JComboBox cbo = (JComboBox) components[i];
+                        controller.setCurrentLineCellColor(GameColor.values()[cbo.getSelectedIndex()], i);
                     }
+                }
             }
         }
-        }
-            return lst;
-
     }
-
 }

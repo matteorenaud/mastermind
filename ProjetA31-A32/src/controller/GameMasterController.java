@@ -46,14 +46,18 @@ public class GameMasterController
         return this.game.getAvailableColors();
     }
 
-    public boolean checkLine()
+    public boolean verifyCurrentLine()
     {
-        System.out.println(game.getMasterMindBoard().verifyCurrentLine());
         return game.getMasterMindBoard().verifyCurrentLine();
     }
 
-    public MasterMindGame getGame()
+    public boolean nextLine()
     {
-        return this.game;
+        return game.getMasterMindBoard().nextLine();
+    }
+
+    public void setCurrentLineCellColor(GameColor color, int index)
+    {
+        this.game.getMasterMindBoard().getCurrentLine().setCellColor(color,index);
     }
 }
