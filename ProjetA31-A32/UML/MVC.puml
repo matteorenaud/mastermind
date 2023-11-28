@@ -16,7 +16,7 @@ package model
         +setCellColor(line:Integer,  column:Integer)
         +generateSecretCombination()
     }
-    enum "<<enum>>\nColor" as Color
+    enum "<<enum>>\GameColor" as GameColor
     {
         RED
         GREEN
@@ -28,8 +28,36 @@ package model
         WHITE
     }
 
-    MasterMindBoard ----> "-[]\nsecretCombination" Color : very secret
-    MasterMindBoard ----> "-[][]\nboard" Color : has
+    MasterMindBoard o----> "-[]\nsecretCombination" GameColor : very secret
+    MasterMindBoard o----> "-[][]\nboard" GameColor : has
+
+    class MasterMindGame
+    {
+         - nbRoud:Integer
+         -  score:Integer
+         -  nbPieceOfCombinaison:Integer
+         -  nbTotalPiece:Integer
+         -  nbTry:Integer
+         -  playerName:String
+         +<<create>>MasterMindBoard(playerName:String, nbRoud:Integer, nbPieceOfCombinaison:Integer, nbTotalPiece:Integer, nbTry:Integer)
+         +getMasterMindBoard():MasterMindBoard
+         +generateNewRound()
+    }
+    MasterMindGame o---> "-1\nmasterMindBoard"MasterMindBoard : play on
+
+    class MasterMindLine
+    {
+        - size:Integer
+        - wellPlaced = 0:Integer
+        - wellChosen = 0:Integer
+        +<<create>>MasterMindLine(size:Integer)
+
+    + verifyCurrentLine(secretCombination:MasterMindLine):Boolean
+    + getCellColor(index:Integer):GameColor
+    + setCellColor(color:GameColor, index:Integer)
+
+    }
+    MasterMindLine o--> "*\n-cells"GameColor:contains
 }
 
 package view
