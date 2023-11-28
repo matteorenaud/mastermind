@@ -60,6 +60,11 @@ public class MasterMindBoard
         }
     }
 
+    public boolean verifyCurrentLine()
+    {
+        return this.board.get(currentLine).verify(this.secretCombination);
+    }
+
     public MasterMindLine getCurrentLine()
     {
         return this.board.get(this.currentLine);

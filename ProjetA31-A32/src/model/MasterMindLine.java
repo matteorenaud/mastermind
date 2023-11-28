@@ -22,7 +22,7 @@ public class MasterMindLine {
 
     //Function that return true if the line is equal to the secret combination
     //the function also fills the wellPLace and wellChosen attributes
-    public boolean verifyCurrentLine(MasterMindLine secretCombination)
+    public boolean verify(MasterMindLine secretCombination)
     {
         this.wellPlaced = 0;
         this.wellChosen = 0;
