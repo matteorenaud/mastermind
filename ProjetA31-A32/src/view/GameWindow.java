@@ -1,11 +1,14 @@
 package view;
 
 import controller.GameMasterController;
+import model.CluesMode;
 import model.GameColor;
-import model.TagComponent;
+import model.LinePanel;
+
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +23,17 @@ public class GameWindow extends JFrame
     private String playerName;
 
     private JPanel boardPanel;
+    private JPanel pnlModeIndice;
+    private JPanel pnlIndice;
+
+    private JPanel pnlNumeric;
+    private JPanel pnlEasyClassicMode;
 
     public GameWindow(GameMasterController controller,String playerName,
                       int nbRound,int lineSize,int lineCount, int colorCount)
     {
         super("MasterMind");
-        setSize(1000,900);
+        setSize(1100,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
 
@@ -76,11 +84,16 @@ public class GameWindow extends JFrame
         constructTry(boardPanel);
         mainPanel.add(boardPanel,constraints);
 
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        JPanel pnlIndice=new JPanel();
-        JLabel l=new JLabel("indices");
-        pnlIndice.add(l);
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        pnlIndice=new JPanel();
+        pnlEasyClassicMode=new JPanel();
+        pnlEasyClassicMode.setLayout(new BoxLayout(pnlEasyClassicMode,BoxLayout.Y_AXIS));
+        pnlNumeric=new JPanel();
+        pnlNumeric.setLayout(new BoxLayout(pnlNumeric,BoxLayout.Y_AXIS));
+        constructPanelForIndices();
+        pnlIndice.add(pnlEasyClassicMode);
+
         mainPanel.add(pnlIndice,constraints);
 
         constraints.gridx = 0;
@@ -93,11 +106,20 @@ public class GameWindow extends JFrame
 
         constraints.gridx = 1;
         constraints.gridy = 2;
-        JPanel pnlModeIndice=new JPanel();
+        pnlModeIndice=new JPanel();
         pnlModeIndice.setLayout(new BoxLayout(pnlModeIndice,BoxLayout.Y_AXIS));
         JRadioButton rdbEasyMode=new JRadioButton("Mode facile");
         JRadioButton rdbClassicMode=new JRadioButton("Mode classique");
         JRadioButton rdbNumeric=new JRadioButton("Mode numérique");
+        rdbEasyMode.addActionListener(ActionEvent->{
+            updateIndiceMode(rdbEasyMode, CluesMode.EASY_MODE);
+        });
+        rdbClassicMode.addActionListener(ActionEvent->{
+            updateIndiceMode(rdbClassicMode,CluesMode.CLASSIC_MODE);
+        });
+        rdbNumeric.addActionListener(ActionEvent->{
+            updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);
+        });
         pnlModeIndice.add(rdbEasyMode);
         pnlModeIndice.add(rdbClassicMode);
         pnlModeIndice.add(rdbNumeric);
@@ -146,10 +168,9 @@ public class GameWindow extends JFrame
     {
         for(int i=0;i<this.lineCount;i++)
         {
-            TagComponent pnlOneTry=new TagComponent();
+            LinePanel pnlOneTry=new LinePanel(i);
             pnlOneTry.setLayout(new GridLayout(1,this.lineSize+1));
             constructOneTryLine(pnlOneTry);
-            pnlOneTry.setTag(i);
             //je mets en actif juste la 1ère ligne
             if(i!=this.lineCount-1)
                 for(Component cbo:pnlOneTry.getComponents())
@@ -183,12 +204,11 @@ public class GameWindow extends JFrame
     }
     private void updateCombBox()
     {
-
         for(Component pnl:boardPanel.getComponents())
         {
-            if(pnl.getClass()==TagComponent.class)
+            if(pnl.getClass()==LinePanel.class)
             {
-                TagComponent pnlTheTry=(TagComponent) pnl;
+                LinePanel pnlTheTry=(LinePanel) pnl;
                 for(Component cbo : pnlTheTry.getComponents())
                 {
                     cbo.setEnabled(false);
@@ -198,9 +218,9 @@ public class GameWindow extends JFrame
         this.activeLine--;
         for(Component pnl:boardPanel.getComponents())
         {
-            if(pnl.getClass()== TagComponent.class)
+            if(pnl.getClass()== LinePanel.class)
             {
-                TagComponent pnlTheTry=(TagComponent) pnl;
+                LinePanel pnlTheTry=(LinePanel) pnl;
                 if(pnlTheTry.getTag()==activeLine) {
 
                     for (Component cbo : pnlTheTry.getComponents()) {
@@ -214,8 +234,8 @@ public class GameWindow extends JFrame
     {
 
         for (Component pnl : boardPanel.getComponents()) {
-            if (pnl.getClass() == TagComponent.class) {
-                TagComponent pnlTheTry = (TagComponent) pnl;
+            if (pnl.getClass() == LinePanel.class) {
+                LinePanel pnlTheTry = (LinePanel) pnl;
                 if (pnlTheTry.getTag() == activeLine) {
                     Component[] components = pnlTheTry.getComponents();
                     for (int i = 0; i < components.length; i++) {
@@ -224,6 +244,54 @@ public class GameWindow extends JFrame
                     }
                 }
             }
+        }
+    }
+    private void updateIndiceMode(JRadioButton rdbActual,CluesMode indicesMode)
+    {
+        for (Component c: pnlModeIndice.getComponents())
+        {
+            JRadioButton rdb=(JRadioButton)c;
+            rdb.setSelected(false);
+        }
+        rdbActual.setSelected(true);
+
+        if(indicesMode==CluesMode.NUMERIC_MODE)
+        {
+            pnlIndice.remove(pnlEasyClassicMode);
+            pnlIndice.add(pnlNumeric);
+        }
+        else
+        {
+            pnlIndice.remove(pnlNumeric);
+            pnlIndice.add(pnlEasyClassicMode);
+        }
+        this.repaint();
+    }
+
+    private void constructPanelForIndices()
+    {
+        for(int i=0;i<this.lineCount;i++)
+        {
+            JPanel pnlOneIndice=new JPanel();
+            pnlOneIndice.setLayout(new FlowLayout());
+            for(int j=0;j<this.lineSize;j++)
+            {
+                Label lbl=new Label();
+                lbl.setBackground(Color.BLACK);
+                pnlOneIndice.add(lbl);
+            }
+            pnlEasyClassicMode.add(pnlOneIndice);
+        }
+        //pour mode numérique
+        for(int i=0;i<this.lineCount;i++)
+        {
+            JPanel pnlOneNumIndice=new JPanel();
+            pnlOneNumIndice.setLayout(new FlowLayout());
+            JLabel lblGoodPlace=new JLabel("Bien placé : ");
+            JLabel lblBadPlace=new JLabel("Mal placé : ");
+            pnlOneNumIndice.add(lblGoodPlace);
+            pnlOneNumIndice.add(lblBadPlace);
+            pnlNumeric.add(pnlOneNumIndice);
         }
     }
 }
