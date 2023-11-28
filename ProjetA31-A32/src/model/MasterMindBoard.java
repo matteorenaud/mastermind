@@ -25,9 +25,6 @@ public class MasterMindBoard
         this.secretCombination = new MasterMindLine(this.lineSize);
 
         generateSecretCombination();
-
-        printBoard();
-        printSecretCombination();
     }
 
     //Function that select the next line of the board

@@ -16,7 +16,7 @@ public class MasterMindLine {
 
         for(int i=0; i<size; i++)
         {
-            this.cells.add(GameColor.WHITE);
+            this.cells.add(GameColor.NONE);
         }
     }
 
