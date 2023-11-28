@@ -1,6 +1,6 @@
 package model;
 
-public enum IndicesMode
+public enum CluesMode
 {
     EASY_MODE,
     CLASSIC_MODE,
