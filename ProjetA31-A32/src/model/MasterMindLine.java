@@ -13,6 +13,11 @@ public class MasterMindLine {
     {
         this.size = size;
         this.cells = new ArrayList<GameColor>();
+
+        for(int i=0; i<size; i++)
+        {
+            this.cells.add(GameColor.WHITE);
+        }
     }
 
     //Function that return true if the line is equal to the secret combination

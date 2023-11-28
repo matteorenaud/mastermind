@@ -163,7 +163,7 @@ public class GameWindow extends JFrame
     }
     private void constructOneTryLine(JPanel pnlOneTry)
     {
-        List<GameColor>lstAvailableColor=this.controller.getLstAvailableColor();
+        List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
         for(int i=0;i<nbPieceOfCombinaison;i++)
         {
             JComboBox cboOnePiece=new JComboBox<>();
@@ -177,7 +177,7 @@ public class GameWindow extends JFrame
     }
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
-        List<GameColor>lstAvailableColor=this.controller.getLstAvailableColor();
+        List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
         for(int i=0;i<this.nbTotalPiece;i++)
         {
             JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());

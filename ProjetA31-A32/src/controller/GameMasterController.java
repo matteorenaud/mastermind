@@ -2,9 +2,11 @@ package controller;
 
 import model.GameColor;
 import model.MasterMindBoard;
+import model.MasterMindGame;
 import view.GameWindow;
 import view.StartWindow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameMasterController
@@ -12,16 +14,15 @@ public class GameMasterController
     private StartWindow startWindow;
     private GameWindow gameWindow;
     //private EndWindow endWindow;
-    private MasterMindBoard masterMindBoard;
+    private MasterMindGame game;
 
     public GameMasterController()
     {}
-    public GameMasterController(StartWindow startWindow, GameWindow gameWindow/*, EndWindow endWindow*/,MasterMindBoard masterMindBoard)
+    public GameMasterController(StartWindow startWindow, GameWindow gameWindow/*, EndWindow endWindow*/)
     {
         this.startWindow=startWindow;
         this.gameWindow=gameWindow;
         //this.endWindow=endWindow;
-        this.masterMindBoard=masterMindBoard;
     }
 
     public void setStartWindow(StartWindow startWindow)
@@ -32,21 +33,16 @@ public class GameMasterController
     {
         this.startWindow=startWindow;
     }
-    public void setMasterMindBoard(MasterMindBoard masterMindBoard)
-    {
-        this.masterMindBoard=masterMindBoard;
-    }
 
     public void launchGame(String playerName,int nbRound,int nbPieceOfCombinaison,int nbTry,int nbTotalPiece)
     {
         startWindow.dispose();//Fermer
-        MasterMindBoard masterMindBoard=new MasterMindBoard(nbPieceOfCombinaison,nbTry,playerName,nbRound, nbPieceOfCombinaison, nbTry, nbTotalPiece);
-        this.setMasterMindBoard(masterMindBoard);
+        this.game = new MasterMindGame(playerName,nbRound,nbPieceOfCombinaison,nbTotalPiece,nbTry);
         this.gameWindow=new GameWindow(this,playerName,nbRound,nbPieceOfCombinaison,nbTry,nbTotalPiece);
     }
 
-    public List<GameColor> getLstAvailableColor()
+    public ArrayList<GameColor> getAvailableColors()
     {
-        return this.masterMindBoard.getLstAvailableColor();
+        return this.game.getAvailableColors();
     }
 }
