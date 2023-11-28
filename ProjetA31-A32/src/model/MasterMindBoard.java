@@ -26,6 +26,8 @@ public class MasterMindBoard
 
         generateBoardLines();
         generateSecretCombination();
+
+        printSecretCombination();
     }
 
     //Function that select the next line of the board

@@ -45,4 +45,10 @@ public class GameMasterController
     {
         return this.game.getAvailableColors();
     }
+
+    public boolean checkLine()
+    {
+        System.out.println(game.getMasterMindBoard().verifyCurrentLine());
+        return game.getMasterMindBoard().verifyCurrentLine();
+    }
 }

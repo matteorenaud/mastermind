@@ -6,6 +6,7 @@ import model.TagComponent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameWindow extends JFrame
@@ -16,6 +17,9 @@ public class GameWindow extends JFrame
     private int nbPieceOfCombinaison;
     private int nbTry;
     private int nbTotalPiece;
+    private int activeLine=0;
+    private JPanel pnlTry;
+
 
     public GameWindow(GameMasterController gmc,String playerName,int nbRound,int nbPieceOfCombinaison,int nbTry, int nbTotalPiece)
     {
@@ -23,6 +27,8 @@ public class GameWindow extends JFrame
         setSize(1000,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
+
+        this.activeLine=nbTry-1;
 
         this.controller=gmc;
         this.playerName=playerName;
@@ -64,7 +70,7 @@ public class GameWindow extends JFrame
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        JPanel pnlTry=new JPanel();
+        pnlTry=new JPanel();
         pnlTry.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
         pnlTry.setSize(300,600);
         pnlTry.setLayout(new BoxLayout(pnlTry,BoxLayout.Y_AXIS));
@@ -104,6 +110,10 @@ public class GameWindow extends JFrame
         //JPanel pnlValidate=new JPanel();
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
+        btnValidate.addActionListener(ActionEvent->{
+            boolean find=controller.checkLine();
+            updateCombBox();
+        });
         //pnlValidate.add(btnValidate);
         mainPanel.add(btnValidate,constraints);
         //mainPanel.add(pnlValidate);
@@ -148,11 +158,10 @@ public class GameWindow extends JFrame
     {
         for(int i=0;i<nbTry;i++)
         {
-            JPanel pnlOneTry=new JPanel(new GridLayout(1,this.nbPieceOfCombinaison+1));
+            TagComponent pnlOneTry=new TagComponent();
+            pnlOneTry.setLayout(new GridLayout(1,this.nbPieceOfCombinaison+1));
             constructOneTryLine(pnlOneTry);
-            TagComponent tag=new TagComponent(i);
-            tag.setMaximumSize(new Dimension(0,0));
-            pnlOneTry.add(tag);
+            pnlOneTry.setTag(i);
             //je mets en actif juste la 1ère ligne
             if(i!=this.nbTry-1)
                 for(Component cbo:pnlOneTry.getComponents())
@@ -182,6 +191,35 @@ public class GameWindow extends JFrame
         {
             JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());
             pnlChoiceColor.add(lblOneColor);
+        }
+    }
+    private void updateCombBox()
+    {
+
+        for(Component pnl:pnlTry.getComponents())
+        {
+            if(pnl.getClass()==TagComponent.class)
+            {
+                TagComponent pnlTheTry=(TagComponent) pnl;
+                for(Component cbo : pnlTheTry.getComponents())
+                {
+                    cbo.setEnabled(false);
+                }
+            }
+        }
+        this.activeLine--;
+        for(Component pnl:pnlTry.getComponents())
+        {
+            if(pnl.getClass()== TagComponent.class)
+            {
+                TagComponent pnlTheTry=(TagComponent) pnl;
+                if(pnlTheTry.getTag()==activeLine) {
+
+                    for (Component cbo : pnlTheTry.getComponents()) {
+                        cbo.setEnabled(true);
+                    }
+                }
+            }
         }
     }
 
