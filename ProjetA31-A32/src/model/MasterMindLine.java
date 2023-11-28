@@ -64,4 +64,12 @@ public class MasterMindLine {
 
         this.cells.set(index,color);
     }
+
+    public int getWellPlaced() {
+        return wellPlaced;
+    }
+
+    public int getWellChosen() {
+        return wellChosen;
+    }
 }
