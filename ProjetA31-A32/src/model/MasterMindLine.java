@@ -79,6 +79,7 @@ public class MasterMindLine {
         this.cells.set(index,color);
     }
 
+    //Function that returns the number of well placed cells
     public int getWellPlaced()
     {
         int nb = 0;
@@ -93,6 +94,7 @@ public class MasterMindLine {
         return nb;
     }
 
+    //Function that returns the number of well vhosen cells
     public int getWellChosen()
     {
         int nb = 0;
@@ -107,6 +109,7 @@ public class MasterMindLine {
         return nb;
     }
 
+    //Function that returns the number of wrongly chose cells
     public int getWrongColor()
     {
         int nb = 0;

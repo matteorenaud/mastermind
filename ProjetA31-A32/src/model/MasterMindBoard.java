@@ -38,6 +38,7 @@ public class MasterMindBoard
         return this.currentLine < this.lineCount;
     }
 
+    //Method that generate all the empty lines of the board
     private void generateBoardLines()
     {
         for(int i=0; i<this.lineCount; i++)
@@ -74,6 +75,7 @@ public class MasterMindBoard
         return this.board.get(this.currentLine);
     }
 
+    //Method that prints the secret combination in the terminal
     public void printSecretCombination()
     {
         for(int i=0; i<this.lineSize;i++)

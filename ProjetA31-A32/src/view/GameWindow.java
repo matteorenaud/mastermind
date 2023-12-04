@@ -130,7 +130,7 @@ public class GameWindow extends JFrame
         btnValidate.addActionListener(ActionEvent->{
             colorOfTheLine();
             System.out.println(controller.verifyCurrentLine());
-            System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
+            System.out.println("Bien placé : " + this.controller.getCurrentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
             controller.nextLine();
             updateCombBox();
             updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);

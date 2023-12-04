@@ -65,7 +65,7 @@ public class GameMasterController
         this.game.getMasterMindBoard().getCurrentLine().setCellColor(color,index);
     }
 
-    public int getCurentLineWellPlaced()
+    public int getCurrentLineWellPlaced()
     {
         return this.game.getMasterMindBoard().getCurrentLine().getWellPlaced();
     }
