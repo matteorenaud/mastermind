@@ -6,6 +6,7 @@ import java.util.Random;
 public class MasterMindGame
 {
     private int nbRoud;
+    private int actualRound=0;
     private int score;
     private int nbTry;
     private int lineSize;
@@ -32,6 +33,7 @@ public class MasterMindGame
 
     public void generateNewRound()
     {
+        this.actualRound++;
         this.masterMindBoard=new MasterMindBoard(this.lineSize,nbTry,availableColors);
     }
 
@@ -58,5 +60,34 @@ public class MasterMindGame
         return availableColors;
     }
 
+    public int getActualRound()
+    {
+        return this.actualRound;
+    }
+    public void setActualRound(int round)
+    {
+        this.actualRound=round;
+    }
+    public int getNbTry(){return this.nbTry;}
+    public int getNbRoud(){return this.nbRoud;}
 
+    public void printInfoAboutGame()
+    {
+        System.out.println("    --> Jeu de Mastermind en ligne de commande\t <--");
+        System.out.println("    --> Voici les paramêtres\t\t\t\t\t <--");
+        System.out.println("    --> MasterMind Info\t\t\t\t\t\t\t <--");
+        System.out.println("    --> Nom joueur : "+this.playerName+"\t\t\t\t\t\t <--");
+        System.out.println("    --> Nb manches : "+this.nbRoud+"\t\t\t\t\t\t\t <--");
+        System.out.println("    --> Nb tentatives/manches : "+this.nbTry+"\t\t\t\t <--");
+        System.out.println("    --> Nb total couleur : " +this.nbTotalPiece+"\t\t\t\t\t <--");
+        System.out.println("    --> Tour actuel : "+this.actualRound+"\t\t\t\t\t\t\t <--");
+        System.out.println("    --> Score : "+this.score+"\t\t\t\t\t\t\t\t <--");
+        printAvailableColor();
+    }
+    public void printAvailableColor()
+    {
+        System.out.println("Couleur disponible : ");
+        for(int i=0;i<this.availableColors.size();i++)
+            System.out.print(this.availableColors.get(i)+" ");
+    }
 }

@@ -75,8 +75,8 @@ public class GameWindow extends JFrame
         constraints.gridx = 0;
         constraints.gridy = 0;
         boardPanel=new JPanel();
-        boardPanel.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
-        boardPanel.setSize(300,600);
+        //boardPanel.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
+        //boardPanel.setSize(300,600);
         boardPanel.setLayout(new BoxLayout(boardPanel,BoxLayout.Y_AXIS));
         constructTry(boardPanel);
         mainPanel.add(boardPanel,constraints);
@@ -129,10 +129,15 @@ public class GameWindow extends JFrame
         btnValidate.setMaximumSize(new Dimension(200,100));
         btnValidate.addActionListener(ActionEvent->{
             colorOfTheLine();
-            System.out.println(controller.verifyCurrentLine());
-            System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
+
+            //System.out.println(controller.verifyCurrentLine());
+            //System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " "
+                    //+ "Mal placé : " + this.controller.getCurrentLineWrongColor()+" "
+                    //+ "Couleur présente : "+this.controller.getCurrentLineWellChosen());
+
             controller.nextLine();
             updateCombBox();
+            updateAllIndicesMode();
             updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);
         });
         //pnlValidate.add(btnValidate);
@@ -184,6 +189,7 @@ public class GameWindow extends JFrame
         for(int i=0;i<this.lineSize;i++)
         {
             JComboBox cboOnePiece=new JComboBox<>();
+            cboOnePiece.setSize(new Dimension(200,40));
             for(int j=0;j<this.colorCount;j++)
             {
                 cboOnePiece.addItem(lstAvailableColor.get(j).toString());
@@ -231,16 +237,20 @@ public class GameWindow extends JFrame
     }
     private void colorOfTheLine()
     {
-
-        for (Component pnl : boardPanel.getComponents()) {
-            if (pnl.getClass() == LinePanel.class) {
+        for (Component pnl : boardPanel.getComponents())
+        {
+            if (pnl.getClass() == LinePanel.class)
+            {
                 LinePanel pnlTheTry = (LinePanel) pnl;
-                if (pnlTheTry.getTag() == activeLine) {
+                if (pnlTheTry.getTag() == activeLine)
+                {
                     Component[] components = pnlTheTry.getComponents();
-                    for (int i = 0; i < components.length; i++) {
+                    for (int i = 0; i < components.length; i++)
+                    {
                         JComboBox cbo = (JComboBox) components[i];
                         controller.setCurrentLineCellColor(GameColor.values()[cbo.getSelectedIndex()], i);
                     }
+
                 }
             }
         }
@@ -275,8 +285,10 @@ public class GameWindow extends JFrame
             pnlOneIndice.setLayout(new FlowLayout());
             for(int j=0;j<this.lineSize;j++)
             {
-                Label lbl=new Label();
+                JLabel lbl=new JLabel(" ");
+                lbl.setOpaque(true);
                 lbl.setBackground(Color.BLACK);
+                //lbl.setMaximumSize(new Dimension(20,20));
                 pnlOneIndice.add(lbl);
             }
             pnlEasyClassicMode.add(pnlOneIndice);
@@ -293,5 +305,10 @@ public class GameWindow extends JFrame
             pnlOneNumIndice.add(lblBadPlace);
             pnlNumeric.add(pnlOneNumIndice);
         }
+    }
+
+    private void updateAllIndicesMode()
+    {
+
     }
 }

@@ -23,8 +23,13 @@ public class MasterMindLine {
 
     //Function that return true if the line is equal to the secret combination
     //the function also fills the cellInfos array
-    public boolean verify(MasterMindLine secretCombination)
+    public boolean verify(MasterMindLine secretCombination, GameColor[] tabColor)
     {
+        //-----------
+        this.cells.clear();
+        for(int i=0;i<tabColor.length;i++)
+            this.cells.add(tabColor[i]);
+        //-----------
         int wellPlaced = 0;
 
         for(int i=0; i<this.size; i++)
@@ -40,14 +45,23 @@ public class MasterMindLine {
         {
             for(int j=0; j<this.size; j++)
             {
-                if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                if(this.cellInfos.get(i)!=CellInfo.WELL_PLACED
+                &&this.getCellColor(i)==secretCombination.getCellColor(j))
                 {
                     this.cellInfos.set(i,CellInfo.GOOD_COLOR);
                 }
 
+                /*
+                if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                {
+                    this.cellInfos.set(i,CellInfo.GOOD_COLOR);
+                }*/
+
             }
 
-            if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR)
+            if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR
+            &&this.cellInfos.get(i) != CellInfo.NONE
+            &&this.cellInfos.get(i) != CellInfo.WELL_PLACED)
             {
                 this.cellInfos.set(i, CellInfo.NOT_PRESENT);
             }
@@ -124,5 +138,22 @@ public class MasterMindLine {
     public ArrayList<GameColor> getCells()
     {
         return cells;
+    }
+
+    public void printAllInformationsAboutTheLine(MasterMindLine secretCombination)
+    {
+        System.out.print("\t| Récapitulatif de la ligne");
+        System.out.print("\n\t| Couleur de la ligne : \n\t| ");
+        for(int i=0;i<this.cells.size();i++)
+            System.out.print(cells.get(i)+" ");
+        System.out.print("\n\t| Combinaison secrète : \n\t| ");
+        for(int i=0;i<this.cells.size();i++)
+            System.out.print(secretCombination.getCellColor(i)+" ");
+        System.out.print("\n\t| Indices : \n\t| ");
+        for(int i=0;i<this.cells.size();i++)
+            System.out.print(cellInfos.get(i)+" ");
+        System.out.print("\n\t| Bien placé : "+this.getWellPlaced());
+        System.out.print(" Mal placé : "+this.getWellChosen());
+        System.out.println(" Non présent : "+this.getWrongColor());
     }
 }

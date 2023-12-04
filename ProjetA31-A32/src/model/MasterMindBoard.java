@@ -9,7 +9,7 @@ public class MasterMindBoard
 {
     private int lineCount; //Number of lines in the board
     private int lineSize; //Size of a board line
-    private int currentLine; //Index of the currentLine
+    private int currentLine=0; //Index of the currentLine
     private MasterMindLine secretCombination; //Secret combination of the current board
     private ArrayList<MasterMindLine> board; //Board that contains all the lines
     private ArrayList<GameColor> availableColors; //Available colors
@@ -26,7 +26,7 @@ public class MasterMindBoard
         generateBoardLines();
         generateSecretCombination();
 
-        printSecretCombination();
+        //printSecretCombination();
     }
 
     //Function that select the next line of the board
@@ -63,9 +63,9 @@ public class MasterMindBoard
 
     //Function used to verify the state of the current line
     //returns true if the line is equal to the secret combination
-    public boolean verifyCurrentLine()
+    public boolean verifyCurrentLine(GameColor[] tab)
     {
-        return this.board.get(currentLine).verify(this.secretCombination);
+        return this.board.get(currentLine).verify(this.secretCombination,tab);
     }
 
     //Function that returns the current line of the board
@@ -73,6 +73,7 @@ public class MasterMindBoard
     {
         return this.board.get(this.currentLine);
     }
+    public int getIndexCurrentLine(){return this.currentLine;}
 
     public void printSecretCombination()
     {
@@ -83,4 +84,9 @@ public class MasterMindBoard
 
         System.out.println();
     }
+    public MasterMindLine getSecretCombination()
+    {
+        return this.secretCombination;
+    }
+
 }
