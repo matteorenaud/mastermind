@@ -28,7 +28,7 @@ public class GameMasterController
     //with the selected parameters
     public void launchGame(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
-        startWindow.dispose();
+        //startWindow.dispose();
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
         this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
     }
@@ -64,4 +64,20 @@ public class GameMasterController
     {
         this.game.getMasterMindBoard().getCurrentLine().setCellColor(color,index);
     }
+
+    public int getCurentLineWellPlaced()
+    {
+        return this.game.getMasterMindBoard().getCurrentLine().getWellPlaced();
+    }
+
+    public int getCurrentLineWellChosen()
+    {
+        return this.game.getMasterMindBoard().getCurrentLine().getWellChosen();
+    }
+
+    public int getCurrentLineWrongColor()
+    {
+        return this.game.getMasterMindBoard().getCurrentLine().getWrongColor();
+    }
+
 }

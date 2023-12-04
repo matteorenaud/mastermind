@@ -12,38 +12,49 @@ public class MasterMindLine {
     {
         this.size = size;
         this.cells = new ArrayList<GameColor>();
-        this.cellInfos = new ArrayList<>(cellInfos)();
+        this.cellInfos = new ArrayList<CellInfo>();
 
         for(int i=0; i<size; i++)
         {
             this.cells.add(GameColor.NONE);
-            this.cellInfos.add(CellInfo.NOT_PRESENT);
+            this.cellInfos.add(CellInfo.NONE);
         }
     }
 
     //Function that return true if the line is equal to the secret combination
-    //the function also fills the wellPLace and wellChosen attributes
+    //the function also fills the cellInfos array
     public boolean verify(MasterMindLine secretCombination)
     {
+        int wellPlaced = 0;
+
         for(int i=0; i<this.size; i++)
         {
             if(this.getCellColor(i) == secretCombination.getCellColor(i))
             {
                 this.cellInfos.set(i,CellInfo.WELL_PLACED);
-            }
-            else
-            {
-                for(int j=0; j<this.size; j++)
-                {
-                    if(this.cellInfos.get(j) != CellInfo.WELL_PLACED)
-                    {
-
-                    }
-                }
+                wellPlaced ++;
             }
         }
 
-        return this.wellPlaced == this.size;
+        for(int i=0; i<this.size; i++)
+        {
+            for(int j=0; j<this.size; j++)
+            {
+                if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                {
+                    this.cellInfos.set(i,CellInfo.GOOD_COLOR);
+                }
+
+            }
+
+            if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR)
+            {
+                this.cellInfos.set(i, CellInfo.NOT_PRESENT);
+            }
+        }
+
+        return wellPlaced == this.size;
+
     }
 
     //Function that gets the GameColor of a specific cell
@@ -70,12 +81,44 @@ public class MasterMindLine {
 
     public int getWellPlaced()
     {
-        return wellPlaced;
+        int nb = 0;
+
+        for(int i=0; i<this.size; i++)
+        {
+            if(this.cellInfos.get(i) == CellInfo.WELL_PLACED)
+            {
+                nb++;
+            }
+        }
+        return nb;
     }
 
     public int getWellChosen()
     {
-        return wellChosen;
+        int nb = 0;
+
+        for(int i=0; i<this.size; i++)
+        {
+            if(this.cellInfos.get(i) == CellInfo.GOOD_COLOR)
+            {
+                nb++;
+            }
+        }
+        return nb;
+    }
+
+    public int getWrongColor()
+    {
+        int nb = 0;
+
+        for(int i=0; i<this.size; i++)
+        {
+            if(this.cellInfos.get(i) == CellInfo.NOT_PRESENT)
+            {
+                nb++;
+            }
+        }
+        return nb;
     }
 
     public ArrayList<GameColor> getCells()

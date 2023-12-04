@@ -130,8 +130,10 @@ public class GameWindow extends JFrame
         btnValidate.addActionListener(ActionEvent->{
             colorOfTheLine();
             System.out.println(controller.verifyCurrentLine());
+            System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
             controller.nextLine();
             updateCombBox();
+            updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);
         });
         //pnlValidate.add(btnValidate);
         mainPanel.add(btnValidate,constraints);
@@ -286,6 +288,7 @@ public class GameWindow extends JFrame
             pnlOneNumIndice.setLayout(new FlowLayout());
             JLabel lblGoodPlace=new JLabel("Bien placé : ");
             JLabel lblBadPlace=new JLabel("Mal placé : ");
+
             pnlOneNumIndice.add(lblGoodPlace);
             pnlOneNumIndice.add(lblBadPlace);
             pnlNumeric.add(pnlOneNumIndice);
