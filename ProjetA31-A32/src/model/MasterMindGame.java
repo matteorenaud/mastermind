@@ -5,23 +5,31 @@ import java.util.Random;
 
 public class MasterMindGame
 {
+<<<<<<< HEAD
     private int nbRoud;
     private int actualRound=0;
     private int score;
     private int nbTry;
     private int lineSize;
     private int nbTotalPiece;
+=======
+    private int nbRoud; //Number of rounds to be played
+    private int score; //Global score of the game
+    private int nbTry; //Number of try to guess the secret combination
+    private int lineSize; //Number of cells in a combination
+    private int colorCount; //Number of colors available
+>>>>>>> bd75caa20b2ad1417af7841027c07c7d2e283b7f
     private String playerName;
     private MasterMindBoard masterMindBoard;
     private ArrayList<GameColor> availableColors;
 
-    public MasterMindGame(String playerName, int nbRoud,int nbPieceOfCombinaison,int nbTotalPiece,int nbTry)
+    public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry)
     {
         this.nbRoud=nbRoud;
         this.score=0;
         this.playerName=playerName;
-        this.lineSize=nbPieceOfCombinaison;
-        this.nbTotalPiece = nbTotalPiece;
+        this.lineSize=lineSize;
+        this.colorCount = colorCount;
 
         this.nbTry=nbTry;
 
@@ -31,25 +39,23 @@ public class MasterMindGame
         generateNewRound();
     }
 
+    //Method that creates a new round of the game by creating a whole new board
     public void generateNewRound()
     {
         this.actualRound++;
         this.masterMindBoard=new MasterMindBoard(this.lineSize,nbTry,availableColors);
     }
 
+    //Function that gets the MasterMindBoard
     public MasterMindBoard getMasterMindBoard()
     {
         return this.masterMindBoard;
     }
 
-    public void endGame()
-    {
-
-    }
-
+    //Method that generates a list with all the colors available in the current game
     public void generateListAvailableGameColor()
     {
-        for(int i=0;i<nbTotalPiece;i++)
+        for(int i=0;i<this.colorCount;i++)
         {
             this.availableColors.add(GameColor.values()[i]);
         }
@@ -59,6 +65,7 @@ public class MasterMindGame
     {
         return availableColors;
     }
+<<<<<<< HEAD
 
     public int getActualRound()
     {
@@ -90,4 +97,6 @@ public class MasterMindGame
         for(int i=0;i<this.availableColors.size();i++)
             System.out.print(this.availableColors.get(i)+" ");
     }
+=======
+>>>>>>> bd75caa20b2ad1417af7841027c07c7d2e283b7f
 }

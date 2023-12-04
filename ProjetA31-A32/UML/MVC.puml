@@ -5,7 +5,15 @@ skinparam classFontStyle Bold
 
 package model
 {
-    enum "<<enum>>\nCluesMode" as ClesMode
+    enum "<<enum>>\nCellInfo" as CellInfo
+    {
+        WELL_PLACED
+        GOOD_COLOR
+        NOT_PRESENT
+        NONE
+    }
+
+    enum "<<enum>>\nCluesMode" as CluesMode
     {
         EASY_MODE
         CLASSIC_MODE
@@ -30,46 +38,51 @@ package model
         -lineCount : Integer
         -lineSize : Integer
         -currentLine : Integer
-        +MasterMindBoard( lineSize:Integer, lineCount:Integer)
+        +<<create>>MasterMindBoard( lineSize:Integer, lineCount:Integer, availableColors : ArrayList<GameColor)
         +nextLine() : Boolean
         +verifyCurrentLine() : Boolean
-        +getCellColor( line:Integer,  column:Integer)
-        +setCellColor(line:Integer,  column:Integer)
+        +getCurrentLine() : MasterMindLine
         -generateSecretCombination()
         -generateBoardLines()
     }
 
 
-    MasterMindBoard o----> "-secretCombination\n\n* -board" MasterMindLine : very secret
-    MasterMindBoard o----> "* -availableColors" GameColor : very secret
+    MasterMindBoard o--> "-secretCombination\n\n* -board" MasterMindLine
+    MasterMindBoard o--> "* -availableColors" GameColor
 
     class MasterMindGame
     {
-         - nbRoud:Integer
-         -  score:Integer
-         -  nbPieceOfCombinaison:Integer
-         -  nbTotalPiece:Integer
-         -  nbTry:Integer
-         -  playerName:String
-         +<<create>>MasterMindBoard(playerName:String, nbRoud:Integer, nbPieceOfCombinaison:Integer, nbTotalPiece:Integer, nbTry:Integer)
+         -  nbRoud : Integer
+         -  score : Integer
+         -  nbTry : Integer
+         -  lineSize : Integer
+         -  colorCount : Integer
+         -  playerName : String
+         +<<create>>MasterMindBoard(playerName : String, nbRoud : Integer, lineSize  Integer, colorCount:Integer, nbTry:Integer)
          +getMasterMindBoard():MasterMindBoard
+         +getAvailableColors() : ArrayList<GameColor>
+         +generateListAvailableGameColors()
          +generateNewRound()
     }
-    MasterMindGame o---> "-1\nmasterMindBoard"MasterMindBoard : play on
+
+    MasterMindGame o--> "1 -masterMindBoard"MasterMindBoard
+    MasterMindGame o--> "* -availableColors"GameColor
 
     class MasterMindLine
     {
         - size:Integer
-        - wellPlaced = 0:Integer
-        - wellChosen = 0:Integer
         +<<create>>MasterMindLine(size:Integer)
-
-    + verifyCurrentLine(secretCombination:MasterMindLine):Boolean
-    + getCellColor(index:Integer):GameColor
-    + setCellColor(color:GameColor, index:Integer)
-
+        + verify(secretCombination:MasterMindLine) : Boolean
+        + getCellColor(index:Integer) : GameColor
+        + setCellColor(color:GameColor, index:Integer)
+        + getWellPlaced() : Integer
+        + getWellChosen() : Integer
+        + getWrongColor() : Integer
+        + getCells() : ArrayList<GameColor>
     }
-    MasterMindLine o--> "*\n-cells"GameColor:contains
+
+    MasterMindLine o--> "* -cells"GameColor
+    MasterMindLine o--> "* -cellInfos"CellInfo
 }
 
 package view
@@ -89,11 +102,23 @@ package controller
 {
     class GameMasterController
     {
+        + startNewGame()
+        + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer)
+        + endgame()
+        + getAvailableColors : ArrayList<GameColor>
+        + verifyCurrentLine() : Boolean
+        + nextLine() : Boolean
+        + setCurrentLineCellColor(color : GameColor, index : Integer)
+        + getCurrentLineWellPlaced() : Integer
+        + getCurrentLineWellChosen() : Integer
+        + getCurrentLineWrongColor() : Integer
 
     }
 
-    GameMasterController --> "-1\nstartWindow" StartWindow : print
-    GameMasterController --> "-1\ngameWindow" GameWindow : print
-    GameMasterController --> "-1\nendWindow" EndWindow : print
+    GameMasterController o--> "1 -startWindow" StartWindow
+    GameMasterController o--> "1 -gameWindow" GameWindow
+    GameMasterController o--> "1 -endWindow" EndWindow
+    GameMasterController o--> "1 -game" MasterMindGame
+
 }
 @enduml
