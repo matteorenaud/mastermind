@@ -60,7 +60,6 @@ public class MasterMindLine {
             }
 
             if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR
-            &&this.cellInfos.get(i) != CellInfo.NONE
             &&this.cellInfos.get(i) != CellInfo.WELL_PLACED)
             {
                 this.cellInfos.set(i, CellInfo.NOT_PRESENT);

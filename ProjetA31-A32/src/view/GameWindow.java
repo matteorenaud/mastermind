@@ -129,17 +129,14 @@ public class GameWindow extends JFrame
         btnValidate.setMaximumSize(new Dimension(200,100));
         btnValidate.addActionListener(ActionEvent->{
             colorOfTheLine();
-<<<<<<< HEAD
 
-            //System.out.println(controller.verifyCurrentLine());
-            //System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " "
+                    //System.out.println(controller.verifyCurrentLine());
+                    //System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " "
                     //+ "Mal placé : " + this.controller.getCurrentLineWrongColor()+" "
                     //+ "Couleur présente : "+this.controller.getCurrentLineWellChosen());
 
-=======
-            System.out.println(controller.verifyCurrentLine());
-            System.out.println("Bien placé : " + this.controller.getCurrentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
->>>>>>> bd75caa20b2ad1417af7841027c07c7d2e283b7f
+            //System.out.println(controller.verifyCurrentLine());
+            //System.out.println("Bien placé : " + this.controller.getCurrentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
             controller.nextLine();
             updateCombBox();
             updateAllIndicesMode();

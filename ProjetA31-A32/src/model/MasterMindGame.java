@@ -5,20 +5,13 @@ import java.util.Random;
 
 public class MasterMindGame
 {
-<<<<<<< HEAD
-    private int nbRoud;
     private int actualRound=0;
-    private int score;
-    private int nbTry;
-    private int lineSize;
     private int nbTotalPiece;
-=======
     private int nbRoud; //Number of rounds to be played
     private int score; //Global score of the game
     private int nbTry; //Number of try to guess the secret combination
     private int lineSize; //Number of cells in a combination
     private int colorCount; //Number of colors available
->>>>>>> bd75caa20b2ad1417af7841027c07c7d2e283b7f
     private String playerName;
     private MasterMindBoard masterMindBoard;
     private ArrayList<GameColor> availableColors;
@@ -65,7 +58,6 @@ public class MasterMindGame
     {
         return availableColors;
     }
-<<<<<<< HEAD
 
     public int getActualRound()
     {
@@ -97,6 +89,5 @@ public class MasterMindGame
         for(int i=0;i<this.availableColors.size();i++)
             System.out.print(this.availableColors.get(i)+" ");
     }
-=======
->>>>>>> bd75caa20b2ad1417af7841027c07c7d2e283b7f
+
 }
