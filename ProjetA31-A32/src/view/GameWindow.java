@@ -3,19 +3,21 @@ package view;
 import controller.GameMasterController;
 import model.CluesMode;
 import model.GameColor;
+import model.MasterMindGameObserver;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GameWindow extends JFrame
+public class GameWindow extends JFrame implements MasterMindGameObserver
 {
     private GameMasterController controller;
     private int lineSize;
     private int lineCount;
     private int colorCount;
     private int nbRound;
+    private int actualRound;
     private int activeLine = 0;
     private String playerName;
 
@@ -25,6 +27,7 @@ public class GameWindow extends JFrame
 
     private JPanel pnlNumeric;
     private JPanel pnlEasyClassicMode;
+    private JLabel lblRound;
 
     public GameWindow(GameMasterController controller,String playerName,
                       int nbRound,int lineSize,int lineCount, int colorCount)
@@ -50,7 +53,20 @@ public class GameWindow extends JFrame
         GridBagConstraints constraints=new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
+        JLabel lblTitle=new JLabel("MasterMind");
+        lblTitle.setMinimumSize(new Dimension(50,50));
+        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTitle.setForeground(Color.RED);
+        lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+
         JPanel pnlInfoPlayer=new JPanel(new FlowLayout());
+        JPanel pnlTitle=new JPanel(new FlowLayout());
+        JPanel pnlTop=new JPanel();
+        pnlTop.setLayout(new BoxLayout(pnlTop,BoxLayout.Y_AXIS));
+
+        pnlTop.add(pnlTitle);
+        pnlTop.add(pnlInfoPlayer);
+
         JLabel lblPlayerName=new JLabel("Pseudo : "+playerName);
         lblPlayerName.setMinimumSize(new Dimension(50,50));
         lblPlayerName.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -61,15 +77,17 @@ public class GameWindow extends JFrame
         lblScore.setAlignmentX(Component.RIGHT_ALIGNMENT);
         lblScore.setForeground(Color.BLACK);
         lblScore.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        JLabel lblTitle=new JLabel("MasterMind");
-        lblTitle.setMinimumSize(new Dimension(50,50));
-        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-        lblTitle.setForeground(Color.RED);
-        lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        lblRound=new JLabel("Tour "+this.actualRound+" / "+this.nbRound);
+        lblRound.setMinimumSize(new Dimension(50,50));
+        lblRound.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        lblRound.setForeground(Color.BLACK);
+        lblRound.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+
         pnlInfoPlayer.add(lblPlayerName);
-        pnlInfoPlayer.add(lblTitle);
         pnlInfoPlayer.add(lblScore);
-        backPanel.add(pnlInfoPlayer);
+        pnlInfoPlayer.add(lblRound);
+        //backPanel.add(pnlInfoPlayer);
+        backPanel.add(pnlTop);
         backPanel.add(mainPanel);
 
         constraints.gridx = 0;
@@ -127,9 +145,29 @@ public class GameWindow extends JFrame
         //JPanel pnlValidate=new JPanel();
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
-        btnValidate.addActionListener(ActionEvent->{
-            colorOfTheLine();
 
+        btnValidate.addActionListener(ActionEvent->{
+            GameColor[] lineColor=colorOfTheLine();
+            System.out.println("Couleur récupére");
+            for (int i=0;i<lineColor.length;i++)
+            {
+                System.out.print(lineColor[i]+" ");
+                controller.setCurrentLineCellColor(lineColor[i],i);
+            }
+            System.out.println();
+
+            boolean find=controller.verifyCurrentLine();
+
+            if(find)
+            {
+                newGame();
+                return;
+            }
+            else if(controller.nextLine() == false)
+            {
+                newGame();
+                return;
+            }
                     //System.out.println(controller.verifyCurrentLine());
                     //System.out.println("Bien placé : " + this.controller.getCurentLineWellPlaced() + " "
                     //+ "Mal placé : " + this.controller.getCurrentLineWrongColor()+" "
@@ -137,10 +175,10 @@ public class GameWindow extends JFrame
 
             //System.out.println(controller.verifyCurrentLine());
             //System.out.println("Bien placé : " + this.controller.getCurrentLineWellPlaced() + " " + "Mal placé : " + this.controller.getCurrentLineWrongColor());
-            controller.nextLine();
+            //controller.nextLine();
             updateCombBox();
             updateAllIndicesMode();
-            updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);
+            //updateIndiceMode(rdbNumeric,CluesMode.NUMERIC_MODE);
         });
         //pnlValidate.add(btnValidate);
         mainPanel.add(btnValidate,constraints);
@@ -237,8 +275,10 @@ public class GameWindow extends JFrame
             }
         }
     }
-    private void colorOfTheLine()
+    private GameColor[] colorOfTheLine()
     {
+        GameColor[] lineColor=new GameColor[this.lineSize];
+
         for (Component pnl : boardPanel.getComponents())
         {
             if (pnl.getClass() == LinePanel.class)
@@ -250,12 +290,14 @@ public class GameWindow extends JFrame
                     for (int i = 0; i < components.length; i++)
                     {
                         JComboBox cbo = (JComboBox) components[i];
-                        controller.setCurrentLineCellColor(GameColor.values()[cbo.getSelectedIndex()], i);
+                        //controller.setCurrentLineCellColor(GameColor.values()[cbo.getSelectedIndex()], i);
+                        lineColor[i]=GameColor.values()[cbo.getSelectedIndex()];
                     }
 
                 }
             }
         }
+        return lineColor;
     }
     private void updateIndiceMode(JRadioButton rdbActual,CluesMode indicesMode)
     {
@@ -312,5 +354,23 @@ public class GameWindow extends JFrame
     private void updateAllIndicesMode()
     {
 
+    }
+
+    private void newGame()
+    {
+        controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+        //controller.endRound();
+    }
+
+
+    @Override
+    public void updateActualRound(int actualRound)
+    {
+        controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+    }
+    @Override
+    public void updateEndGame(int score)
+    {
+        controller.endGame();
     }
 }

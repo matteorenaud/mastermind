@@ -16,6 +16,8 @@ public class MasterMindGame
     private MasterMindBoard masterMindBoard;
     private ArrayList<GameColor> availableColors;
 
+    private ArrayList<MasterMindGameObserver>lstGameObserver;
+
     public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry)
     {
         this.nbRoud=nbRoud;
@@ -26,16 +28,35 @@ public class MasterMindGame
         this.nbTry=nbTry;
 
         this.availableColors = new ArrayList<GameColor>();
+        this.lstGameObserver=new ArrayList<MasterMindGameObserver>();
 
         generateListAvailableGameColor();
         generateNewRound();
+    }
+
+    public void addMasterMindGameObserver(MasterMindGameObserver o)
+    {
+        this.lstGameObserver.add(o);
+    }
+    public void removeMasterMindGameObserver(MasterMindGameObserver o)
+    {
+        this.lstGameObserver.remove(o);
     }
 
     //Method that creates a new round of the game by creating a whole new board
     public void generateNewRound()
     {
         this.currentRound++;
-        this.masterMindBoard=new MasterMindBoard(this.lineSize,nbTry,availableColors);
+
+        if(currentRound<=nbRoud)
+        {
+            this.masterMindBoard = new MasterMindBoard(this.lineSize, nbTry, availableColors);
+            notifyGameObserverNewRound();
+        }
+        else
+        {
+            endGame();
+        }
     }
 
     //Function that gets the MasterMindBoard
@@ -116,4 +137,25 @@ public class MasterMindGame
             System.out.print(this.availableColors.get(i)+" ");
     }
 
+    private void notifyGameObserverNewRound()
+    {
+        for(MasterMindGameObserver o:this.lstGameObserver)
+        {
+            o.updateActualRound(this.currentRound);
+        }
+    }
+
+    public void endGame()
+    {
+        System.out.println("FIN DE LA PARTIE");
+        notifyGameObserverEndGame();
+
+    }
+    private void notifyGameObserverEndGame()
+    {
+        for(MasterMindGameObserver o:this.lstGameObserver)
+        {
+            o.updateActualRound(this.score);
+        }
+    }
 }

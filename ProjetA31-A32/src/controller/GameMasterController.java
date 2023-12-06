@@ -32,6 +32,16 @@ public class GameMasterController
         startWindow.dispose();
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
         this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
+        //game.addMasterMindGameObserver(this.gameWindow);
+        game.addMasterMindGameObserver(this.gameWindow);
+    }
+    public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
+    {
+        //this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
+        game.generateNewRound();
+        this.gameWindow.dispose();
+        this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
+        game.addMasterMindGameObserver(this.gameWindow);
     }
 
     //Method that ends the current round
@@ -44,7 +54,7 @@ public class GameMasterController
     //Method that ends the current game
     public void endGame()
     {
-
+        this.gameWindow.dispose();
     }
 
     //Function used to get the list of all availables colors
@@ -57,8 +67,9 @@ public class GameMasterController
     //returns true if the line is equal to the secret combination
     public boolean verifyCurrentLine()
     {
+        boolean find=game.getMasterMindBoard().verifyCurrentLine();
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
-        return game.getMasterMindBoard().verifyCurrentLine();
+        return find;
     }
 
     //Function that selects the next line in the MasterMinBoard
