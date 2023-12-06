@@ -9,6 +9,7 @@ import model.MasterMindGameObserver;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class GameWindow extends JFrame implements MasterMindGameObserver
@@ -203,6 +204,9 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         constraints.gridx = 1;
         constraints.gridy = 4;
         JButton btnPassTurn=new JButton("Abandonner la manche actulle");
+        btnPassTurn.addActionListener(ActionEvent->{
+            newGame();
+        });
         mainPanel.add(btnPassTurn,constraints);
 
 
