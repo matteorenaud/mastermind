@@ -41,7 +41,10 @@ package model
         +<<create>>MasterMindBoard( lineSize:Integer, lineCount:Integer, availableColors : ArrayList<GameColor)
         +nextLine() : Boolean
         +verifyCurrentLine() : Boolean
+        +getSecretCombination() : MasterMindLine
         +getCurrentLine() : MasterMindLine
+        +getIndexCurrentLine() : Integer
+        +getBoard : MasterMindLine[*]
         -generateSecretCombination()
         -generateBoardLines()
     }
@@ -60,11 +63,15 @@ package model
          -  playerName : String
          +<<create>>MasterMindBoard(playerName : String, nbRoud : Integer, lineSize  Integer, colorCount:Integer, nbTry:Integer)
          +getMasterMindBoard():MasterMindBoard
-         +getAvailableColors() : ArrayList<GameColor>
+         +getAvailableColors() : GameColor[*]
+         +updateScore()
          +generateListAvailableGameColors()
          +generateNewRound()
+         +getScore() : Integer
+         +setCluesMode(cluesMode : CluesMode)
     }
 
+    MasterMindGame o--> "1 -cluesMode"CluesMode
     MasterMindGame o--> "1 -masterMindBoard"MasterMindBoard
     MasterMindGame o--> "* -availableColors"GameColor
 
@@ -78,7 +85,7 @@ package model
         + getWellPlaced() : Integer
         + getWellChosen() : Integer
         + getWrongColor() : Integer
-        + getCells() : ArrayList<GameColor>
+        + getCells() : GameColor[*]
     }
 
     MasterMindLine o--> "* -cells"GameColor
@@ -105,14 +112,16 @@ package controller
         + startNewGame()
         + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer)
         + endgame()
-        + getAvailableColors : ArrayList<GameColor>
+        + endRound()
+        + getAvailableColors() : GameColor[*]
         + verifyCurrentLine() : Boolean
         + nextLine() : Boolean
         + setCurrentLineCellColor(color : GameColor, index : Integer)
         + getCurrentLineWellPlaced() : Integer
         + getCurrentLineWellChosen() : Integer
         + getCurrentLineWrongColor() : Integer
-
+        + getCurrentGameCluesMode() : CluesMode
+        + setCurrentGameCluesMode(cluesMode : CluesMode)
     }
 
     GameMasterController o--> "1 -startWindow" StartWindow

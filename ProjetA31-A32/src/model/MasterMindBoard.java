@@ -64,9 +64,9 @@ public class MasterMindBoard
 
     //Function used to verify the state of the current line
     //returns true if the line is equal to the secret combination
-    public boolean verifyCurrentLine(GameColor[] tab)
+    public boolean verifyCurrentLine()
     {
-        return this.board.get(currentLine).verify(this.secretCombination,tab);
+        return this.board.get(currentLine).verify(this.secretCombination);
     }
 
     //Function that returns the current line of the board
@@ -89,6 +89,11 @@ public class MasterMindBoard
     public MasterMindLine getSecretCombination()
     {
         return this.secretCombination;
+    }
+
+    public ArrayList<MasterMindLine> getBoard()
+    {
+        return this.board;
     }
 
 }

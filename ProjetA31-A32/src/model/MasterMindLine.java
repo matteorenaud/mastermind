@@ -23,13 +23,8 @@ public class MasterMindLine {
 
     //Function that return true if the line is equal to the secret combination
     //the function also fills the cellInfos array
-    public boolean verify(MasterMindLine secretCombination, GameColor[] tabColor)
+    public boolean verify(MasterMindLine secretCombination)
     {
-        //-----------
-        this.cells.clear();
-        for(int i=0;i<tabColor.length;i++)
-            this.cells.add(tabColor[i]);
-        //-----------
         int wellPlaced = 0;
 
         for(int i=0; i<this.size; i++)
@@ -45,22 +40,13 @@ public class MasterMindLine {
         {
             for(int j=0; j<this.size; j++)
             {
-                if(this.cellInfos.get(i)!=CellInfo.WELL_PLACED
-                &&this.getCellColor(i)==secretCombination.getCellColor(j))
-                {
-                    this.cellInfos.set(i,CellInfo.GOOD_COLOR);
-                }
-
-                /*
                 if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
                 {
                     this.cellInfos.set(i,CellInfo.GOOD_COLOR);
-                }*/
-
+                }
             }
 
-            if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR
-            &&this.cellInfos.get(i) != CellInfo.WELL_PLACED)
+            if(this.cellInfos.get(i) != CellInfo.GOOD_COLOR && this.cellInfos.get(i) != CellInfo.WELL_PLACED)
             {
                 this.cellInfos.set(i, CellInfo.NOT_PRESENT);
             }

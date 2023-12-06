@@ -5,13 +5,13 @@ import java.util.Random;
 
 public class MasterMindGame
 {
-    private int actualRound=0;
-    private int nbTotalPiece;
+    private int currentRound = 0;
     private int nbRoud; //Number of rounds to be played
-    private int score; //Global score of the game
+    private int score = 0; //Global score of the game
     private int nbTry; //Number of try to guess the secret combination
     private int lineSize; //Number of cells in a combination
     private int colorCount; //Number of colors available
+    private CluesMode cluesMode = CluesMode.EASY_MODE;
     private String playerName;
     private MasterMindBoard masterMindBoard;
     private ArrayList<GameColor> availableColors;
@@ -19,7 +19,6 @@ public class MasterMindGame
     public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry)
     {
         this.nbRoud=nbRoud;
-        this.score=0;
         this.playerName=playerName;
         this.lineSize=lineSize;
         this.colorCount = colorCount;
@@ -35,7 +34,7 @@ public class MasterMindGame
     //Method that creates a new round of the game by creating a whole new board
     public void generateNewRound()
     {
-        this.actualRound++;
+        this.currentRound++;
         this.masterMindBoard=new MasterMindBoard(this.lineSize,nbTry,availableColors);
     }
 
@@ -54,21 +53,48 @@ public class MasterMindGame
         }
     }
 
+    public void updateScore()
+    {
+        for(MasterMindLine line : this.masterMindBoard.getBoard())
+        {
+            this.score += line.getWellPlaced() + line.getWellPlaced() * 3;
+        }
+
+        if(this.cluesMode == CluesMode.EASY_MODE)
+        {
+            this.score += 4;
+        }
+    }
+    public int getScore()
+    {
+        return this.score;
+    }
+
     public ArrayList<GameColor> getAvailableColors()
     {
         return availableColors;
     }
 
-    public int getActualRound()
+    public int getCurrentRound()
     {
-        return this.actualRound;
+        return this.currentRound;
     }
     public void setActualRound(int round)
     {
-        this.actualRound=round;
+        this.currentRound=round;
     }
     public int getNbTry(){return this.nbTry;}
     public int getNbRoud(){return this.nbRoud;}
+
+    public CluesMode getCluesMode()
+    {
+        return this.cluesMode;
+    }
+
+    public void setCluesMode(CluesMode cluesMode)
+    {
+        this.cluesMode = cluesMode;
+    }
 
     public void printInfoAboutGame()
     {
@@ -78,8 +104,8 @@ public class MasterMindGame
         System.out.println("    --> Nom joueur : "+this.playerName+"\t\t\t\t\t\t <--");
         System.out.println("    --> Nb manches : "+this.nbRoud+"\t\t\t\t\t\t\t <--");
         System.out.println("    --> Nb tentatives/manches : "+this.nbTry+"\t\t\t\t <--");
-        System.out.println("    --> Nb total couleur : " +this.nbTotalPiece+"\t\t\t\t\t <--");
-        System.out.println("    --> Tour actuel : "+this.actualRound+"\t\t\t\t\t\t\t <--");
+        System.out.println("    --> Nb total couleur : " +this.colorCount+"\t\t\t\t\t <--");
+        System.out.println("    --> Tour actuel : "+this.currentRound+"\t\t\t\t\t\t\t <--");
         System.out.println("    --> Score : "+this.score+"\t\t\t\t\t\t\t\t <--");
         printAvailableColor();
     }

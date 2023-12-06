@@ -20,7 +20,7 @@ public class CommandLineMain
             manche=true;
 
             System.out.println("\n====================================================");
-            System.out.println("====================Tour n°" + game.getActualRound() + " sur " + game.getNbRoud()+"==================");
+            System.out.println("====================Tour n°" + game.getCurrentRound() + " sur " + game.getNbRoud()+"==================");
             System.out.println("====================================================");
             while (manche)
             {
@@ -38,28 +38,28 @@ public class CommandLineMain
                         String saisie;
                         saisie = sc.nextLine();
                         if (saisie.contains("RED")) {
-                            tabColor[i] = GameColor.RED;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.RED, i);
                             ok = true;
                         } else if (saisie.contains("GREEN")) {
-                            tabColor[i] = GameColor.GREEN;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.GREEN, i);
                             ok = true;
                         } else if (saisie.contains("BLUE")) {
-                            tabColor[i] = GameColor.BLUE;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.BLUE, i);
                             ok = true;
                         } else if (saisie.contains("YELLOW")) {
-                            tabColor[i] = GameColor.YELLOW;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.YELLOW, i);
                             ok = true;
                         } else if (saisie.contains("ORANGE")) {
-                            tabColor[i] = GameColor.ORANGE;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.ORANGE, i);
                             ok = true;
                         } else if (saisie.contains("PINK")) {
-                            tabColor[i] = GameColor.PINK;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.PINK, i);
                             ok = true;
                         } else if (saisie.contains("GREY")) {
-                            tabColor[i] = GameColor.GREY;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.GREY, i);
                             ok = true;
                         } else if (saisie.contains("WHITE")) {
-                            tabColor[i] = GameColor.WHITE;
+                            game.getMasterMindBoard().getCurrentLine().setCellColor(GameColor.WHITE, i);
                             ok = true;
                         } else
                             System.out.print("Veulliez entrer une couleur qui existe :");
@@ -67,7 +67,7 @@ public class CommandLineMain
 
 
                 }
-                boolean find = game.getMasterMindBoard().verifyCurrentLine(tabColor);
+                boolean find = game.getMasterMindBoard().verifyCurrentLine();
                 System.out.println("Résultat : "+find);
                 game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
 
@@ -89,7 +89,7 @@ public class CommandLineMain
                     doitOnRelancerUneManche=true;
                 }
                 //Fin du jeu
-                if(game.getActualRound() == game.getNbRoud())
+                if(game.getCurrentRound() == game.getNbRoud())
                 {
                     jeu=false;
                     manche=false;

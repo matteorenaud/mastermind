@@ -1,5 +1,6 @@
 package controller;
 
+import model.CluesMode;
 import model.GameColor;
 import model.MasterMindBoard;
 import model.MasterMindGame;
@@ -28,9 +29,16 @@ public class GameMasterController
     //with the selected parameters
     public void launchGame(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
-        //startWindow.dispose();
+        startWindow.dispose();
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
         this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
+    }
+
+    //Method that ends the current round
+    public void endRound()
+    {
+        this.game.updateScore();
+        this.game.generateNewRound();
     }
 
     //Method that ends the current game
@@ -47,10 +55,10 @@ public class GameMasterController
 
     //Function used to verify the state of the current line
     //returns true if the line is equal to the secret combination
-    public boolean verifyCurrentLine(GameColor[] tab)
+    public boolean verifyCurrentLine()
     {
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
-        return game.getMasterMindBoard().verifyCurrentLine(tab);
+        return game.getMasterMindBoard().verifyCurrentLine();
     }
 
     //Function that selects the next line in the MasterMinBoard
@@ -79,6 +87,16 @@ public class GameMasterController
     public int getCurrentLineWrongColor()
     {
         return this.game.getMasterMindBoard().getCurrentLine().getWrongColor();
+    }
+
+    public CluesMode getCurrentGameCluesMode()
+    {
+        return this.game.getCluesMode();
+    }
+
+    public void setCurrentGameCluesMode(CluesMode cluesMode)
+    {
+        this.game.setCluesMode(cluesMode);
     }
 
 }
