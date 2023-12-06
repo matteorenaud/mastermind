@@ -44,7 +44,7 @@ public class MasterMindGame
     }
 
     //Method that creates a new round of the game by creating a whole new board
-    public void generateNewRound()
+    public boolean generateNewRound()
     {
         this.currentRound++;
 
@@ -56,7 +56,9 @@ public class MasterMindGame
         else
         {
             endGame();
+            return false;
         }
+        return true;
     }
 
     //Function that gets the MasterMindBoard
@@ -155,7 +157,8 @@ public class MasterMindGame
     {
         for(MasterMindGameObserver o:this.lstGameObserver)
         {
-            o.updateActualRound(this.score);
+            o.updateEndGame(this.score);
         }
     }
+
 }

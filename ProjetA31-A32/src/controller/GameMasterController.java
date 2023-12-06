@@ -31,17 +31,20 @@ public class GameMasterController
     {
         startWindow.dispose();
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
-        this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
+        this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
         //game.addMasterMindGameObserver(this.gameWindow);
         game.addMasterMindGameObserver(this.gameWindow);
     }
     public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
         //this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
-        game.generateNewRound();
-        this.gameWindow.dispose();
-        this.gameWindow=new GameWindow(this,playerName,nbRound,lineSize,lineCount,colorCount);
-        game.addMasterMindGameObserver(this.gameWindow);
+        game.updateScore();
+        if(game.generateNewRound())
+        {
+            this.gameWindow.dispose();
+            this.gameWindow = new GameWindow(this, game,playerName, nbRound, lineSize, lineCount, colorCount);
+            game.addMasterMindGameObserver(this.gameWindow);
+        }
     }
 
     //Method that ends the current round

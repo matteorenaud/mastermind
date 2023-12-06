@@ -3,6 +3,7 @@ package view;
 import controller.GameMasterController;
 import model.CluesMode;
 import model.GameColor;
+import model.MasterMindGame;
 import model.MasterMindGameObserver;
 
 
@@ -13,11 +14,11 @@ import java.util.List;
 public class GameWindow extends JFrame implements MasterMindGameObserver
 {
     private GameMasterController controller;
+    private MasterMindGame masterMindGame;
     private int lineSize;
     private int lineCount;
     private int colorCount;
     private int nbRound;
-    private int actualRound;
     private int activeLine = 0;
     private String playerName;
 
@@ -29,7 +30,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
     private JPanel pnlEasyClassicMode;
     private JLabel lblRound;
 
-    public GameWindow(GameMasterController controller,String playerName,
+    public GameWindow(GameMasterController controller,MasterMindGame game,String playerName,
                       int nbRound,int lineSize,int lineCount, int colorCount)
     {
         super("MasterMind");
@@ -39,6 +40,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         this.activeLine=lineCount-1;
         this.controller=controller;
+        this.masterMindGame=game;
         this.playerName=playerName;
         this.nbRound=nbRound;
         this.lineCount=lineCount;
@@ -63,7 +65,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         JPanel pnlTitle=new JPanel(new FlowLayout());
         JPanel pnlTop=new JPanel();
         pnlTop.setLayout(new BoxLayout(pnlTop,BoxLayout.Y_AXIS));
-
+        pnlTitle.add(lblTitle);
         pnlTop.add(pnlTitle);
         pnlTop.add(pnlInfoPlayer);
 
@@ -72,12 +74,12 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         lblPlayerName.setAlignmentX(Component.LEFT_ALIGNMENT);
         lblPlayerName.setForeground(Color.BLACK);
         lblPlayerName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        JLabel lblScore=new JLabel("Score : ");
+        JLabel lblScore=new JLabel("Score : "+masterMindGame.getScore());
         lblScore.setMinimumSize(new Dimension(50,50));
         lblScore.setAlignmentX(Component.RIGHT_ALIGNMENT);
         lblScore.setForeground(Color.BLACK);
         lblScore.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        lblRound=new JLabel("Tour "+this.actualRound+" / "+this.nbRound);
+        lblRound=new JLabel("Tour "+masterMindGame.getCurrentRound()+" / "+this.nbRound);
         lblRound.setMinimumSize(new Dimension(50,50));
         lblRound.setAlignmentX(Component.RIGHT_ALIGNMENT);
         lblRound.setForeground(Color.BLACK);
@@ -366,7 +368,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
     @Override
     public void updateActualRound(int actualRound)
     {
-        controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+        //controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
     }
     @Override
     public void updateEndGame(int score)
