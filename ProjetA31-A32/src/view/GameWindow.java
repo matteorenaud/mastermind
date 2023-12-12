@@ -5,6 +5,7 @@ import model.CluesMode;
 import model.GameColor;
 import model.MasterMindGame;
 import model.MasterMindGameObserver;
+import view.GamePanels.BoardPanel;
 
 
 import javax.swing.*;
@@ -95,11 +96,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        boardPanel=new JPanel();
-        //boardPanel.setBorder(BorderFactory.createLineBorder(Color.RED,5,true));
-        //boardPanel.setSize(300,600);
-        boardPanel.setLayout(new BoxLayout(boardPanel,BoxLayout.Y_AXIS));
-        constructTry(boardPanel);
+        boardPanel= new BoardPanel(this.lineCount,this.lineSize,this.controller);
         mainPanel.add(boardPanel,constraints);
 
         constraints.gridx = 1;
@@ -212,37 +209,6 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         add(backPanel);
         setVisible(true);
-    }
-
-    private void constructTry(JPanel pnlTry)
-    {
-        for(int i=0;i<this.lineCount;i++)
-        {
-            LinePanel pnlOneTry=new LinePanel(i);
-            pnlOneTry.setLayout(new GridLayout(1,this.lineSize+1));
-            constructOneTryLine(pnlOneTry);
-            //je mets en actif juste la 1ère ligne
-            if(i!=this.lineCount-1)
-                for(Component cbo:pnlOneTry.getComponents())
-                    cbo.setEnabled(false);
-
-            pnlTry.add(pnlOneTry);
-        }
-    }
-    private void constructOneTryLine(JPanel pnlOneTry)
-    {
-        List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
-        for(int i=0;i<this.lineSize;i++)
-        {
-            JComboBox cboOnePiece=new JComboBox<>();
-            cboOnePiece.setSize(new Dimension(200,40));
-            for(int j=0;j<this.colorCount;j++)
-            {
-                cboOnePiece.addItem(lstAvailableColor.get(j).toString());
-            }
-
-            pnlOneTry.add(cboOnePiece);
-        }
     }
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
