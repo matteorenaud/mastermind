@@ -1,0 +1,133 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+package model
+{
+    enum "<<enum>>\nCellInfo" as CellInfo
+    {
+        WELL_PLACED
+        GOOD_COLOR
+        NOT_PRESENT
+        NONE
+    }
+
+    enum "<<enum>>\nCluesMode" as CluesMode
+    {
+        EASY_MODE
+        CLASSIC_MODE
+        NUMERIC_MODE
+    }
+
+    enum "<<enum>>\nGameColor" as GameColor
+    {
+        RED
+        GREEN
+        BLUE
+        YELLOW
+        ORANGE
+        PINK
+        GREY
+        WHITE
+        NONE
+    }
+
+    class MasterMindBoard
+    {
+        -lineCount : Integer
+        -lineSize : Integer
+        -currentLine : Integer
+        +<<create>>MasterMindBoard( lineSize:Integer, lineCount:Integer, availableColors : ArrayList<GameColor)
+        +nextLine() : Boolean
+        +verifyCurrentLine() : Boolean
+        +getSecretCombination() : MasterMindLine
+        +getCurrentLine() : MasterMindLine
+        +getIndexCurrentLine() : Integer
+        +getBoard : MasterMindLine[*]
+        -generateSecretCombination()
+        -generateBoardLines()
+    }
+
+
+    MasterMindBoard o--> "-secretCombination\n\n* -board" MasterMindLine
+    MasterMindBoard o--> "* -availableColors" GameColor
+
+    class MasterMindGame
+    {
+         -  nbRoud : Integer
+         -  score : Integer
+         -  nbTry : Integer
+         -  lineSize : Integer
+         -  colorCount : Integer
+         -  playerName : String
+         +<<create>>MasterMindBoard(playerName : String, nbRoud : Integer, lineSize  Integer, colorCount:Integer, nbTry:Integer)
+         +getMasterMindBoard():MasterMindBoard
+         +getAvailableColors() : GameColor[*]
+         +updateScore()
+         +generateListAvailableGameColors()
+         +generateNewRound()
+         +getScore() : Integer
+         +setCluesMode(cluesMode : CluesMode)
+    }
+
+    MasterMindGame o--> "1 -cluesMode"CluesMode
+    MasterMindGame o--> "1 -masterMindBoard"MasterMindBoard
+    MasterMindGame o--> "* -availableColors"GameColor
+
+    class MasterMindLine
+    {
+        - size:Integer
+        +<<create>>MasterMindLine(size:Integer)
+        + verify(secretCombination:MasterMindLine) : Boolean
+        + getCellColor(index:Integer) : GameColor
+        + setCellColor(color:GameColor, index:Integer)
+        + getWellPlaced() : Integer
+        + getWellChosen() : Integer
+        + getWrongColor() : Integer
+        + getCells() : GameColor[*]
+    }
+
+    MasterMindLine o--> "* -cells"GameColor
+    MasterMindLine o--> "* -cellInfos"CellInfo
+}
+
+package view
+{
+    class StartWindow
+    {
+    }
+    class GameWindow
+    {
+    }
+    class EndWindow
+    {
+    }
+}
+
+package controller
+{
+    class GameMasterController
+    {
+        + startNewGame()
+        + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer)
+        + endgame()
+        + endRound()
+        + getAvailableColors() : GameColor[*]
+        + verifyCurrentLine() : Boolean
+        + nextLine() : Boolean
+        + setCurrentLineCellColor(color : GameColor, index : Integer)
+        + getCurrentLineWellPlaced() : Integer
+        + getCurrentLineWellChosen() : Integer
+        + getCurrentLineWrongColor() : Integer
+        + getCurrentGameCluesMode() : CluesMode
+        + setCurrentGameCluesMode(cluesMode : CluesMode)
+    }
+
+    GameMasterController o--> "1 -startWindow" StartWindow
+    GameMasterController o--> "1 -gameWindow" GameWindow
+    GameMasterController o--> "1 -endWindow" EndWindow
+    GameMasterController o--> "1 -game" MasterMindGame
+
+}
+@enduml
