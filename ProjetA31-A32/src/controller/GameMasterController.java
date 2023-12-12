@@ -113,4 +113,9 @@ public class GameMasterController
         this.game.setCluesMode(cluesMode);
     }
 
+    public void exitStartWindow()
+    {
+        this.startWindow.closeWindow();
+    }
+
 }
