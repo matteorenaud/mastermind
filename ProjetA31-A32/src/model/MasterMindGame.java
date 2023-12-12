@@ -161,4 +161,19 @@ public class MasterMindGame
         }
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public int getColorCount() {
+        return colorCount;
+    }
+
+    public int getLineSize() {
+        return lineSize;
+    }
+
+    public int getLineCount() {
+        return nbTry;
+    }
 }

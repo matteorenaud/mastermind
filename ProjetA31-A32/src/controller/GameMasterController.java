@@ -68,11 +68,13 @@ public class GameMasterController
 
     //Function used to verify the state of the current line
     //returns true if the line is equal to the secret combination
-    public boolean verifyCurrentLine()
+    public void verifyCurrentLine()
     {
-        boolean find=game.getMasterMindBoard().verifyCurrentLine();
+        if(game.getMasterMindBoard().verifyCurrentLine())
+        {
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+        }
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
-        return find;
     }
 
     //Function that selects the next line in the MasterMinBoard
