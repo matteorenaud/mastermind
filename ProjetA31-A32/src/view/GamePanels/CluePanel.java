@@ -53,10 +53,12 @@ public class CluePanel extends JPanel
         if(this.controller.getCurrentGameCluesMode() == CluesMode.NUMERIC_MODE)
         {
             clue.setText(
-                    "Bien placé : "
-                            + this.controller.getCurrentLineWellPlaced()
-                            + "Mal placé : " +
-                            this.controller.getCurrentLineWellChosen());
+                        "Bien placé : "
+                        + this.controller.getCurrentLineWellPlaced()
+                        + " | Bonne couleur : " +
+                        this.controller.getCurrentLineWellChosen()
+                        + " | Mauvaise couleur : " +
+                        this.controller.getCurrentLineWrongColor());
         }
     }
 }
