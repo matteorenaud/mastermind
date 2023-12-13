@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dbac44-eff3-432a-bd91-396f79dbc327" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/controller/GameMasterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/controller/GameMasterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/ClueModePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/ClueModePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" afterDir="false" />
     </list>
@@ -66,11 +63,22 @@
       <updated>1702460736174</updated>
       <workItem from="1702460742515" duration="53000" />
       <workItem from="1702460810449" duration="121000" />
-      <workItem from="1702461005101" duration="1163000" />
+      <workItem from="1702461005101" duration="3454000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

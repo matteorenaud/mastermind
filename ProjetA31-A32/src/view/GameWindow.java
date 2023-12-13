@@ -68,9 +68,9 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 0;
-        pnlIndice= new CluePanel(this.lineCount,this.lineSize,this.controller);
+        CluePanel pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller);
 
-        mainPanel.add(pnlIndice,constraints);
+        mainPanel.add(pnlClue,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -92,6 +92,8 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         btnValidate.setMaximumSize(new Dimension(200,100));
 
         btnValidate.addActionListener(ActionEvent->{
+
+
             GameColor[] lineColor=colorOfTheLine();
             System.out.println("Couleur récupére");
             for (int i=0;i<lineColor.length;i++)
@@ -99,13 +101,12 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 System.out.print(lineColor[i]+" ");
                 controller.setCurrentLineCellColor(lineColor[i],i);
             }
-            System.out.println();
-
             controller.verifyCurrentLine();
+            pnlClue.updateClues(activeLine);
             controller.nextLine();
 
             updateCombBox();
-            updateAllIndicesMode();
+
         });
         mainPanel.add(btnValidate,constraints);
 
