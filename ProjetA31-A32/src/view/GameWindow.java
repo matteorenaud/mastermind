@@ -103,12 +103,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
             System.out.println();
 
             controller.verifyCurrentLine();
-
-            if(controller.nextLine() == false)
-            {
-                newGame();
-                return;
-            }
+            controller.nextLine();
 
             updateCombBox();
             updateAllIndicesMode();

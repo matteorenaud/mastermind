@@ -37,7 +37,6 @@ public class GameMasterController
     }
     public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
-        //this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
         game.updateScore();
         if(game.generateNewRound())
         {
@@ -79,9 +78,12 @@ public class GameMasterController
 
     //Function that selects the next line in the MasterMinBoard
     //return true if the next line exists
-    public boolean nextLine()
+    public void nextLine()
     {
-        return game.getMasterMindBoard().nextLine();
+        if(!game.getMasterMindBoard().nextLine())
+        {
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+        }
     }
 
     //Method to set the color of a cell of the current line
