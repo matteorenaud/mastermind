@@ -1,6 +1,7 @@
 package view.StartPanels;
 
 import controller.GameMasterController;
+import model.CluesMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,8 @@ public class StartPanel extends JPanel
     private JComboBox cboNbTotalPiece;
     private JComboBox cboNbTry;
     private JComboBox cboNbPieceOfCombinaison;
+
+    private ClueModePanel clueModePanel;
 
     private Color originalColorButton;
 
@@ -69,6 +72,11 @@ public class StartPanel extends JPanel
 
         cboNbTry=constructMyComboBox(new String[]{"10", "11", "12"},0,cboNbTry);
         this.add(cboNbTry);
+
+        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+
+        clueModePanel=new ClueModePanel(controller);
+        this.add(clueModePanel);
 
         this.add(Box.createVerticalStrut(20));//Espace vertical vide
 
@@ -142,9 +150,10 @@ public class StartPanel extends JPanel
             int nbTotalPiece=Integer.parseInt(cboNbTotalPiece.getSelectedItem().toString());
             int nbPieceOfCombinaison= Integer.parseInt(cboNbPieceOfCombinaison.getSelectedItem().toString());
             int nbTry=Integer.parseInt(cboNbTry.getSelectedItem().toString());
+            CluesMode cluesMode=clueModePanel.getSelectedCluesMode();
 
             if(!playerName.isEmpty())
-                controller.launchGame(playerName,nbRound,nbPieceOfCombinaison,nbTry,nbTotalPiece);
+                controller.launchGame(playerName,nbRound,nbPieceOfCombinaison,nbTry,nbTotalPiece,cluesMode);
             else
                 JOptionPane.showMessageDialog(new JFrame(),
                         "Vous devez entrer un nom de joueur",

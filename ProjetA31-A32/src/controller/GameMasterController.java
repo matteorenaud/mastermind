@@ -27,10 +27,10 @@ public class GameMasterController
 
     //Method that is used by the view to launch the game
     //with the selected parameters
-    public void launchGame(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
+    public void launchGame(String playerName,int nbRound,int lineSize,int lineCount,int colorCount,CluesMode cluesMode)
     {
         startWindow.dispose();
-        this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
+        this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount,cluesMode);
         this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
         game.addMasterMindGameObserver(this.gameWindow);
     }
@@ -111,10 +111,7 @@ public class GameMasterController
         return this.game.getCluesMode();
     }
 
-    public void setCurrentGameCluesMode(CluesMode cluesMode)
-    {
-        this.game.setCluesMode(cluesMode);
-    }
+
 
     public void exitStartWindow()
     {

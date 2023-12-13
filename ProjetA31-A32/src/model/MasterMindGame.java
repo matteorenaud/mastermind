@@ -18,12 +18,13 @@ public class MasterMindGame
 
     private ArrayList<MasterMindGameObserver>lstGameObserver;
 
-    public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry)
+    public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry,CluesMode cluesMode)
     {
         this.nbRoud=nbRoud;
         this.playerName=playerName;
         this.lineSize=lineSize;
         this.colorCount = colorCount;
+        this.cluesMode=cluesMode;
 
         this.nbTry=nbTry;
 
@@ -114,10 +115,6 @@ public class MasterMindGame
         return this.cluesMode;
     }
 
-    public void setCluesMode(CluesMode cluesMode)
-    {
-        this.cluesMode = cluesMode;
-    }
 
     public void printInfoAboutGame()
     {

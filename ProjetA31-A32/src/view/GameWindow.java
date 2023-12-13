@@ -82,9 +82,9 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 2;
-        pnlModeIndice=new ClueModePanel(this.controller);
+        //pnlModeIndice=new ClueModePanel(this.controller);
 
-        mainPanel.add(pnlModeIndice,constraints);
+        //mainPanel.add(pnlModeIndice,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;

@@ -1,3 +1,4 @@
+import model.CluesMode;
 import model.GameColor;
 import model.MasterMindGame;
 
@@ -9,7 +10,7 @@ public class CommandLineMain
 
     public static void main(String args[])
     {
-        MasterMindGame game=new MasterMindGame("Joueur",3,4,4,10);
+        MasterMindGame game=new MasterMindGame("Joueur",3,4,4,10, CluesMode.EASY_MODE);
 
         game.printInfoAboutGame();
 

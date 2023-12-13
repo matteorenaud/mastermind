@@ -1,4 +1,4 @@
-package view.GamePanels;
+package view.StartPanels;
 
 import controller.GameMasterController;
 import model.CluesMode;
@@ -9,22 +9,21 @@ import java.awt.*;
 public class ClueModePanel extends JPanel
 {
     private GameMasterController controller;
+    private JRadioButton rdbEasyMode;
+    private JRadioButton rdbClassicMode;
+    private JRadioButton rdbNumeric;
     public ClueModePanel(GameMasterController controller)
     {
         this.controller = controller;
 
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
-        JRadioButton rdbEasyMode=new JRadioButton("Mode facile");
-        JRadioButton rdbClassicMode=new JRadioButton("Mode classique");
-        JRadioButton rdbNumeric=new JRadioButton("Mode numérique");
+        rdbEasyMode=new JRadioButton("Mode facile");
+        rdbClassicMode=new JRadioButton("Mode classique");
+        rdbNumeric=new JRadioButton("Mode numérique");
 
-        switch (this.controller.getCurrentGameCluesMode())
-        {
-            case EASY_MODE -> rdbEasyMode.setSelected(true);
-            case CLASSIC_MODE -> rdbClassicMode.setSelected(true);
-            default -> rdbNumeric.setSelected(true);
-        }
+        rdbEasyMode.setSelected(true);
+
 
         rdbEasyMode.addActionListener(ActionEvent->{
             updateIndiceMode(rdbEasyMode, CluesMode.EASY_MODE);
@@ -51,8 +50,16 @@ public class ClueModePanel extends JPanel
 
         rdbActual.setSelected(true);
 
-        this.controller.setCurrentGameCluesMode(indicesMode);
-
         this.repaint();
+    }
+
+    public CluesMode getSelectedCluesMode()
+    {
+        CluesMode cluesMode=CluesMode.EASY_MODE;
+        if(rdbClassicMode.isSelected())
+            cluesMode=CluesMode.CLASSIC_MODE;
+        else
+            cluesMode=CluesMode.NUMERIC_MODE;
+        return cluesMode;
     }
 }
