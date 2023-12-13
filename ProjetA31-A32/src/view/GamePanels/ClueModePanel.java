@@ -31,7 +31,7 @@ public class pnlIndiceMode extends JPanel
     {
         for (Component c: this.getComponents())
         {
-            JRadioButton rdb=(JRadioButton)c;
+            JRadioButton rdb = (JRadioButton)c;
             rdb.setSelected(false);
         }
         rdbActual.setSelected(true);

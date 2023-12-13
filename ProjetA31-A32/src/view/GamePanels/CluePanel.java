@@ -11,33 +11,34 @@ public class pnlIndice extends JPanel
     {
         this.pnlEasyClassicMode = new JPanel();
         this.pnlEasyClassicMode.setLayout(new BoxLayout(pnlEasyClassicMode,BoxLayout.Y_AXIS));
+
         this.pnlNumeric = new JPanel();
         this.pnlNumeric.setLayout(new BoxLayout(pnlNumeric,BoxLayout.Y_AXIS));
 
         for(int i=0;i<lineCount;i++)
         {
-            JPanel pnlOneIndice=new JPanel();
-            pnlOneIndice.setLayout(new FlowLayout());
+            JPanel clue = new JPanel();
+            clue.setLayout(new FlowLayout());
             for(int j=0;j<lineSize;j++)
             {
-                JLabel lbl=new JLabel(" ");
+                JLabel lbl  =new JLabel(" ");
                 lbl.setOpaque(true);
                 lbl.setBackground(Color.BLACK);
-                pnlOneIndice.add(lbl);
+                clue.add(lbl);
             }
-            pnlEasyClassicMode.add(pnlOneIndice);
+            pnlEasyClassicMode.add(clue);
         }
         //pour mode numérique
         for(int i=0;i<lineCount;i++)
         {
-            JPanel pnlOneNumIndice=new JPanel();
-            pnlOneNumIndice.setLayout(new FlowLayout());
+            JPanel clue = new JPanel();
+            clue.setLayout(new FlowLayout());
             JLabel lblGoodPlace=new JLabel("Bien placé : ");
             JLabel lblBadPlace=new JLabel("Mal placé : ");
 
-            pnlOneNumIndice.add(lblGoodPlace);
-            pnlOneNumIndice.add(lblBadPlace);
-            pnlNumeric.add(pnlOneNumIndice);
+            clue.add(lblGoodPlace);
+            clue.add(lblBadPlace);
+            pnlNumeric.add(clue);
         }
     }
 }
