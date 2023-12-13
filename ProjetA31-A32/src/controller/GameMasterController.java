@@ -32,7 +32,6 @@ public class GameMasterController
         startWindow.dispose();
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount);
         this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
-        //game.addMasterMindGameObserver(this.gameWindow);
         game.addMasterMindGameObserver(this.gameWindow);
     }
     public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)

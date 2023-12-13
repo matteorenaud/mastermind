@@ -1,14 +1,20 @@
 package view.GamePanels;
 
+import controller.GameMasterController;
+import model.CluesMode;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class pnlIndice extends JPanel
+public class CluePanel extends JPanel
 {
+    private GameMasterController controller;
     private JPanel pnlEasyClassicMode;
     private JPanel pnlNumeric;
-    public pnlIndice(int lineCount, int lineSize)
+    public CluePanel(int lineCount, int lineSize, GameMasterController controller)
     {
+        this.controller = controller;
+
         this.pnlEasyClassicMode = new JPanel();
         this.pnlEasyClassicMode.setLayout(new BoxLayout(pnlEasyClassicMode,BoxLayout.Y_AXIS));
 
@@ -39,6 +45,15 @@ public class pnlIndice extends JPanel
             clue.add(lblGoodPlace);
             clue.add(lblBadPlace);
             pnlNumeric.add(clue);
+        }
+
+        if(this.controller.getCurrentGameCluesMode() == CluesMode.NUMERIC_MODE)
+        {
+            this.add(pnlNumeric);
+        }
+        else
+        {
+            this.add(pnlEasyClassicMode);
         }
     }
 }

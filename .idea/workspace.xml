@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="51dbac44-eff3-432a-bd91-396f79dbc327" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/controller/GameMasterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/controller/GameMasterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/ClueModePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/ClueModePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,18 +32,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;rendu2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "rendu2",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -56,7 +66,7 @@
       <updated>1702460736174</updated>
       <workItem from="1702460742515" duration="53000" />
       <workItem from="1702460810449" duration="121000" />
-      <workItem from="1702461005101" duration="131000" />
+      <workItem from="1702461005101" duration="1163000" />
     </task>
     <servers />
   </component>

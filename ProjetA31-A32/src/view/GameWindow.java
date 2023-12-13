@@ -1,7 +1,6 @@
 package view;
 
 import controller.GameMasterController;
-import model.CluesMode;
 import model.GameColor;
 import model.MasterMindGame;
 import model.MasterMindGameObserver;
@@ -69,7 +68,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 0;
-        pnlIndice= new pnlIndice(this.lineCount,this.lineSize);
+        pnlIndice= new CluePanel(this.lineCount,this.lineSize,this.controller);
 
         mainPanel.add(pnlIndice,constraints);
 
@@ -83,7 +82,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 2;
-        pnlModeIndice=new pnlIndiceMode();
+        pnlModeIndice=new ClueModePanel(this.controller);
 
         mainPanel.add(pnlModeIndice,constraints);
 
