@@ -45,6 +45,7 @@ public class MasterMindLine {
                     if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
                     {
                         this.cellInfos.set(i,CellInfo.GOOD_COLOR);
+                        break;
                     }
                 }
             }
