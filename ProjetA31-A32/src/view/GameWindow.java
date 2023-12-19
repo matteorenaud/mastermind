@@ -29,6 +29,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
     private JPanel pnlNumeric;
     private JPanel pnlEasyClassicMode;
     private JLabel lblRound;
+    private CluePanel pnlClue;
     //------------------------------------------------------------------
 
     public GameWindow(GameMasterController controller,MasterMindGame game,String playerName,
@@ -68,7 +69,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 0;
-        CluePanel pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
+        pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
 
         mainPanel.add(pnlClue,constraints);
 
@@ -103,8 +104,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 controller.setCurrentLineCellColor(lineColor[i],i);
             }
             controller.verifyCurrentLine();
-            pnlClue.updateClues(activeLine);
-            controller.nextLine();
+
 
 
         });
@@ -119,6 +119,9 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         constraints.gridx = 0;
         constraints.gridy = 4;
         JButton btnRestart=new JButton("Relancer une nouvelle partie");
+        btnRestart.addActionListener(ActiveEvent->{
+            controller.launchGame(this.playerName,this.nbRound,this.lineSize,this.lineCount,this.colorCount,this.masterMindGame.getCluesMode());
+        });
         mainPanel.add(btnRestart,constraints);
 
         constraints.gridx = 1;
@@ -245,4 +248,16 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
     {
         controller.endGame();
     }
+    public void updateClues()
+    {
+        pnlClue.updateClues(activeLine);
+    }
 }
+
+
+
+
+
+
+
+

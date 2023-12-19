@@ -84,7 +84,7 @@ public class MasterMindGame
             this.score += line.getWellPlaced() + line.getWellPlaced() * 3;
         }
 
-        if(this.cluesMode == CluesMode.EASY_MODE)
+        if(this.cluesMode == CluesMode.CLASSIC_MODE)
         {
             this.score += 4;
         }

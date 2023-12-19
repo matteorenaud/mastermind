@@ -30,6 +30,8 @@ public class GameMasterController
     public void launchGame(String playerName,int nbRound,int lineSize,int lineCount,int colorCount,CluesMode cluesMode)
     {
         startWindow.dispose();
+        if(gameWindow!=null)
+             gameWindow.dispose();//Si relance une partie alors que déjà en cours
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount,cluesMode);
         this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
         game.addMasterMindGameObserver(this.gameWindow);
@@ -71,8 +73,11 @@ public class GameMasterController
         if(game.getMasterMindBoard().verifyCurrentLine())
         {
             this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+            return;
         }
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
+
+        this.nextLine();
     }
 
     //Function that selects the next line in the MasterMinBoard
@@ -86,6 +91,8 @@ public class GameMasterController
         }
 
         this.gameWindow.updateCombBox();
+        this.gameWindow.updateClues();
+
     }
 
     //Method to set the color of a cell of the current line
