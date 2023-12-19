@@ -34,7 +34,6 @@ public class GameMasterController
              gameWindow.dispose();//Si relance une partie alors que déjà en cours
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount,cluesMode);
         this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
-        game.addMasterMindGameObserver(this.gameWindow);
     }
     public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
@@ -43,21 +42,19 @@ public class GameMasterController
         {
             this.gameWindow.dispose();
             this.gameWindow = new GameWindow(this, game,playerName, nbRound, lineSize, lineCount, colorCount);
-            game.addMasterMindGameObserver(this.gameWindow);
+        }
+        else
+        {
+            this.endGame();
         }
     }
 
-    //Method that ends the current round
-    public void endRound()
-    {
-        this.game.updateScore();
-        this.game.generateNewRound();
-    }
 
     //Method that ends the current game
     public void endGame()
     {
         this.gameWindow.dispose();
+        this.endWindow = new EndWindow(this.game);
     }
 
     //Function used to get the list of all availables colors
