@@ -19,8 +19,11 @@ public class ClueModePanel extends JPanel
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
         rdbEasyMode=new JRadioButton("Mode facile");
+        rdbEasyMode.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         rdbClassicMode=new JRadioButton("Mode classique");
+        rdbClassicMode.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
         rdbNumeric=new JRadioButton("Mode numérique");
+        rdbNumeric.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 
         rdbEasyMode.setSelected(true);
 
@@ -38,6 +41,8 @@ public class ClueModePanel extends JPanel
         this.add(rdbEasyMode);
         this.add(rdbClassicMode);
         this.add(rdbNumeric);
+
+        this.setAlignmentX(CENTER_ALIGNMENT);
     }
 
     private void updateIndiceMode(JRadioButton rdbActual,CluesMode indicesMode)
@@ -55,8 +60,10 @@ public class ClueModePanel extends JPanel
 
     public CluesMode getSelectedCluesMode()
     {
-        CluesMode cluesMode=CluesMode.EASY_MODE;
-        if(rdbClassicMode.isSelected())
+        CluesMode cluesMode;
+        if(rdbEasyMode.isSelected())
+            cluesMode=CluesMode.EASY_MODE;
+        else if(rdbClassicMode.isSelected())
             cluesMode=CluesMode.CLASSIC_MODE;
         else
             cluesMode=CluesMode.NUMERIC_MODE;

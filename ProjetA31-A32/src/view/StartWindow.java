@@ -12,7 +12,7 @@ public class StartWindow extends JFrame//evidemment faut hériter
     public StartWindow(GameMasterController gmc)
     {
         super("Menu Principal");//ou setTitle("Menu Principal");
-        this.setSize( 600, 800 );
+        this.setSize( 600, 920 );
         this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
 
         this.controller=gmc;

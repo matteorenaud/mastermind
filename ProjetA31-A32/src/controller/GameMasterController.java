@@ -82,7 +82,10 @@ public class GameMasterController
         if(!game.getMasterMindBoard().nextLine())
         {
             this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+            return;
         }
+
+        this.gameWindow.updateCombBox();
     }
 
     //Method to set the color of a cell of the current line
@@ -90,27 +93,6 @@ public class GameMasterController
     {
         this.game.getMasterMindBoard().getCurrentLine().setCellColor(color,index);
     }
-
-    public int getCurrentLineWellPlaced()
-    {
-        return this.game.getMasterMindBoard().getCurrentLine().getWellPlaced();
-    }
-
-    public int getCurrentLineWellChosen()
-    {
-        return this.game.getMasterMindBoard().getCurrentLine().getWellChosen();
-    }
-
-    public int getCurrentLineWrongColor()
-    {
-        return this.game.getMasterMindBoard().getCurrentLine().getWrongColor();
-    }
-
-    public CluesMode getCurrentGameCluesMode()
-    {
-        return this.game.getCluesMode();
-    }
-
 
 
     public void exitStartWindow()

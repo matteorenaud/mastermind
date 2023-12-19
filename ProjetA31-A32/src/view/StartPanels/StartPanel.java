@@ -5,6 +5,8 @@ import model.CluesMode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -75,6 +77,8 @@ public class StartPanel extends JPanel
 
         this.add(Box.createVerticalStrut(20));//Espace vertical vide
 
+        constructMyLabel("Choissisez votre mode d'indices :");
+
         clueModePanel=new ClueModePanel(controller);
         this.add(clueModePanel);
 
@@ -113,6 +117,25 @@ public class StartPanel extends JPanel
         txtPlayerName.setFont(new Font(Font.DIALOG_INPUT,Font.PLAIN,20));
         txtPlayerName.setSize(new Dimension(400,30));
         txtPlayerName.setMaximumSize(new Dimension(400,30));
+
+        //juste pour pas écrire un pseudo de 999999999 caractères lol
+        txtPlayerName.addKeyListener(new KeyListener() {
+                                         @Override
+                                         public void keyTyped(KeyEvent e) {
+
+                                         }
+
+                                         @Override
+                                         public void keyPressed(KeyEvent e) {
+                                            System.out.println(e.toString());
+                                         }
+
+                                         @Override
+                                         public void keyReleased(KeyEvent e) {
+
+                                         }
+                                     }
+        );
         this.add(txtPlayerName);
     }
     private void constructMyLabel(String text)

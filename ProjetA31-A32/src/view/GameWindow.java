@@ -68,7 +68,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         constraints.gridx = 1;
         constraints.gridy = 0;
-        CluePanel pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller);
+        CluePanel pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
 
         mainPanel.add(pnlClue,constraints);
 
@@ -105,7 +105,6 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
             pnlClue.updateClues(activeLine);
             controller.nextLine();
 
-            updateCombBox();
 
         });
         mainPanel.add(btnValidate,constraints);
@@ -142,7 +141,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
             pnlChoiceColor.add(lblOneColor);
         }
     }
-    private void updateCombBox()
+    public void updateCombBox()
     {
         for(Component pnl:boardPanel.getComponents())
         {
@@ -155,7 +154,10 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 }
             }
         }
+        GameColor[] lineColor=colorOfTheLine();
+
         this.activeLine--;
+        int i=0;
         for(Component pnl:boardPanel.getComponents())
         {
             if(pnl.getClass()== LinePanel.class)
@@ -163,8 +165,13 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 LinePanel pnlTheTry=(LinePanel) pnl;
                 if(pnlTheTry.getTag()==activeLine) {
 
-                    for (Component cbo : pnlTheTry.getComponents()) {
+                    for (Component cbo : pnlTheTry.getComponents())
+                    {
                         cbo.setEnabled(true);
+                        //On fait en sorte de remplir les ComboBox de l'essai prochain avec celles qu'il vient de mettre
+                        JComboBox the_cbo=(JComboBox)cbo;
+                        the_cbo.setSelectedIndex(masterMindGame.getAvailableColors().indexOf(lineColor[i]));
+                        i++;
                     }
                 }
             }

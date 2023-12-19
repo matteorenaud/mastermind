@@ -144,4 +144,8 @@ public class MasterMindLine {
         System.out.print(" Mal placé : "+this.getWellChosen());
         System.out.println(" Non présent : "+this.getWrongColor());
     }
+    public ArrayList<CellInfo> getCellInfos()
+    {
+        return this.cellInfos;
+    }
 }
