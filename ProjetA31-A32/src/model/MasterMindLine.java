@@ -26,6 +26,7 @@ public class MasterMindLine {
     public boolean verify(MasterMindLine secretCombination)
     {
         int wellPlaced = 0;
+        ArrayList<GameColor> goodColor = new ArrayList<GameColor>();
 
         for(int i=0; i<this.size; i++)
         {
@@ -42,10 +43,10 @@ public class MasterMindLine {
             {
                 for(int j=0; j<this.size; j++)
                 {
-                    if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                    if(!goodColor.contains(this.getCellColor(i)) && this.getCellColor(i) == secretCombination.getCellColor(j))
                     {
                         this.cellInfos.set(i,CellInfo.GOOD_COLOR);
-                        break;
+                        goodColor.add(this.getCellColor(i));
                     }
                 }
             }
