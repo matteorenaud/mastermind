@@ -53,6 +53,8 @@ public class BoardPanel extends JPanel
                 comboBox.addItem(lstAvailableColor.get(j).toString());
             }
 
+            comboBox.setSelectedIndex(-1);
+
             pnlLine.add(comboBox);
         }
     }

@@ -117,23 +117,19 @@ public class StartPanel extends JPanel
         txtPlayerName.setFont(new Font(Font.DIALOG_INPUT,Font.PLAIN,20));
         txtPlayerName.setSize(new Dimension(400,30));
         txtPlayerName.setMaximumSize(new Dimension(400,30));
-
-        //juste pour pas écrire un pseudo de 999999999 caractères lol
+        
         txtPlayerName.addKeyListener(new KeyListener() {
                                          @Override
                                          public void keyTyped(KeyEvent e) {
-
+                                             if(txtPlayerName.getText().length() > 20)
+                                             {
+                                                 e.consume();
+                                             }
                                          }
-
                                          @Override
-                                         public void keyPressed(KeyEvent e) {
-                                            System.out.println(e.toString());
-                                         }
-
+                                         public void keyPressed(KeyEvent e) {}
                                          @Override
-                                         public void keyReleased(KeyEvent e) {
-
-                                         }
+                                         public void keyReleased(KeyEvent e) {}
                                      }
         );
         this.add(txtPlayerName);

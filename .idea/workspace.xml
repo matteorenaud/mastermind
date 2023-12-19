@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="51dbac44-eff3-432a-bd91-396f79dbc327" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/model/MasterMindLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/model/MasterMindLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/StartPanels/StartPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/StartPanels/StartPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,22 +65,11 @@
       <workItem from="1702460742515" duration="53000" />
       <workItem from="1702460810449" duration="121000" />
       <workItem from="1702461005101" duration="5123000" />
-      <workItem from="1702988943964" duration="1385000" />
+      <workItem from="1702988943964" duration="3058000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ProjetA31-A32/src/view/GameWindow.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

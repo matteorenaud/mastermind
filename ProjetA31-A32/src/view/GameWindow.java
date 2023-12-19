@@ -93,6 +93,7 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
 
         btnValidate.addActionListener(ActionEvent->{
 
+            if(!activeLineFilled()){return;}
 
             GameColor[] lineColor=colorOfTheLine();
             System.out.println("Couleur récupére");
@@ -140,6 +141,28 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
             JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());
             pnlChoiceColor.add(lblOneColor);
         }
+    }
+
+    private boolean activeLineFilled()
+    {
+        for(Component component : boardPanel.getComponents())
+        {
+            LinePanel linePanel = (LinePanel) component;
+
+            if(linePanel.getTag() == activeLine) {
+
+                for (Component component1 : linePanel.getComponents())
+                {
+                    JComboBox comboBox = (JComboBox) component1;
+                    if(comboBox.getSelectedIndex() < 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
     public void updateCombBox()
     {
