@@ -38,12 +38,14 @@ public class MasterMindLine {
 
         for(int i=0; i<this.size; i++)
         {
-            for(int j=0; j<this.size; j++)
+            if(this.cellInfos.get(i) != CellInfo.WELL_PLACED)
             {
-                if(this.cellInfos.get(i) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                for(int j=0; j<this.size; j++)
                 {
-                    this.cellInfos.set(i,CellInfo.GOOD_COLOR);
-                    break;
+                    if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                    {
+                        this.cellInfos.set(i,CellInfo.GOOD_COLOR);
+                    }
                 }
             }
 
