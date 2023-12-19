@@ -16,6 +16,7 @@ public class BoardPanel extends JPanel
     //-----------------------------------------------------------------------------
     private GameMasterController controller;
     private int lineSize;
+
     //-----------------------------------------------------------------------------
     public BoardPanel(int lineCount, int lineSize, GameMasterController controller)
     {
@@ -73,6 +74,8 @@ public class BoardPanel extends JPanel
             pnlLine.add(comboBox);
         }
     }
+
+
 
 
 }

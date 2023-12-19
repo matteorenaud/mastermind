@@ -23,6 +23,8 @@ public class GameMasterController
     public void startNewGame()
     {
         this.startWindow = new StartWindow(this);
+        if(this.endWindow!=null)
+            this.endWindow.dispose();
     }
 
     //Method that is used by the view to launch the game
@@ -54,7 +56,7 @@ public class GameMasterController
     public void endGame()
     {
         this.gameWindow.dispose();
-        this.endWindow = new EndWindow(this.game);
+        this.endWindow = new EndWindow(this.game,this);
     }
 
     //Function used to get the list of all availables colors
@@ -112,6 +114,16 @@ public class GameMasterController
     public void printFoundToPlayer()
     {
         gameWindow.showFoundToPlayer();
+    }
+
+    public void shutDownApp()
+    {
+        if(this.startWindow!=null)
+            this.startWindow.dispose();
+        if(this.gameWindow!=null)
+            this.gameWindow.dispose();
+        if(this.endWindow!=null)
+            this.endWindow.dispose();
     }
 
 }

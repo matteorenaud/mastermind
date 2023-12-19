@@ -95,6 +95,7 @@ public class CluePanel extends JPanel
                 for (Component cc : p.getComponents())
                 {
                     JLabel l = (JLabel) cc;
+                    l.setOpaque(true);
                     if(i>=nbWellPlace)
                         l.setBackground(Color.BLACK);
                     else

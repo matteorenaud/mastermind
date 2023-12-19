@@ -10,6 +10,7 @@ import view.GamePanels.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Properties;
 
 public class GameWindow extends JFrame
 {
@@ -25,6 +26,8 @@ public class GameWindow extends JFrame
 
     private JPanel boardPanel;
     private CluePanel pnlClue;
+    private Color originalCBOBackColor;
+
 
     //------------------------------------------------------------------
 
@@ -35,6 +38,9 @@ public class GameWindow extends JFrame
         setSize(1100,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Apparait au milieu de l'écran
+
+        //J'ai regarde pour trouver la couleur exacte de base
+        this.originalCBOBackColor=new Color(238,238,238);
 
         this.activeLine = lineCount-1;
         this.controller = controller;
@@ -270,6 +276,7 @@ public class GameWindow extends JFrame
                     {
                         JComboBox cbo=(JComboBox) cc;
                         cbo.setSelectedIndex(-1);
+                        cbo.setBackground(this.originalCBOBackColor);
                     }
                 }
             }
