@@ -1,4 +1,4 @@
-#Le .gitiignore avec ce que propose la liste du GitHub
+#Le .gitignore avec ce que propose la liste du GitHub
 
 # Compiled class file
 *.class
@@ -28,3 +28,5 @@ replay_pid*
 */.idea
 
 */META-INF
+
+

@@ -2,9 +2,12 @@ package view.GamePanels;
 
 import controller.GameMasterController;
 import model.GameColor;
+import model.Helpers;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,24 +50,29 @@ public class BoardPanel extends JPanel
             JComboBox comboBox = new JComboBox<>();
 
             comboBox.setSize(new Dimension(200,40));
+            comboBox.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
 
             for(int j=0;j<this.controller.getAvailableColors().size();j++)
             {
-                comboBox.addItem(lstAvailableColor.get(j).toString());
+                comboBox.addItem(
+                Helpers.translateColorToFrench(lstAvailableColor.get(j)).toUpperCase());
             }
 
             comboBox.setSelectedIndex(-1);
+
+            comboBox.addItemListener(e -> {
+                int idx=comboBox.getSelectedIndex();
+                if(idx!=-1) {
+                    GameColor[] colors = GameColor.values();
+                    GameColor color = colors[idx];
+                    Color backColor = Helpers.transformGameColorIntoColor(color);
+                    comboBox.setBackground(backColor);
+                }
+            });
 
             pnlLine.add(comboBox);
         }
     }
 
-    public void updateLine(ArrayList<GameColor> colors)
-    {
-        for(int i=0; i<this.lineSize; i++)
-        {
-            
-        }
-    }
 
 }

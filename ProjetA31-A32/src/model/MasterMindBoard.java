@@ -96,4 +96,11 @@ public class MasterMindBoard
         return this.board;
     }
 
+    public String secretCombinaisonToString()
+    {
+        String secret="";
+        for(GameColor c : this.secretCombination.getCells())
+            secret+=Helpers.translateColorToFrench(c).toUpperCase()+" ";
+        return secret;
+    }
 }

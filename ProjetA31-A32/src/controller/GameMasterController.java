@@ -69,10 +69,14 @@ public class GameMasterController
     {
         if(game.getMasterMindBoard().verifyCurrentLine())
         {
+            printFoundToPlayer();
             this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
             return;
         }
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
+
+        this.gameWindow.updateCombBox();
+        this.gameWindow.updateClues();
 
         this.nextLine();
     }
@@ -83,13 +87,9 @@ public class GameMasterController
     {
         if(!game.getMasterMindBoard().nextLine())
         {
+            printFailToPlayer();
             this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
-            return;
         }
-
-        this.gameWindow.updateCombBox();
-        this.gameWindow.updateClues();
-
     }
 
     //Method to set the color of a cell of the current line
@@ -102,6 +102,16 @@ public class GameMasterController
     public void exitStartWindow()
     {
         this.startWindow.closeWindow();
+    }
+
+    public void printFailToPlayer()
+    {
+        gameWindow.showFailToPlayer();
+    }
+
+    public void printFoundToPlayer()
+    {
+        gameWindow.showFoundToPlayer();
     }
 
 }

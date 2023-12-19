@@ -139,4 +139,5 @@ public class MasterMindGame
     public int getLineCount() {
         return nbTry;
     }
+
 }

@@ -5,10 +5,7 @@ import model.CluesMode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class StartPanel extends JPanel
 {
@@ -121,13 +118,17 @@ public class StartPanel extends JPanel
         txtPlayerName.addKeyListener(new KeyListener() {
                                          @Override
                                          public void keyTyped(KeyEvent e) {
+                                             //Pseudo doit être inférieur à 20 caractères
                                              if(txtPlayerName.getText().length() > 20)
-                                             {
                                                  e.consume();
-                                             }
+
                                          }
                                          @Override
-                                         public void keyPressed(KeyEvent e) {}
+                                         public void keyPressed(KeyEvent e) {
+                                             //Pas de retour à la ligne
+                                             if(e.getKeyChar()=='\n')
+                                                 e.consume();
+                                         }
                                          @Override
                                          public void keyReleased(KeyEvent e) {}
                                      }

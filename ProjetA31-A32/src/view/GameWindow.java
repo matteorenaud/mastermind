@@ -2,6 +2,7 @@ package view;
 
 import controller.GameMasterController;
 import model.GameColor;
+import model.Helpers;
 import model.MasterMindGame;
 import view.GamePanels.*;
 
@@ -23,12 +24,8 @@ public class GameWindow extends JFrame
     private String playerName;
 
     private JPanel boardPanel;
-    private JPanel pnlModeIndice;
-    private JPanel pnlIndice;
-    private JPanel pnlNumeric;
-    private JPanel pnlEasyClassicMode;
-    private JLabel lblRound;
     private CluePanel pnlClue;
+
     //------------------------------------------------------------------
 
     public GameWindow(GameMasterController controller,MasterMindGame game,String playerName,
@@ -37,7 +34,7 @@ public class GameWindow extends JFrame
         super("MasterMind");
         setSize(1100,900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);//Apparait au milieu de l'écran
 
         this.activeLine = lineCount-1;
         this.controller = controller;
@@ -55,8 +52,6 @@ public class GameWindow extends JFrame
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
-
-        //backPanel.add(pnlInfoPlayer);
         backPanel.add(new TopPanel(this.playerName,this.nbRound,this.masterMindGame));
         backPanel.add(mainPanel);
 
@@ -76,21 +71,16 @@ public class GameWindow extends JFrame
         constraints.gridy = 2;
         JPanel pnlChoiceColor=new JPanel();
         pnlChoiceColor.setLayout(new FlowLayout());
+        pnlChoiceColor.setBackground(new Color(140, 218, 218));
 
         constructAvailableColor(pnlChoiceColor);
         mainPanel.add(pnlChoiceColor,constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        //pnlModeIndice=new ClueModePanel(this.controller);
-
-        //mainPanel.add(pnlModeIndice,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
-
+        btnValidate.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnValidate.addActionListener(ActionEvent->{
 
             if(!activeLineFilled()){return;}
@@ -110,35 +100,70 @@ public class GameWindow extends JFrame
         constraints.gridx = 1;
         constraints.gridy = 3;
         JButton btnReset=new JButton("Réinitialiser");
+        btnReset.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnReset.setMaximumSize(new Dimension(200,100));
+        btnReset.addActionListener(ActiveEvent->{
+
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous réinitialiser la ligne ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                resetComboBox();
+        });
         mainPanel.add(btnReset,constraints);
 
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        JButton btnRestart=new JButton("Relancer une nouvelle partie");
-        btnRestart.addActionListener(ActiveEvent->{
-            controller.launchGame(this.playerName,this.nbRound,this.lineSize,this.lineCount,this.colorCount,this.masterMindGame.getCluesMode());
-        });
-        mainPanel.add(btnRestart,constraints);
 
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        JButton btnPassTurn=new JButton("Abandonner la manche actulle");
+        JButton btnPassTurn=new JButton("Abandonner la manche actuelle");
+        btnPassTurn.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
+        btnPassTurn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnPassTurn.addActionListener(ActionEvent->{
-            newGame();
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous abandonner la manche ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                newGame();
         });
-        mainPanel.add(btnPassTurn,constraints);
+        backPanel.add(Box.createVerticalStrut(15));
 
+        backPanel.add(btnPassTurn);
 
-        add(backPanel);
-        setVisible(true);
+        backPanel.add(Box.createVerticalStrut(15));
+
+        JButton btnRestart=new JButton("Relancer une nouvelle partie");
+        btnRestart.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
+        btnRestart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnRestart.addActionListener(ActiveEvent->{
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous relancer une partie ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                controller.launchGame(this.playerName,this.nbRound,this.lineSize,this.lineCount,this.colorCount,this.masterMindGame.getCluesMode());
+        });
+        backPanel.add(btnRestart);
+        backPanel.add(Box.createVerticalStrut(15));
+
+        backPanel.setBackground(new Color(216, 222, 152));
+
+        this.add(backPanel);
+        this.setVisible(true);
     }
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
         List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
+        JLabel lblInfoColor=new JLabel("Couleurs disponibles :");
+        lblInfoColor.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
+        pnlChoiceColor.add(lblInfoColor);
         for(int i=0;i<this.colorCount;i++)
         {
-            JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());
+            JLabel lblOneColor=new JLabel(" "+
+                    Helpers.translateColorToFrench(lstAvailableColor.get(i)).toUpperCase());
+            lblOneColor.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
             pnlChoiceColor.add(lblOneColor);
         }
     }
@@ -224,11 +249,6 @@ public class GameWindow extends JFrame
         return lineColor;
     }
 
-    private void updateAllIndicesMode()
-    {
-
-    }
-
     private void newGame()
     {
         controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
@@ -237,6 +257,40 @@ public class GameWindow extends JFrame
     public void updateClues()
     {
         pnlClue.updateClues(activeLine);
+    }
+
+    private void resetComboBox()
+    {
+        for(Component c:this.boardPanel.getComponents())
+        {
+            if (c.getClass() == LinePanel.class) {
+                LinePanel panel = (LinePanel) c;
+                if (panel.getTag() == activeLine) {
+                    for(Component cc : panel.getComponents())
+                    {
+                        JComboBox cbo=(JComboBox) cc;
+                        cbo.setSelectedIndex(-1);
+                    }
+                }
+            }
+        }
+    }
+
+    public void showFoundToPlayer()
+    {
+        JOptionPane.showMessageDialog(null,
+        "Bravo !\nLa combinaison secrète était bien : "+
+                masterMindGame.getMasterMindBoard().secretCombinaisonToString(),
+                "Trouver",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    public void showFailToPlayer()
+    {
+        JOptionPane.showMessageDialog(null,
+                "Dommage !\nLa combinaison secrète était : "+
+                        masterMindGame.getMasterMindBoard().secretCombinaisonToString(),
+                "Perdu !",
+                JOptionPane.OK_OPTION);
     }
 }
 

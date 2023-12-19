@@ -13,7 +13,7 @@ public class CluePanel extends JPanel
 {
     private GameMasterController controller;
     private MasterMindGame game;
-    private ArrayList<Component/*JLabel*/> clues;
+    private ArrayList<Component> clues;
 
 
     public CluePanel(int lineCount, int lineSize, GameMasterController controller,MasterMindGame game)
@@ -22,14 +22,16 @@ public class CluePanel extends JPanel
         this.game=game;
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
-        this.clues = new ArrayList<Component/*JLabel*/>();
+        this.clues = new ArrayList<Component>();
 
         if(game.getCluesMode()==CluesMode.NUMERIC_MODE) {
 
             for (int i = 0; i < lineCount; i++) {
-                JLabel lbl = new JLabel("------------");
+                JLabel lbl = new JLabel("---------------");
                 lbl.setOpaque(true);
-                lbl.setSize(0, 40);
+                lbl.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,30));
+                this.add(Box.createVerticalStrut(10));//Espace vertical vide
+
 
                 clues.add(lbl);
                 this.add(lbl);
@@ -41,11 +43,13 @@ public class CluePanel extends JPanel
                 JPanel clue = new JPanel();
                 clue.setLayout(new FlowLayout());
                 for (int j = 0; j < lineSize; j++) {
-                    JLabel lbl = new JLabel(" ");
-                    lbl.setOpaque(true);
-                    lbl.setBackground(Color.BLACK);
+                    JLabel lbl = new JLabel("  ");
+                    lbl.setOpaque(false);
+                    lbl.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,30));
                     clue.add(lbl);
                 }
+                clue.setBackground(new Color(140, 218, 218));
+
                 clues.add(clue);
                 this.add(clue);
             }
@@ -55,7 +59,7 @@ public class CluePanel extends JPanel
 
     public void updateClues(int line)
     {
-        Component c = this.clues.get(line);
+        Component c = this.clues.get(line+1);
 
         if(this.game.getCluesMode() == CluesMode.NUMERIC_MODE)
         {
@@ -63,10 +67,8 @@ public class CluePanel extends JPanel
             clue.setText(
                         "Bien placé : "
                         + this.game.getMasterMindBoard().getCurrentLine().getWellPlaced()
-                        + " | Bonne couleur : " +
-                        this.game.getMasterMindBoard().getCurrentLine().getWellChosen()
-                        + " | Mauvaise couleur : " +
-                        this.game.getMasterMindBoard().getCurrentLine().getWrongColor());
+                        + " | Mal placé : "
+                        + this.game.getMasterMindBoard().getCurrentLine().getWellChosen());
         }
         else
         {
@@ -78,6 +80,7 @@ public class CluePanel extends JPanel
             {
                 for (Component cc : p.getComponents()) {
                     JLabel l = (JLabel) cc;
+                    l.setOpaque(true);
                     if (info.get(i) == CellInfo.WELL_PLACED)
                         l.setBackground(Color.WHITE);
                     else
@@ -92,7 +95,7 @@ public class CluePanel extends JPanel
                 for (Component cc : p.getComponents())
                 {
                     JLabel l = (JLabel) cc;
-                    if(i<nbWellPlace)
+                    if(i>=nbWellPlace)
                         l.setBackground(Color.BLACK);
                     else
                         l.setBackground(Color.WHITE);
