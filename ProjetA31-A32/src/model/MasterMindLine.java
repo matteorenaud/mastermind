@@ -40,7 +40,7 @@ public class MasterMindLine {
         {
             for(int j=0; j<this.size; j++)
             {
-                if(this.cellInfos.get(j) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
+                if(this.cellInfos.get(i) != CellInfo.WELL_PLACED && this.getCellColor(i) == secretCombination.getCellColor(j))
                 {
                     this.cellInfos.set(i,CellInfo.GOOD_COLOR);
                 }
