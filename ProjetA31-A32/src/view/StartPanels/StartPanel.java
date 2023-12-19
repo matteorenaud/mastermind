@@ -117,7 +117,7 @@ public class StartPanel extends JPanel
         txtPlayerName.setFont(new Font(Font.DIALOG_INPUT,Font.PLAIN,20));
         txtPlayerName.setSize(new Dimension(400,30));
         txtPlayerName.setMaximumSize(new Dimension(400,30));
-        
+
         txtPlayerName.addKeyListener(new KeyListener() {
                                          @Override
                                          public void keyTyped(KeyEvent e) {
