@@ -17,9 +17,6 @@ public class EndWindow extends JFrame {
         this.game = game;
 
 
-
-
-
         this.setVisible(true);
     }
 }
