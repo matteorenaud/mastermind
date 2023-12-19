@@ -3,7 +3,6 @@ package view;
 import controller.GameMasterController;
 import model.GameColor;
 import model.MasterMindGame;
-import model.MasterMindGameObserver;
 import view.GamePanels.*;
 
 
@@ -11,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GameWindow extends JFrame implements MasterMindGameObserver
+public class GameWindow extends JFrame
 {
     //------------------------------------------------------------------
     private GameMasterController controller;
@@ -104,8 +103,6 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 controller.setCurrentLineCellColor(lineColor[i],i);
             }
             controller.verifyCurrentLine();
-
-
 
         });
         mainPanel.add(btnValidate,constraints);
@@ -237,17 +234,6 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
     }
 
-
-    @Override
-    public void updateActualRound(int actualRound)
-    {
-        //controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
-    }
-    @Override
-    public void updateEndGame(int score)
-    {
-        controller.endGame();
-    }
     public void updateClues()
     {
         pnlClue.updateClues(activeLine);
