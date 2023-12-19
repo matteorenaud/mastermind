@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51dbac44-eff3-432a-bd91-396f79dbc327" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetA31-A32/src/view/GamePanels/CluePanel.java" afterDir="false" />
-    </list>
+    <list default="true" id="51dbac44-eff3-432a-bd91-396f79dbc327" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +59,7 @@
       <updated>1702460736174</updated>
       <workItem from="1702460742515" duration="53000" />
       <workItem from="1702460810449" duration="121000" />
-      <workItem from="1702461005101" duration="4896000" />
+      <workItem from="1702461005101" duration="5123000" />
     </task>
     <servers />
   </component>

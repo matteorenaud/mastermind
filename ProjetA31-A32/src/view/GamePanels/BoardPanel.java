@@ -5,6 +5,7 @@ import model.GameColor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardPanel extends JPanel
@@ -53,6 +54,14 @@ public class BoardPanel extends JPanel
             }
 
             pnlLine.add(comboBox);
+        }
+    }
+
+    public void updateLine(ArrayList<GameColor> colors)
+    {
+        for(int i=0; i<this.lineSize; i++)
+        {
+            
         }
     }
 
