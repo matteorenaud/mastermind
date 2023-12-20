@@ -1,8 +1,8 @@
 package model;
 
-import java.awt.*;
+import helpersLib.Helpers;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MasterMindBoard
@@ -100,7 +100,7 @@ public class MasterMindBoard
     {
         String secret="";
         for(GameColor c : this.secretCombination.getCells())
-            secret+=Helpers.translateColorToFrench(c).toUpperCase()+" ";
+            secret+= Helpers.translateColorToFrench(c).toUpperCase()+" ";
         return secret;
     }
 }

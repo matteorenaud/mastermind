@@ -2,15 +2,16 @@ package view;
 
 import controller.GameMasterController;
 import model.GameColor;
-import model.Helpers;
+import helpersLib.Helpers;
 import model.MasterMindGame;
 import view.GamePanels.*;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Properties;
 
 public class GameWindow extends JFrame
 {
@@ -27,6 +28,7 @@ public class GameWindow extends JFrame
     private JPanel boardPanel;
     private CluePanel pnlClue;
     private Color originalCBOBackColor;
+    private Color originalColorButton;
 
 
     //------------------------------------------------------------------
@@ -35,13 +37,16 @@ public class GameWindow extends JFrame
                       int nbRound,int lineSize,int lineCount, int colorCount)
     {
         super("MasterMind");
-        setSize(1100,900);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(1200,1000);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Apparait au milieu de l'écran
+        ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_mastermind.png");
+        this.setIconImage(icon.getImage());
 
         //J'ai regarde pour trouver la couleur exacte de base
         this.originalCBOBackColor=new Color(238,238,238);
 
+        //On mets en place tout ce qu'on a besoin
         this.activeLine = lineCount-1;
         this.controller = controller;
         this.masterMindGame = game;
@@ -92,15 +97,16 @@ public class GameWindow extends JFrame
             if(!activeLineFilled()){return;}
 
             GameColor[] lineColor=colorOfTheLine();
-            System.out.println("Couleur récupére");
+            //System.out.println("Couleur récupére");
             for (int i=0;i<lineColor.length;i++)
             {
-                System.out.print(lineColor[i]+" ");
+                //System.out.print(lineColor[i]+" ");
                 controller.setCurrentLineCellColor(lineColor[i],i);
             }
             controller.verifyCurrentLine();
-
         });
+        this.originalColorButton=btnValidate.getBackground();
+        createMyGameButtonMouseHoverEvent(btnValidate);
         mainPanel.add(btnValidate,constraints);
 
         constraints.gridx = 1;
@@ -118,6 +124,7 @@ public class GameWindow extends JFrame
             if(choice==JOptionPane.YES_OPTION)
                 resetComboBox();
         });
+        createMyGameButtonMouseHoverEvent(btnReset);
         mainPanel.add(btnReset,constraints);
 
 
@@ -133,6 +140,7 @@ public class GameWindow extends JFrame
             if(choice==JOptionPane.YES_OPTION)
                 newGame();
         });
+        createMyGameButtonMouseHoverEvent(btnPassTurn);
         backPanel.add(Box.createVerticalStrut(15));
 
         backPanel.add(btnPassTurn);
@@ -151,6 +159,7 @@ public class GameWindow extends JFrame
             if(choice==JOptionPane.YES_OPTION)
                 controller.launchGame(this.playerName,this.nbRound,this.lineSize,this.lineCount,this.colorCount,this.masterMindGame.getCluesMode());
         });
+        createMyGameButtonMouseHoverEvent(btnRestart);
         backPanel.add(btnRestart);
         backPanel.add(Box.createVerticalStrut(15));
 
@@ -159,6 +168,8 @@ public class GameWindow extends JFrame
         this.add(backPanel);
         this.setVisible(true);
     }
+
+    //Construit le Panel des couleurs disponible
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
         List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
@@ -174,6 +185,22 @@ public class GameWindow extends JFrame
         }
     }
 
+    //Applique le curseur de main et le fait que le boutton change de couleur quand on survole avec la souris un boutton
+    private void createMyGameButtonMouseHoverEvent(JButton button)
+    {
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(new Color(201, 246, 117));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(originalColorButton);
+            }
+        });
+    }
+
+    //Vérifie si toute les ComboBox de la ligne en cours sont remplis
     private boolean activeLineFilled()
     {
         for(Component component : boardPanel.getComponents())
@@ -195,6 +222,9 @@ public class GameWindow extends JFrame
 
         return true;
     }
+
+    //Mets à jour les ComboBox
+    //Mets en actif la ligne actuelle et recopie les couleurs du tour précédents dans le nouveau
     public void updateCombBox()
     {
         for(Component pnl:boardPanel.getComponents())
@@ -231,6 +261,8 @@ public class GameWindow extends JFrame
             }
         }
     }
+
+    //Renvoi un tableau avec les couleurs de la ligne actuelle
     private GameColor[] colorOfTheLine()
     {
         GameColor[] lineColor=new GameColor[this.lineSize];
@@ -255,16 +287,19 @@ public class GameWindow extends JFrame
         return lineColor;
     }
 
+    //Lance une nouvelle manche
     private void newGame()
     {
         controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
     }
 
+    //Mets à jour le Panel des indices
     public void updateClues()
     {
         pnlClue.updateClues(activeLine);
     }
 
+    //Réinitalise les ComboBox de la ligne actuelle
     private void resetComboBox()
     {
         for(Component c:this.boardPanel.getComponents())
@@ -283,6 +318,7 @@ public class GameWindow extends JFrame
         }
     }
 
+    //Affiche une boite de dialogue qui dit qu'il a trouvé la combinaison secrèete
     public void showFoundToPlayer()
     {
         JOptionPane.showMessageDialog(null,
@@ -291,6 +327,7 @@ public class GameWindow extends JFrame
                 "Trouver",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+    //Affiche une boite de dialogue qui dit qu'il n'a pas réussi à trouvé la combinaison secrète
     public void showFailToPlayer()
     {
         JOptionPane.showMessageDialog(null,
@@ -300,11 +337,3 @@ public class GameWindow extends JFrame
                 JOptionPane.OK_OPTION);
     }
 }
-
-
-
-
-
-
-
-

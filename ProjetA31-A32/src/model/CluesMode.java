@@ -1,5 +1,6 @@
 package model;
 
+//Énumération du mode des indices
 public enum CluesMode
 {
     EASY_MODE,

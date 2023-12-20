@@ -4,6 +4,8 @@ import model.MasterMindGame;
 
 import java.util.Scanner;
 
+//Test du model en ligne de commande
+//(N'est plus à jour)
 public class CommandLineMain
 {
     static Scanner sc=new Scanner(System.in);

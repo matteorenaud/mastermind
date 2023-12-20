@@ -1,9 +1,14 @@
-package model;
+package helpersLib;
+
+import model.CluesMode;
+import model.GameColor;
 
 import java.awt.*;
 
+//Un fichier d'aide
 public class Helpers
 {
+    //Transforme notre GameColor en Color pour JavaSwing
     public static Color transformGameColorIntoColor(GameColor c)
     {
         Color color;
@@ -38,6 +43,7 @@ public class Helpers
         return color;
     }
 
+    //Traduit le mode d'indices en chaîne de caractère en français
     public static String translateCluesModeToFrench(CluesMode cluesMode)
     {
         String frenchName;
@@ -50,6 +56,7 @@ public class Helpers
         return frenchName;
     }
 
+    //Traduit notre GameColor en chaine de caractère en français
     public static String translateColorToFrench(GameColor c)
     {
         String frenchColorName;
