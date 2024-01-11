@@ -1,4 +1,4 @@
-package view.GamePanels;
+package view.gamePanels;
 
 import controller.GameMasterController;
 import model.GameColor;

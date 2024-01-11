@@ -29,6 +29,28 @@ public class MasterMindBoard
         //printSecretCombination();
     }
 
+    //Getters
+    //The current line
+    public MasterMindLine getCurrentLine()
+    {
+        return this.board.get(this.currentLine);
+    }
+    //The index of the current line
+    public int getIndexCurrentLine()
+    {
+        return this.currentLine;
+    }
+    //The secret combination
+    public MasterMindLine getSecretCombination()
+    {
+        return this.secretCombination;
+    }
+    //The board
+    public ArrayList<MasterMindLine> getBoard()
+    {
+        return this.board;
+    }
+
     //Function that select the next line of the board
     //the function returns true if the next line exists
     public boolean nextLine()
@@ -69,13 +91,6 @@ public class MasterMindBoard
         return this.board.get(currentLine).verify(this.secretCombination);
     }
 
-    //Function that returns the current line of the board
-    public MasterMindLine getCurrentLine()
-    {
-        return this.board.get(this.currentLine);
-    }
-    public int getIndexCurrentLine(){return this.currentLine;}
-
     //Method that prints the secret combination in the terminal
     public void printSecretCombination()
     {
@@ -86,16 +101,8 @@ public class MasterMindBoard
 
         System.out.println();
     }
-    public MasterMindLine getSecretCombination()
-    {
-        return this.secretCombination;
-    }
 
-    public ArrayList<MasterMindLine> getBoard()
-    {
-        return this.board;
-    }
-
+    //Method that returns a String with the color of the secret combination in french separate by space
     public String secretCombinaisonToString()
     {
         String secret="";

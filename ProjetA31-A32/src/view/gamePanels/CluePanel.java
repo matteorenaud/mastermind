@@ -1,4 +1,4 @@
-package view.GamePanels;
+package view.gamePanels;
 
 import controller.GameMasterController;
 import model.CellInfo;
@@ -15,7 +15,6 @@ public class CluePanel extends JPanel
     private GameMasterController controller;
     private MasterMindGame game;
     private ArrayList<Component> clues;
-
 
     public CluePanel(int lineCount, int lineSize, GameMasterController controller,MasterMindGame game)
     {

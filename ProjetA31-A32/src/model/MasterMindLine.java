@@ -21,6 +21,17 @@ public class MasterMindLine {
         }
     }
 
+    //Getters for the list of colors of the cells
+    public ArrayList<GameColor> getCells()
+    {
+        return cells;
+    }
+    //Getters for the list of informations of the cells
+    public ArrayList<CellInfo> getCellInfos()
+    {
+        return this.cellInfos;
+    }
+
     //Function that return true if the line is equal to the secret combination
     //the function also fills the cellInfos array
     public boolean verify(MasterMindLine secretCombination)
@@ -58,7 +69,6 @@ public class MasterMindLine {
         }
 
         return wellPlaced == this.size;
-
     }
 
     //Function that gets the GameColor of a specific cell
@@ -98,7 +108,7 @@ public class MasterMindLine {
         return nb;
     }
 
-    //Function that returns the number of well vhosen cells
+    //Function that returns the number of well chosen cells
     public int getWellChosen()
     {
         int nb = 0;
@@ -128,11 +138,7 @@ public class MasterMindLine {
         return nb;
     }
 
-    public ArrayList<GameColor> getCells()
-    {
-        return cells;
-    }
-
+    //Method that print all informations about a line on the terminal
     public void printAllInformationsAboutTheLine(MasterMindLine secretCombination)
     {
         System.out.print("\t| Récapitulatif de la ligne");
@@ -148,9 +154,5 @@ public class MasterMindLine {
         System.out.print("\n\t| Bien placé : "+this.getWellPlaced());
         System.out.print(" Mal placé : "+this.getWellChosen());
         System.out.println(" Non présent : "+this.getWrongColor());
-    }
-    public ArrayList<CellInfo> getCellInfos()
-    {
-        return this.cellInfos;
     }
 }

@@ -35,99 +35,245 @@ package model
 
     class MasterMindBoard
     {
-        -lineCount : Integer
-        -lineSize : Integer
-        -currentLine : Integer
-        +<<create>>MasterMindBoard( lineSize:Integer, lineCount:Integer, availableColors : ArrayList<GameColor)
-        +nextLine() : Boolean
-        +verifyCurrentLine() : Boolean
-        +getSecretCombination() : MasterMindLine
-        +getCurrentLine() : MasterMindLine
-        +getIndexCurrentLine() : Integer
-        +getBoard : MasterMindLine[*]
-        -generateSecretCombination()
-        -generateBoardLines()
+        - lineCount : Integer
+        - lineSize : Integer
+        - currentLine : Integer
+        + <<create>> MasterMindBoard(lineSize:Integer, lineCount:Integer, availableColors : GameColor[*])
+        + getCurrentLine() : MasterMindLine
+        + getIndexCurrentLine() : Integer
+        + getSecretCombination() : MasterMindLine
+        + getBoard : MasterMindLine[*]
+        + nextLine() : Boolean
+        - generateBoardLines()
+        - generateSecretCombination()
+        + verifyCurrentLine() : Boolean
+        + printSecretCombination()
+        + secretCombinaisonToString():String
     }
 
-
-    MasterMindBoard o--> "-secretCombination\n\n* -board" MasterMindLine
-    MasterMindBoard o--> "* -availableColors" GameColor
+    MasterMindBoard o--> " 1\n -secretCombination\n\n * -board" MasterMindLine
+    MasterMindBoard o--> " *\n -availableColors" GameColor
 
     class MasterMindGame
     {
-         -  nbRoud : Integer
-         -  score : Integer
-         -  nbTry : Integer
-         -  lineSize : Integer
-         -  colorCount : Integer
-         -  playerName : String
-         +<<create>>MasterMindBoard(playerName : String, nbRoud : Integer, lineSize  Integer, colorCount:Integer, nbTry:Integer)
-         +getMasterMindBoard():MasterMindBoard
-         +getAvailableColors() : GameColor[*]
-         +updateScore()
-         +generateListAvailableGameColors()
-         +generateNewRound()
-         +getScore() : Integer
-         +setCluesMode(cluesMode : CluesMode)
+        - currentRound:Integer
+        - nbRoud : Integer
+        - score : Integer
+        - nbTry : Integer
+        - lineSize : Integer
+        - colorCount : Integer
+        - playerName : String
+        + <<create>> MasterMindBoard(playerName : String, nbRoud : Integer, lineSize : Integer, colorCount : Integer, nbTry : Integer,cluesMode : CluesMode)
+        + getCurrentRound() : Integer
+        + getNbRoud() : Integer
+        + getScore() : Integer
+        + getNbTry() : Integer
+        + getLineSize() : Integer
+        + getColorCount() : Integer
+        + getPlayerName() : String
+        + getCluesMode() : CluesMode
+        + getMasterMindBoard() : MasterMindBoard
+        + getAvailableColors() : GameColor[*]
+        + generateNewRound() : Boolean
+        + generateListAvailableGameColors()
+        + updateScore()
+        + printInfoAboutGame()
+        + printAvailableColor()
     }
 
-    MasterMindGame o--> "1 -cluesMode"CluesMode
-    MasterMindGame o--> "1 -masterMindBoard"MasterMindBoard
-    MasterMindGame o--> "* -availableColors"GameColor
+    MasterMindGame o--> " 1\n -cluesMode" CluesMode
+    MasterMindGame o--> " 1\n -masterMindBoard" MasterMindBoard
+    MasterMindGame o--> " *\n -availableColors" GameColor
 
     class MasterMindLine
     {
         - size:Integer
-        +<<create>>MasterMindLine(size:Integer)
+        +<<create>> MasterMindLine(size:Integer)
+        + getCells() : GameColor[*]
+        + getCellsInfos() : CellInfo[*]
         + verify(secretCombination:MasterMindLine) : Boolean
         + getCellColor(index:Integer) : GameColor
         + setCellColor(color:GameColor, index:Integer)
         + getWellPlaced() : Integer
         + getWellChosen() : Integer
         + getWrongColor() : Integer
-        + getCells() : GameColor[*]
+        + printAllInformationsAboutTheLine(secretCombination:MasterMindLine)
     }
 
-    MasterMindLine o--> "* -cells"GameColor
-    MasterMindLine o--> "* -cellInfos"CellInfo
+    MasterMindLine o--> " *\n -cells" GameColor
+    MasterMindLine o--> " *\n -cellInfos" CellInfo
 }
 
 package view
 {
     class StartWindow
     {
+        + <<create>> StartWindow(gmc : GameMasterController)
+        + closeWindow()
     }
+
+    StartWindow o--> "1\n-controller" GameMasterController
+
+    package startPanels
+    {
+        class StartPanel
+        {
+                + <<create>> StartPanel(controller : GameMasterController)
+                - constructMyComboBox(numberTab : String[], startIndex : Integer, cbo : JComboBox) : JComboBox
+                - constructTitleLabel()
+                - constructPlayerTextBox()
+                - constructMyLabel(String text)
+                - constructLaunchGameButton()
+                - constructExitButton()
+                - constructLabelPicture()
+                - createMyStartButtonMouseHoverEvent(JButton button)
+                - startTheGame()
+        }
+
+        StartPanel o--> "1\n-controller" GameMasterController
+        StartPanel o--> "1\n-txtPlayerName" JTextArea
+        StartPanel o--> "1\n-cboNbRound" JComboBox
+        StartPanel o--> "1\n-cboNbTotalPiece" JComboBox
+        StartPanel o--> "1\n-cboNbTry" JComboBox
+        StartPanel o--> "1\n-cboNbPieceOfCombinaison" JComboBox
+        StartPanel o--> "1\n-clueModePanel" ClueModePanel
+        StartPanel o--> "1\n-originalColorButton" Color
+
+        class ClueModePanel
+        {
+            + <<create>> ClueModePanel(controller : GameMasterController)
+            - updateIndiceMode(rdbActual : JRadioButton, indicesMode : CluesMode)
+            + getSelectedCluesMode() : CluesMode
+        }
+
+        ClueModePanel o--> "1\n-controller" GameMasterController
+        ClueModePanel o--> "1\n-rdbEasyMode" JRadioButton
+        ClueModePanel o--> "1\n-rdbClassicMode" JRadioButton
+        ClueModePanel o--> "1\n-rdbNumeric" JRadioButton
+    }
+
     class GameWindow
     {
+        - lineSize : Integer
+        - lineCount : Integer
+        - colorCount : Integer
+        - nbRound : Integer
+        - activeLine : Integer
+        - playerName : String
+        + <<create>> GameWindow(controller : GameMasterController, game : MasterMindGame, playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer)
+        - constructAvailableColor(pnlChoiceColor : JPanel)
+        - createMyGameButtonMouseHoverEvent(button : JButton)
+        - activeLineFilled() : Boolean
+        + updateCombBox()
+        - colorOfTheLine() : GameColor[]
+        - newRound()
+        + updateClues()
+        - resetComboBox()
+        + showFoundToPlayer()
+        + showFailToPlayer()
     }
+
+    GameWindow o--> "1\n-controller" GameMasterController
+    GameWindow o--> "1\n-masterMindGame" MasterMindGame
+    GameWindow o--> "1\n-boardPanel" JPanel
+    GameWindow o--> "1\n-pnlClue" CluePanel
+    GameWindow o--> "1\n-originalCBOBackColor" Color
+    GameWindow o--> "1\n-originalColorButton" Color
+
+    package gamePanels
+    {
+        class BoardPanel
+        {
+           - lineSize : Integer
+           + <<create>> BoardPanel(lineCount : Integer, lineSize : Integer, controller : GameMasterController)
+           - constructLine(pnlLine : JPanel)
+        }
+
+        BoardPanel o--> "1\n-controller" GameMasterController
+
+        class CluePanel
+        {
+            + <<create>> CluePanel(lineCount : Integer, lineSize  : Integer, controller : GameMasterController, game : MasterMindGame)
+            + updateClues(line : Integer)
+        }
+
+        CluePanel o--> "1\n-controller" GameMasterController
+        CluePanel o--> "1\n-game" MasterMindGame
+        CluePanel o--> "*\n-clues" Component
+
+        class LinePanel
+        {
+            - tag : Integer
+            + <<create>> LinePanel(tag : Integer)
+            + getTag() : Integer
+        }
+
+        class MainPanel
+        {
+            + <<create>> MainPanel()
+        }
+
+        class TopPanel
+        {
+           + <<create>> TopPanel(playerName : String, nbRound : Integer, masterMindGame : MasterMindGame)
+           - constructTopBigLabel(texte : String) : JLabel
+           - constructTopSmallLabel(texte : String) : JLabel
+        }
+    }
+
     class EndWindow
     {
+        + <<create>> EndWindow(game : MasterMindGame, gmc : GameMasterController)
+        - createMyEndGameButtonMouseHoverEvent(JButton button)
+        - constructTitleLabel()
+        - constructEndScoreLabel()
+        - constructEndSmallRacepLabel(String txt)
+        - constructSimpleLabel()
+        - contructRetryButton()
+        - constructQuitButton()
     }
+
+    EndWindow o--> "1\n game" MasterMindGame
+    EndWindow o--> "1\n controller" GameMasterController
+    EndWindow o--> "1\n originalColorButton" Color
+    EndWindow o--> "1\n backPanel" JPanel
 }
 
 package controller
 {
     class GameMasterController
     {
-        + startNewGame()
-        + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer)
-        + endgame()
-        + endRound()
         + getAvailableColors() : GameColor[*]
-        + verifyCurrentLine() : Boolean
-        + nextLine() : Boolean
-        + setCurrentLineCellColor(color : GameColor, index : Integer)
-        + getCurrentLineWellPlaced() : Integer
-        + getCurrentLineWellChosen() : Integer
-        + getCurrentLineWrongColor() : Integer
-        + getCurrentGameCluesMode() : CluesMode
-        + setCurrentGameCluesMode(cluesMode : CluesMode)
+        + startNewGame()
+        + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer, cluesMode : CluesMode)
+        + newRound(playerName : String, nbRound : Integer , lineSize : Integer, lineCount : Integer, colorCount : Integer)
+        + endgame()
+        + verifyCurrentLine()
+        + nextLine()
+        + exitStartWindow()
+        + printFailToPlayer()ToPlayer();
+        + printFoundToPlayer()
+        + shutDownApp()
     }
 
-    GameMasterController o--> "1 -startWindow" StartWindow
-    GameMasterController o--> "1 -gameWindow" GameWindow
-    GameMasterController o--> "1 -endWindow" EndWindow
-    GameMasterController o--> "1 -game" MasterMindGame
-
+    GameMasterController o--> "1\n -startWindow" StartWindow
+    GameMasterController o--> "1\n -gameWindow" GameWindow
+    GameMasterController o--> "1\n -endWindow" EndWindow
+    GameMasterController o--> "1\n -game" MasterMindGame
 }
+
+package helpersLib
+{
+    class Helpers
+    {
+        + {static} transformGameColorIntoColor(c : GameColor) : Color
+        + {static} String translateCluesModeToFrench(cluesMode : CluesMode) : String
+        + {static} String translateColorToFrench(c GameColor) : String
+    }
+}
+
+'The uses
+
+
+
 @enduml

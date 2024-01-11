@@ -29,4 +29,12 @@ replay_pid*
 
 */META-INF
 
+#Le .idea est toujours pris, donc on va empêcher chaque fichier
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+#Et le .iml
+a31-mastermind.iml
 

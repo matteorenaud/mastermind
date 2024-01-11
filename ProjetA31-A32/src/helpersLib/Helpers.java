@@ -5,10 +5,10 @@ import model.GameColor;
 
 import java.awt.*;
 
-//Un fichier d'aide
+//A helpers class
 public class Helpers
 {
-    //Transforme notre GameColor en Color pour JavaSwing
+    //Transform our GameColor enum in a Color enum of JavaSwing
     public static Color transformGameColorIntoColor(GameColor c)
     {
         Color color;
@@ -43,7 +43,7 @@ public class Helpers
         return color;
     }
 
-    //Traduit le mode d'indices en chaîne de caractère en français
+    //Translate the clues mode into a french String
     public static String translateCluesModeToFrench(CluesMode cluesMode)
     {
         String frenchName;
@@ -56,7 +56,7 @@ public class Helpers
         return frenchName;
     }
 
-    //Traduit notre GameColor en chaine de caractère en français
+    //Translate our GameColor enum into a french String
     public static String translateColorToFrench(GameColor c)
     {
         String frenchColorName;

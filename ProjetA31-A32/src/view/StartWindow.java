@@ -1,38 +1,39 @@
 package view;
 
 import controller.GameMasterController;
-import view.StartPanels.StartPanel;
+import view.startPanels.StartPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-//Fenêtre du début de choix des paramêtre de la partie
-public class StartWindow extends JFrame//Hériter de JFrame
+//Start window were the player choses the game options
+public class StartWindow extends JFrame//Remember to extend JFrame
 {
     private GameMasterController controller;
 
     public StartWindow(GameMasterController gmc)
     {
-        super("Menu Principal");//ou setTitle("Menu Principal");
+        super("Menu Principal");//or setTitle("Menu Principal");
         this.setSize( 600, 920 );
-        this.setLocationRelativeTo(null);//Fentêre qui apprait au milieu de l'écran
-        //Change l'icône par défaut de la fenêtre
+        this.setLocationRelativeTo(null);//Window spawn in center screen
+        //Change default icone of the window
         ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_start_game.png");
         this.setIconImage(icon.getImage());
 
         this.controller=gmc;
 
-        //On mets une taille minimum, comme cela pas de problème avec le fait que c'est trop petit
+        //A minimum size
         this.setMinimumSize(new Dimension(600,1000));
-        this.setResizable(false);//Peut pas redimensionner la fenêtre comme cela pas de problème d'affichage bizarre
+        this.setResizable(false);//Cannot resize window in order to avoid strange display
 
         JPanel startPanel=new StartPanel(gmc);
 
         this.setContentPane(startPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);//Coupe le programme quand on appuie sur la croix
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);//Close the program when we click on the cross
         this.setVisible(true);
     }
 
+    //Method that close this windows
     public void closeWindow()
     {
         this.dispose();

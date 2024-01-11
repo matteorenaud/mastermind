@@ -5,17 +5,16 @@ import java.util.Random;
 
 public class MasterMindGame
 {
-    private int currentRound = 0;
+    private int currentRound = 0; //Current round
     private int nbRoud; //Number of rounds to be played
     private int score = 0; //Global score of the game
     private int nbTry; //Number of try to guess the secret combination
     private int lineSize; //Number of cells in a combination
     private int colorCount; //Number of colors available
-    private CluesMode cluesMode = CluesMode.EASY_MODE;
-    private String playerName;
-    private MasterMindBoard masterMindBoard;
-    private ArrayList<GameColor> availableColors;
-
+    private String playerName; //Player name
+    private CluesMode cluesMode = CluesMode.EASY_MODE; //Clues mode
+    private MasterMindBoard masterMindBoard; //The MasterMind board
+    private ArrayList<GameColor> availableColors; //List of the available colors
 
     public MasterMindGame(String playerName, int nbRoud,int lineSize,int colorCount,int nbTry,CluesMode cluesMode)
     {
@@ -32,6 +31,54 @@ public class MasterMindGame
         generateListAvailableGameColor();
         generateNewRound();
     }
+
+    //***********************
+    //*** All the getters ***
+    //***********************
+
+    //The current round
+    public int getCurrentRound() {
+        return this.currentRound;
+    }
+    //Total's round
+    public int getNbRoud(){
+        return this.nbRoud;
+    }
+    //Score
+    public int getScore() {
+        return this.score;
+    }
+    //Number of try per round
+    public int getNbTry(){
+        return this.nbTry;
+    }
+    //Le lenght of a line (= size the combinaison)
+    public int getLineSize() {
+        return lineSize;
+    }
+    //Number of color available
+    public int getColorCount() {
+        return colorCount;
+    }
+    //Player name
+    public String getPlayerName() {
+        return playerName;
+    }
+    //Clues mode
+    public CluesMode getCluesMode() {
+        return this.cluesMode;
+    }
+    //MasterMindBoard
+    public MasterMindBoard getMasterMindBoard() {
+        return this.masterMindBoard;
+    }
+    //The list of available color
+    public ArrayList<GameColor> getAvailableColors() {
+        return availableColors;
+    }
+    //***********************
+    //***** End getters *****
+    //***********************
 
 
     //Method that creates a new round of the game by creating a whole new board
@@ -50,11 +97,6 @@ public class MasterMindGame
         return true;
     }
 
-    //Function that gets the MasterMindBoard
-    public MasterMindBoard getMasterMindBoard()
-    {
-        return this.masterMindBoard;
-    }
 
     //Method that generates a list with all the colors available in the current game
     public void generateListAvailableGameColor()
@@ -65,6 +107,7 @@ public class MasterMindGame
         }
     }
 
+    //Method that update the score after each round
     public void updateScore()
     {
         for(MasterMindLine line : this.masterMindBoard.getBoard())
@@ -77,33 +120,8 @@ public class MasterMindGame
             this.score += 4;
         }
     }
-    public int getScore()
-    {
-        return this.score;
-    }
 
-    public ArrayList<GameColor> getAvailableColors()
-    {
-        return availableColors;
-    }
-
-    public int getCurrentRound()
-    {
-        return this.currentRound;
-    }
-    public void setActualRound(int round)
-    {
-        this.currentRound=round;
-    }
-    public int getNbTry(){return this.nbTry;}
-    public int getNbRoud(){return this.nbRoud;}
-
-    public CluesMode getCluesMode()
-    {
-        return this.cluesMode;
-    }
-
-
+    //Method that print informations about the game on the terminal
     public void printInfoAboutGame()
     {
         System.out.println("    --> Jeu de Mastermind en ligne de commande\t <--");
@@ -117,27 +135,12 @@ public class MasterMindGame
         System.out.println("    --> Score : "+this.score+"\t\t\t\t\t\t\t\t <--");
         printAvailableColor();
     }
+
+    //Méthode that print all the available color on the terminal
     public void printAvailableColor()
     {
         System.out.println("Couleur disponible : ");
         for(int i=0;i<this.availableColors.size();i++)
             System.out.print(this.availableColors.get(i)+" ");
     }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public int getColorCount() {
-        return colorCount;
-    }
-
-    public int getLineSize() {
-        return lineSize;
-    }
-
-    public int getLineCount() {
-        return nbTry;
-    }
-
 }

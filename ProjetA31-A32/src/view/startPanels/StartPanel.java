@@ -1,4 +1,4 @@
-package view.StartPanels;
+package view.startPanels;
 
 import controller.GameMasterController;
 import model.CluesMode;
@@ -16,14 +16,11 @@ public class StartPanel extends JPanel
 {
     private JTextArea txtPlayerName;
     private GameMasterController controller;
-
     private JComboBox cboNbRound;
     private JComboBox cboNbTotalPiece;
     private JComboBox cboNbTry;
     private JComboBox cboNbPieceOfCombinaison;
-
     private ClueModePanel clueModePanel;
-
     private Color originalColorButton;
 
     public StartPanel(GameMasterController controller)
@@ -182,7 +179,6 @@ public class StartPanel extends JPanel
 
         createMyStartButtonMouseHoverEvent(btnExit);
         this.add(btnExit);
-
     }
 
     //Construit le Label avec l'image

@@ -4,8 +4,7 @@ import controller.GameMasterController;
 import model.GameColor;
 import helpersLib.Helpers;
 import model.MasterMindGame;
-import view.GamePanels.*;
-
+import view.gamePanels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +23,6 @@ public class GameWindow extends JFrame
     private int nbRound;
     private int activeLine;
     private String playerName;
-
     private JPanel boardPanel;
     private CluePanel pnlClue;
     private Color originalCBOBackColor;
@@ -94,14 +92,15 @@ public class GameWindow extends JFrame
         btnValidate.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnValidate.addActionListener(ActionEvent->{
 
-            if(!activeLineFilled()){return;}
+            if(!activeLineFilled())
+            {
+                return;
+            }
 
             GameColor[] lineColor=colorOfTheLine();
-            //System.out.println("Couleur récupére");
             for (int i=0;i<lineColor.length;i++)
             {
-                //System.out.print(lineColor[i]+" ");
-                controller.setCurrentLineCellColor(lineColor[i],i);
+                masterMindGame.getMasterMindBoard().getCurrentLine().setCellColor(lineColor[i],i);
             }
             controller.verifyCurrentLine();
         });
@@ -138,7 +137,7 @@ public class GameWindow extends JFrame
                     JOptionPane.YES_NO_OPTION);
 
             if(choice==JOptionPane.YES_OPTION)
-                newGame();
+                newRound();
         });
         createMyGameButtonMouseHoverEvent(btnPassTurn);
         backPanel.add(Box.createVerticalStrut(15));
@@ -169,7 +168,7 @@ public class GameWindow extends JFrame
         this.setVisible(true);
     }
 
-    //Construit le Panel des couleurs disponible
+    //Construct the panel with all the availaible colors
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
         List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
@@ -185,7 +184,7 @@ public class GameWindow extends JFrame
         }
     }
 
-    //Applique le curseur de main et le fait que le boutton change de couleur quand on survole avec la souris un boutton
+    //Put the hand's cursor and that the button changes colors its hover by the mouse
     private void createMyGameButtonMouseHoverEvent(JButton button)
     {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -200,15 +199,15 @@ public class GameWindow extends JFrame
         });
     }
 
-    //Vérifie si toute les ComboBox de la ligne en cours sont remplis
+    //Check if all the ComboBox of the current line are filled
     private boolean activeLineFilled()
     {
         for(Component component : boardPanel.getComponents())
         {
             LinePanel linePanel = (LinePanel) component;
 
-            if(linePanel.getTag() == activeLine) {
-
+            if(linePanel.getTag() == activeLine)
+            {
                 for (Component component1 : linePanel.getComponents())
                 {
                     JComboBox comboBox = (JComboBox) component1;
@@ -223,8 +222,8 @@ public class GameWindow extends JFrame
         return true;
     }
 
-    //Mets à jour les ComboBox
-    //Mets en actif la ligne actuelle et recopie les couleurs du tour précédents dans le nouveau
+    //Update ComboBoxs
+    //Set active the current line and copy all precedent colors in the ComboBox of this line
     public void updateCombBox()
     {
         for(Component pnl:boardPanel.getComponents())
@@ -262,7 +261,7 @@ public class GameWindow extends JFrame
         }
     }
 
-    //Renvoi un tableau avec les couleurs de la ligne actuelle
+    //Return an array with the colors of the current line
     private GameColor[] colorOfTheLine()
     {
         GameColor[] lineColor=new GameColor[this.lineSize];
@@ -287,19 +286,19 @@ public class GameWindow extends JFrame
         return lineColor;
     }
 
-    //Lance une nouvelle manche
-    private void newGame()
+    //Laucnh a new round
+    private void newRound()
     {
         controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
     }
 
-    //Mets à jour le Panel des indices
+    //Update clue's panel
     public void updateClues()
     {
         pnlClue.updateClues(activeLine);
     }
 
-    //Réinitalise les ComboBox de la ligne actuelle
+    //Reset the ComboBoxs of the current line
     private void resetComboBox()
     {
         for(Component c:this.boardPanel.getComponents())
@@ -318,7 +317,7 @@ public class GameWindow extends JFrame
         }
     }
 
-    //Affiche une boite de dialogue qui dit qu'il a trouvé la combinaison secrèete
+    //Print a message when the player found the secret combination
     public void showFoundToPlayer()
     {
         JOptionPane.showMessageDialog(null,
@@ -327,7 +326,7 @@ public class GameWindow extends JFrame
                 "Trouver",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    //Affiche une boite de dialogue qui dit qu'il n'a pas réussi à trouvé la combinaison secrète
+    //Print a message when the player fail to found the secret combination
     public void showFailToPlayer()
     {
         JOptionPane.showMessageDialog(null,

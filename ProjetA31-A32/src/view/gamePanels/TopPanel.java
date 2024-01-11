@@ -1,4 +1,4 @@
-package view.GamePanels;
+package view.gamePanels;
 
 import helpersLib.Helpers;
 import model.MasterMindGame;

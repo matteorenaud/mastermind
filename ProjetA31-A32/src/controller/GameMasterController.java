@@ -2,21 +2,26 @@ package controller;
 
 import model.CluesMode;
 import model.GameColor;
-import model.MasterMindBoard;
 import model.MasterMindGame;
 import view.EndWindow;
 import view.GameWindow;
 import view.StartWindow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameMasterController
 {
     private StartWindow startWindow; //Start window where the player select the game parameters
     private GameWindow gameWindow; //Game window where the mastermind is played
     private EndWindow endWindow; //End window where the score is displayed
-    private MasterMindGame game;
+    private MasterMindGame game; //The game (=the models of our MVC)
+
+    //Function used to get the list of all availables colors
+    //(Only getters in the controller)
+    public ArrayList<GameColor> getAvailableColors()
+    {
+        return this.game.getAvailableColors();
+    }
 
     //Method used by the main class to start a new game
     //the method creates a new start window for the player to select the game parameters
@@ -37,6 +42,9 @@ public class GameMasterController
         this.game = new MasterMindGame(playerName,nbRound,lineSize,colorCount,lineCount,cluesMode);
         this.gameWindow=new GameWindow(this,game,playerName,nbRound,lineSize,lineCount,colorCount);
     }
+
+    //Method that create a new round
+    //(Different from lauchGame() because launche game is to launch the game at the beginning and newRound() is at the end of every round)
     public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
     {
         game.updateScore();
@@ -51,18 +59,11 @@ public class GameMasterController
         }
     }
 
-
     //Method that ends the current game
     public void endGame()
     {
         this.gameWindow.dispose();
         this.endWindow = new EndWindow(this.game,this);
-    }
-
-    //Function used to get the list of all availables colors
-    public ArrayList<GameColor> getAvailableColors()
-    {
-        return this.game.getAvailableColors();
     }
 
     //Function used to verify the state of the current line
@@ -72,7 +73,7 @@ public class GameMasterController
         if(game.getMasterMindBoard().verifyCurrentLine())
         {
             printFoundToPlayer();
-            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount());
             return;
         }
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
@@ -90,32 +91,29 @@ public class GameMasterController
         if(!game.getMasterMindBoard().nextLine())
         {
             printFailToPlayer();
-            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getLineCount(), this.game.getColorCount());
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount());
         }
     }
 
-    //Method to set the color of a cell of the current line
-    public void setCurrentLineCellColor(GameColor color, int index)
-    {
-        this.game.getMasterMindBoard().getCurrentLine().setCellColor(color,index);
-    }
-
-
+    //Method that calls another method of the view to make it close
     public void exitStartWindow()
     {
         this.startWindow.closeWindow();
     }
 
+    //Method that calls anoter method of the view to inform it to show a fail message to the player
     public void printFailToPlayer()
     {
         gameWindow.showFailToPlayer();
     }
 
+    //Method that calls anoter method of the view to inform it to show a victory message to the player
     public void printFoundToPlayer()
     {
         gameWindow.showFoundToPlayer();
     }
 
+    //Method that shut down the app
     public void shutDownApp()
     {
         if(this.startWindow!=null)
@@ -125,5 +123,4 @@ public class GameMasterController
         if(this.endWindow!=null)
             this.endWindow.dispose();
     }
-
 }
