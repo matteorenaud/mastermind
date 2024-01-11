@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-//Le Panel de choix des paramêtre de jeu
+//Panel with game option choice
 public class StartPanel extends JPanel
 {
     private JTextArea txtPlayerName;
@@ -29,65 +29,65 @@ public class StartPanel extends JPanel
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.setBackground(new Color(195, 211, 250));
-        //Mets une petite bordure autour
+        //Put a small border around
         this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(25,50,25,50),
                 BorderFactory.createLineBorder(new Color(255, 36, 36, 168),10,true)));//Pour faire un genre de padding
 
-        //BoxLayout, car on veut tout placer à la vertical (les uns au dessus des autres)
+        //BoxLayout, because we want all the component on top of each other (all place verticaly)
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
-        this.add(Box.createVerticalStrut(10));//Espace vertical vide
+        this.add(Box.createVerticalStrut(10));//Empty vertical space
 
-        constructLabelPicture();//Label avec l'image
+        constructLabelPicture();//Label with picture
 
-        this.add(Box.createVerticalStrut(10));//Espace vertical vide
+        this.add(Box.createVerticalStrut(10));//Empty vertical space
 
-        constructMyLabel("Entrer votre pseudo :");//Label du pseudo
-        constructPlayerTextBox();//TexteBox du pseudo
+        constructMyLabel("Entrer votre pseudo :");//Label for pseudo
+        constructPlayerTextBox();//TexteBox for pseudo
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructMyLabel("Nombre de manche :");//Label Nombre de manche
-        cboNbRound=constructMyComboBox(new String[]{"3", "4", "5"},0,cboNbRound);//ComboBox du nombre de manche
+        constructMyLabel("Nombre de manche :");//Label number of round
+        cboNbRound=constructMyComboBox(new String[]{"3", "4", "5"},0,cboNbRound);//ComboBox number of round
         this.add(cboNbRound);
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructMyLabel("Nombre de couleurs :");//Label du nombre de couleur
-        cboNbTotalPiece=constructMyComboBox(new String[]{"4", "5", "6","7","8"},4,cboNbTotalPiece);//ComboBox du nombre de couleur
+        constructMyLabel("Nombre de couleurs :");//Label number of colors
+        cboNbTotalPiece=constructMyComboBox(new String[]{"4", "5", "6","7","8"},4,cboNbTotalPiece);//ComboBox number of colors
         this.add(cboNbTotalPiece);
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructMyLabel("Nombre de pions d'une combinaison :");//Label taille de la combinaison
-        cboNbPieceOfCombinaison=constructMyComboBox(new String[]{"4", "5", "6"},0,cboNbPieceOfCombinaison);//COmboBox taille de la combinaison
+        constructMyLabel("Nombre de pions d'une combinaison :");//Label size combination
+        cboNbPieceOfCombinaison=constructMyComboBox(new String[]{"4", "5", "6"},0,cboNbPieceOfCombinaison);//ComboBox size combinaison
         this.add(cboNbPieceOfCombinaison);
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructMyLabel("Nombre de tentatives par manche :");//Label nombre de manche
-        cboNbTry=constructMyComboBox(new String[]{"10", "11", "12"},0,cboNbTry);//ComboBox nombre de manche
+        constructMyLabel("Nombre de tentatives par manche :");//Label number of try
+        cboNbTry=constructMyComboBox(new String[]{"10", "11", "12"},0,cboNbTry);//ComboBox number of try
         this.add(cboNbTry);
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructMyLabel("Choissisez votre mode d'indices :");//Label mode d'indice
-        clueModePanel=new ClueModePanel(controller);//Panel des indices
+        constructMyLabel("Choissisez votre mode d'indices :");//Label clue mode
+        clueModePanel=new ClueModePanel(controller);//Panel clue mode
         this.add(clueModePanel);
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructLaunchGameButton();//Bouton pour lancer le jeu
+        constructLaunchGameButton();//Button to launch the game
 
-        this.add(Box.createVerticalStrut(20));//Espace vertical vide
+        this.add(Box.createVerticalStrut(20));
 
-        constructExitButton();//Bouton pour quitter
+        constructExitButton();//Button to quit
 
-        this.add(Box.createVerticalStrut(10));//Espace vertical vide
+        this.add(Box.createVerticalStrut(10));
     }
 
-    //Construit une ComboBox avec les valeurs fournit par le tableau et l'index par défaut de la ComBox
+    //Construct a ComboBox with values of the tab and set the default selected index on the startIndex int
     private JComboBox constructMyComboBox(String [] numberTab,int startIndex,JComboBox cbo)
     {
         cbo=new JComboBox(numberTab);
@@ -98,7 +98,7 @@ public class StartPanel extends JPanel
         return cbo;
     }
 
-    //Construit le Label du titre
+    //Construct the title label
     private void constructTitleLabel()
     {
         JLabel lblTitle=new JLabel("Mastermind");
@@ -109,7 +109,7 @@ public class StartPanel extends JPanel
         this.add(lblTitle);
     }
 
-    //Contruit la zone de texte du pseudo
+    //Contruct player name text box
     private void constructPlayerTextBox()
     {
         txtPlayerName=new JTextArea();
@@ -118,19 +118,19 @@ public class StartPanel extends JPanel
         txtPlayerName.setSize(new Dimension(400,30));
         txtPlayerName.setMaximumSize(new Dimension(400,30));
 
-        //Ajout d'un évènement de touche du clavier
+        //Add an event for the keyboard
         txtPlayerName.addKeyListener(new KeyListener() {
                                          @Override
                                          public void keyTyped(KeyEvent e) {
-                                             //Pseudo doit être inférieur à 20 caractères
-                                             //Limites fixés par nous
+                                             //Pseudo needs to be less than 20 char
+                                             //Limit place by us
                                              if(txtPlayerName.getText().length() > 20)
                                                  e.consume();
 
                                          }
                                          @Override
                                          public void keyPressed(KeyEvent e) {
-                                             //Pas de retour à la ligne
+                                             //No \n
                                              if(e.getKeyChar()=='\n')
                                                  e.consume();
                                          }
@@ -141,7 +141,7 @@ public class StartPanel extends JPanel
         this.add(txtPlayerName);
     }
 
-    //Consruite un Label avec le texte en paramêtre et l'ajoute au Panel
+    //Consruct a Label with the texte in parameter and add it to the panel
     private void constructMyLabel(String text)
     {
         JLabel lblNbRound=new JLabel(text);
@@ -150,7 +150,7 @@ public class StartPanel extends JPanel
         this.add(lblNbRound);
     }
 
-    //Construit le bouton de lancement du jeu
+    //Construct lauch game button
     private void constructLaunchGameButton()
     {
         JButton btnLaunchGame=new JButton("Lancer le jeu !");
@@ -167,7 +167,7 @@ public class StartPanel extends JPanel
         this.add(btnLaunchGame);
     }
 
-    //Construit le bouton pour quitter
+    //Construct exit button
     private void constructExitButton()
     {
         JButton btnExit=new JButton("Quitter");
@@ -181,32 +181,32 @@ public class StartPanel extends JPanel
         this.add(btnExit);
     }
 
-    //Construit le Label avec l'image
+    //Construct the Label with the picture
     private void constructLabelPicture()
     {
         try
         {
-            //Charge l'image
+            //Load picture
             BufferedImage myPicture = ImageIO.read(new File("./ProjetA31-A32/images/mastermind_title.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-            //Taille
+            //size
             picLabel.setMaximumSize(new Dimension(415,225));
-            //Alignement
+            //Aloignement
             picLabel.setHorizontalAlignment(SwingConstants.CENTER);
             picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             this.add(picLabel);
         }
         catch (IOException e)
         {
-            //Si jamais, on n'arrive pas a charger, l'image, on met juste le Label de Titre classique
+            //If we don't find the picture, we put a simple title label instead
             constructTitleLabel();
         }
     }
 
-    //Applique le curseur de main et le fait que le boutton change de couleur quand on survole avec la souris à un boutton
+    //Put the hand's cursor and that the button changes colors its hover by the mouse
     private void createMyStartButtonMouseHoverEvent(JButton button)
     {
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));//Curseur de main
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));//Hand cursor
 
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
@@ -219,7 +219,7 @@ public class StartPanel extends JPanel
         });
     }
 
-    //Méthode lors du clique sur le bouton "Lancer le jeu"
+    //Metho when we click on the button "Lancer le jeu"
     private void startTheGame()
     {
         String playerName=txtPlayerName.getText();
@@ -229,17 +229,17 @@ public class StartPanel extends JPanel
         int nbTry=Integer.parseInt(cboNbTry.getSelectedItem().toString());
         CluesMode cluesMode=clueModePanel.getSelectedCluesMode();
 
-        //On vérifie si la zone de texte du pseudo n'est pas vide
+        //Check if the payer text box is not empty
         if(!playerName.isEmpty())
             controller.launchGame(playerName,nbRound,nbPieceOfCombinaison,nbTry,nbTotalPiece,cluesMode);
         else
         {
-            //Petit message d'information
+            //Small information dialog message
             JOptionPane.showMessageDialog(new JFrame(),
                     "Vous devez entrer un nom de joueur",
                     "Entrer un nom",
                     JOptionPane.ERROR_MESSAGE);
-            txtPlayerName.requestFocus();//Focus sur la zone de texte
+            txtPlayerName.requestFocus();//Focus on the text box
         }
     }
 }

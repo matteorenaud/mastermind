@@ -272,8 +272,12 @@ package helpersLib
     }
 }
 
-'The uses
+class Main
+{
+    + {static} main(args : String [])
+}
 
+'The uses
 
 
 @enduml

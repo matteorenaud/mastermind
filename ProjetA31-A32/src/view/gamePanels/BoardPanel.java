@@ -38,7 +38,7 @@ public class BoardPanel extends JPanel
         }
     }
 
-    //Construit une ligne d'essai
+    //Construct one try line
     private void constructLine(JPanel pnlLine)
     {
         List<GameColor> lstAvailableColor=this.controller.getAvailableColors();

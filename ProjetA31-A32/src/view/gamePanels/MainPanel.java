@@ -3,7 +3,7 @@ package view.gamePanels;
 import javax.swing.*;
 import java.awt.*;
 
-//Le Panel principal
+//Le main Panel
 public class MainPanel extends JPanel
 {
     public MainPanel()

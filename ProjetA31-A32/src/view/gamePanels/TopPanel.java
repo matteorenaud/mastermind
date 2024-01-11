@@ -6,7 +6,7 @@ import model.MasterMindGame;
 import javax.swing.*;
 import java.awt.*;
 
-//Panel du haut
+//Top panel of the game window
 public class TopPanel extends JPanel
 {
     public TopPanel(String playerName,int nbRound, MasterMindGame masterMindGame)
@@ -18,7 +18,7 @@ public class TopPanel extends JPanel
         lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 
         FlowLayout flowLayout=new FlowLayout();
-        flowLayout.setHgap(100);//Espace horizontal entre les composants
+        flowLayout.setHgap(100);//Horizontal space between components
         JPanel pnlInfoPlayer=new JPanel(flowLayout);
 
         JPanel pnlTitle=new JPanel(new FlowLayout());
@@ -55,7 +55,7 @@ public class TopPanel extends JPanel
         this.add(pnlInfoGame);
     }
 
-    //Consruit un gros Label avec le texte en paramêtre
+    //Consruct a big label with the texte in parmeter
     private JLabel constructTopBigLabel(String texte)
     {
         JLabel bigLabel=new JLabel(texte);
@@ -67,7 +67,7 @@ public class TopPanel extends JPanel
         return bigLabel;
     }
 
-    //Construit un petit Label avec le texte en paramêtre
+    //Construct a small Label wuth the texte in parameter
     private JLabel constructTopSmallLabel(String texte)
     {
         JLabel smallLabel=new JLabel(texte);

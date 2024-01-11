@@ -2,7 +2,7 @@ package view.gamePanels;
 
 import javax.swing.*;
 
-//Un Panel classique mais avec un tag en plus pour identifier le numéros de la ligne
+//A classic Panel but with a tag in order to identify the number of the line
 public class LinePanel extends JPanel
 {
     private int tag;

@@ -27,8 +27,6 @@ public class GameWindow extends JFrame
     private CluePanel pnlClue;
     private Color originalCBOBackColor;
     private Color originalColorButton;
-
-
     //------------------------------------------------------------------
 
     public GameWindow(GameMasterController controller,MasterMindGame game,String playerName,
