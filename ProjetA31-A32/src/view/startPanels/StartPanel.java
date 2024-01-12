@@ -32,7 +32,7 @@ public class StartPanel extends JPanel
         //Put a small border around
         this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(25,50,25,50),
-                BorderFactory.createLineBorder(new Color(255, 36, 36, 168),10,true)));//Pour faire un genre de padding
+                BorderFactory.createLineBorder(new Color(255, 36, 36, 168),10,true)));//Make a padding
 
         //BoxLayout, because we want all the component on top of each other (all place verticaly)
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -73,7 +73,7 @@ public class StartPanel extends JPanel
         this.add(Box.createVerticalStrut(20));
 
         constructMyLabel("Choissisez votre mode d'indices :");//Label clue mode
-        clueModePanel=new ClueModePanel(controller);//Panel clue mode
+        this.clueModePanel=new ClueModePanel(controller);//Panel clue mode
         this.add(clueModePanel);
 
         this.add(Box.createVerticalStrut(20));

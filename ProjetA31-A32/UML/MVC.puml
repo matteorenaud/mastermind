@@ -238,10 +238,10 @@ package view
         - constructQuitButton()
     }
 
-    EndWindow o--> "1\n game" MasterMindGame
-    EndWindow o--> "1\n controller" GameMasterController
-    EndWindow o--> "1\n originalColorButton" Color
-    EndWindow o--> "1\n backPanel" JPanel
+    EndWindow o--> "1\n -game" MasterMindGame
+    EndWindow o--> "1\n -controller" GameMasterController
+    EndWindow o--> "1\n -originalColorButton" Color
+    EndWindow o--> "1\n -backPanel" JPanel
 }
 
 package controller
@@ -283,6 +283,40 @@ class Main
 }
 
 'The uses and create
+Main ..> GameMasterController : > <<create>>
+
+StartWindow ..> StartPanel : > <<create>>
+StartWindow ..> ClueModePanel : > <<create>>
+
+GameWindow ..> MainPanel : > <<create>>
+GameWindow ..> CluePanel : > <<create>>
+GameWindow ..> BoardPanel : > <<create>>
+GameWindow ..> TopPanel : > <<create>>
+GameWindow ..> GameColor : > <<use>>
+GameWindow ..> MasterMindGame : > <<use>>
+
+CluePanel ..> CluesMode : > <<use>>
+
+BoardPanel ..> LinePanel : > <<create>>
+
+MasterMindGame ..> MasterMindBoard : > <<create>>
+MasterMindGame ..> GameColor : > <<use>>
+MasterMindGame ..> CluesMode : > <<use>>
+
+MasterMindBoard ..> MasterMindLine : > <<create>>
+MasterMindBoard ..> Helpers : > <<use>>
+
+MasterMindLine ..> CellInfo : > <<use>>
+MasterMindLine ..> CluesMode : > <<use>>
+MasterMindLine ..> GameColor : > <<use>>
+
+Helpers ..> CluesMode : > <<use>
+Helpers ..> GameColor : > <<use>
+
+GameMasterController ..> StartWindow : > <<create>
+GameMasterController ..> GameWindow : > <<create>
+GameMasterController ..> EndWindow : > <<create>
+GameMasterController ..> MasterMindGame : > <<create>
 
 
 @enduml

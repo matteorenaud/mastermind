@@ -183,7 +183,7 @@ public class MasterMindLine {
     //Method that print all informations about a line on the terminal
     public void printAllInformationsAboutTheLine(MasterMindLine secretCombination)
     {
-        System.out.print("\t| Récapitulatif de la ligne");
+        System.out.print("\t| === Récapitulatif de la ligne ===");
         System.out.print("\n\t| Couleur de la ligne : \n\t| ");
         for(int i=0;i<this.cells.size();i++)
             System.out.print(cells.get(i)+" ");
