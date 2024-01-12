@@ -50,6 +50,14 @@ public class MasterMindBoard
     {
         return this.board;
     }
+    //Get the last line (the last of the board or the last with the combination found)
+    public MasterMindLine getLastLine()
+    {
+        int index=this.currentLine;
+        if(currentLine>=this.board.size())
+            index=this.board.size()-1;
+        return this.board.get(index);
+    }
 
     //Function that select the next line of the board
     //the function returns true if the next line exists

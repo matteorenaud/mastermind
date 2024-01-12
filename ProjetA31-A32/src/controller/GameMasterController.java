@@ -1,13 +1,10 @@
 package controller;
 
 import model.CluesMode;
-import model.GameColor;
 import model.MasterMindGame;
 import view.EndWindow;
 import view.GameWindow;
 import view.StartWindow;
-
-import java.util.ArrayList;
 
 public class GameMasterController
 {
@@ -16,12 +13,8 @@ public class GameMasterController
     private EndWindow endWindow; //End window where the score is displayed
     private MasterMindGame game; //The game (=the models of our MVC)
 
-    //Function used to get the list of all availables colors
-    //(Only getters in the controller)
-    public ArrayList<GameColor> getAvailableColors()
-    {
-        return this.game.getAvailableColors();
-    }
+    //The constructor is empty
+    public GameMasterController(){}
 
     //Method used by the main class to start a new game
     //the method creates a new start window for the player to select the game parameters
@@ -45,9 +38,11 @@ public class GameMasterController
 
     //Method that create a new round
     //(Different from lauchGame() because launche game is to launch the game at the beginning and newRound() is at the end of every round)
-    public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount)
+    public void newRound(String playerName,int nbRound,int lineSize,int lineCount,int colorCount, boolean abandond)
     {
-        game.updateScore();
+        if(!abandond)
+            game.updateScore();
+
         if(game.generateNewRound())
         {
             this.gameWindow.dispose();
@@ -73,7 +68,7 @@ public class GameMasterController
         if(game.getMasterMindBoard().verifyCurrentLine())
         {
             printFoundToPlayer();
-            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount());
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount(),false);
             return;
         }
         game.getMasterMindBoard().getCurrentLine().printAllInformationsAboutTheLine(game.getMasterMindBoard().getSecretCombination());
@@ -91,7 +86,7 @@ public class GameMasterController
         if(!game.getMasterMindBoard().nextLine())
         {
             printFailToPlayer();
-            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount());
+            this.newRound(this.game.getPlayerName(), this.game.getNbRoud(), this.game.getLineSize(), this.game.getNbTry(), this.game.getColorCount(),false);
         }
     }
 

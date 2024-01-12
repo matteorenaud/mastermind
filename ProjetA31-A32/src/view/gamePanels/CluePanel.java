@@ -49,7 +49,7 @@ public class CluePanel extends JPanel
                 clue.setLayout(new FlowLayout());
                 for (int j = 0; j < lineSize; j++)
                 {
-                    JLabel lbl = new JLabel("  ");
+                    JLabel lbl = new JLabel("   ");
                     lbl.setOpaque(false);//Default, we don't see the color of the label
                     lbl.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,30));
                     clue.add(lbl);
@@ -78,40 +78,53 @@ public class CluePanel extends JPanel
                         + this.game.getMasterMindBoard().getCurrentLine().getWellChosen());
         }
         //Else (classic and easy mode)
-        //We color it in with or black
+        //We color it in withe or black
         else
         {
             JPanel p=(JPanel) c;
             ArrayList<CellInfo> info=game.getMasterMindBoard().getCurrentLine().getCellInfos();
             int i=0;
 
-            //In easy mod, the white pawn are at the good place
+            //In easy mod, the black pawn are at the good place
+            //White are present but not at the good place
+            //No color = not present
             if (this.game.getCluesMode()==CluesMode.EASY_MODE)
             {
                 for (Component cc : p.getComponents()) {
                     JLabel l = (JLabel) cc;
+                    l.setText(" o ");
                     l.setOpaque(true);
                     if (info.get(i) == CellInfo.WELL_PLACED)
+                        l.setBackground(Color.BLACK);
+                    else if(info.get(i)==CellInfo.GOOD_COLOR)
                         l.setBackground(Color.WHITE);
                     else
-                        l.setBackground(Color.BLACK);
+                        l.setOpaque(false);
                     i++;
                 }
             }
-            //In classic mode, we print first the white, than the black
+            //In classic mode, we print first the black, than the white
             else
             {
-                i=0;
                 int nbWellPlace=game.getMasterMindBoard().getCurrentLine().getWellPlaced();
+                int nbGoodColor=game.getMasterMindBoard().getCurrentLine().getWellChosen();
                 for (Component cc : p.getComponents())
                 {
                     JLabel l = (JLabel) cc;
-                    l.setOpaque(true);
-                    if(i>=nbWellPlace)
+                    l.setText(" o ");
+                    if(nbWellPlace>0)
+                    {
                         l.setBackground(Color.BLACK);
-                    else
+                        l.setOpaque(true);
+                        nbWellPlace--;
+                        continue;
+                    }
+                    if(nbGoodColor>0)
+                    {
                         l.setBackground(Color.WHITE);
-                    i++;
+                        l.setOpaque(true);
+                        nbGoodColor--;
+                    }
                 }
             }
         }

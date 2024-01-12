@@ -43,6 +43,7 @@ package model
         + getIndexCurrentLine() : Integer
         + getSecretCombination() : MasterMindLine
         + getBoard : MasterMindLine[*]
+        + getLastLine() : MasterMindLine
         + nextLine() : Boolean
         - generateBoardLines()
         - generateSecretCombination()
@@ -87,11 +88,13 @@ package model
 
     class MasterMindLine
     {
-        - size:Integer
+        - size : Integer
+        - tabAlreadyGoodPlace[] : Boolean
         +<<create>> MasterMindLine(size:Integer)
         + getCells() : GameColor[*]
         + getCellsInfos() : CellInfo[*]
         + verify(secretCombination:MasterMindLine) : Boolean
+        - boolean allColorAlreadyWellPlaced(c : GameColor, secretCombination : MasterMindLine)
         + getCellColor(index:Integer) : GameColor
         + setCellColor(color:GameColor, index:Integer)
         + getWellPlaced() : Integer
@@ -185,16 +188,18 @@ package view
         class BoardPanel
         {
            - lineSize : Integer
-           + <<create>> BoardPanel(lineCount : Integer, lineSize : Integer, controller : GameMasterController)
+           + <<create>> BoardPanel(lineCount : Integer, lineSize : Integer, controller : GameMasterController, game : MasterMindGame)
            - constructLine(pnlLine : JPanel)
         }
 
         BoardPanel o--> "1\n-controller" GameMasterController
+        BoardPanel o--> "1\n-game" MasterMindGame
 
         class CluePanel
         {
             + <<create>> CluePanel(lineCount : Integer, lineSize  : Integer, controller : GameMasterController, game : MasterMindGame)
             + updateClues(line : Integer)
+
         }
 
         CluePanel o--> "1\n-controller" GameMasterController
@@ -243,10 +248,10 @@ package controller
 {
     class GameMasterController
     {
-        + getAvailableColors() : GameColor[*]
+        + <<create>> GameMasterController()
         + startNewGame()
         + launchGame(playerName : String, nbRound : Integer, lineSize : Integer, lineCount : Integer, colorCount : Integer, cluesMode : CluesMode)
-        + newRound(playerName : String, nbRound : Integer , lineSize : Integer, lineCount : Integer, colorCount : Integer)
+        + newRound(playerName : String, nbRound : Integer , lineSize : Integer, lineCount : Integer, colorCount : Integer, abandond :  Boolean)
         + endgame()
         + verifyCurrentLine()
         + nextLine()
@@ -277,7 +282,7 @@ class Main
     + {static} main(args : String [])
 }
 
-'The uses
+'The uses and create
 
 
 @enduml

@@ -35,14 +35,14 @@ public class GameWindow extends JFrame
         super("MasterMind");
         this.setSize(1200,1000);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);//Apparait au milieu de l'écran
+        this.setLocationRelativeTo(null);//Spawn center screen
         ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_mastermind.png");
         this.setIconImage(icon.getImage());
 
-        //J'ai regarde pour trouver la couleur exacte de base
+        //I have look to find the good default color
         this.originalCBOBackColor=new Color(238,238,238);
 
-        //On mets en place tout ce qu'on a besoin
+        //We put everything we need
         this.activeLine = lineCount-1;
         this.controller = controller;
         this.masterMindGame = game;
@@ -65,7 +65,7 @@ public class GameWindow extends JFrame
         constraints.gridx = 0;
         constraints.gridy = 0;
 
-        boardPanel= new BoardPanel(this.lineCount,this.lineSize,this.controller);
+        boardPanel= new BoardPanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
         mainPanel.add(boardPanel,constraints);
 
         constraints.gridx = 1;
@@ -89,7 +89,7 @@ public class GameWindow extends JFrame
         btnValidate.setMaximumSize(new Dimension(200,100));
         btnValidate.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnValidate.addActionListener(ActionEvent->{
-
+            //Verify if all ComboBoxs of the line are filled
             if(!activeLineFilled())
             {
                 return;
@@ -123,7 +123,6 @@ public class GameWindow extends JFrame
         });
         createMyGameButtonMouseHoverEvent(btnReset);
         mainPanel.add(btnReset,constraints);
-
 
         JButton btnPassTurn=new JButton("Abandonner la manche actuelle");
         btnPassTurn.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
@@ -169,7 +168,7 @@ public class GameWindow extends JFrame
     //Construct the panel with all the availaible colors
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
-        List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
+        List<GameColor>lstAvailableColor=this.masterMindGame.getAvailableColors();
         JLabel lblInfoColor=new JLabel("Couleurs disponibles :");
         lblInfoColor.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
         pnlChoiceColor.add(lblInfoColor);
@@ -284,10 +283,10 @@ public class GameWindow extends JFrame
         return lineColor;
     }
 
-    //Laucnh a new round
+    //Launch a new round
     private void newRound()
     {
-        controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+        this.controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount,true);
     }
 
     //Update clue's panel

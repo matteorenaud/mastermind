@@ -3,6 +3,7 @@ package view.gamePanels;
 import controller.GameMasterController;
 import model.GameColor;
 import helpersLib.Helpers;
+import model.MasterMindGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +13,14 @@ public class BoardPanel extends JPanel
 {
     //-----------------------------------------------------------------------------
     private GameMasterController controller;
+    private MasterMindGame game;
     private int lineSize;
 
     //-----------------------------------------------------------------------------
-    public BoardPanel(int lineCount, int lineSize, GameMasterController controller)
+    public BoardPanel(int lineCount, int lineSize, GameMasterController controller, MasterMindGame game)
     {
         this.controller = controller;
+        this.game=game;
         this.lineSize = lineSize;
 
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -41,7 +44,7 @@ public class BoardPanel extends JPanel
     //Construct one try line
     private void constructLine(JPanel pnlLine)
     {
-        List<GameColor> lstAvailableColor=this.controller.getAvailableColors();
+        List<GameColor> lstAvailableColor=this.game.getAvailableColors();
         for(int i=0;i<this.lineSize;i++)
         {
             JComboBox comboBox = new JComboBox<>();
@@ -50,10 +53,9 @@ public class BoardPanel extends JPanel
             comboBox.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
             comboBox.setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
 
-            for(int j=0;j<this.controller.getAvailableColors().size();j++)
+            for(int j=0;j<this.game.getAvailableColors().size();j++)
             {
-                comboBox.addItem(
-                Helpers.translateColorToFrench(lstAvailableColor.get(j)).toUpperCase());
+                comboBox.addItem(Helpers.translateColorToFrench(lstAvailableColor.get(j)).toUpperCase());
             }
 
             comboBox.setSelectedIndex(-1);

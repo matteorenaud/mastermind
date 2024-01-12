@@ -109,10 +109,9 @@ public class MasterMindGame
     //Method that update the score after each round
     public void updateScore()
     {
-        for(MasterMindLine line : this.masterMindBoard.getBoard())
-        {
-            this.score += line.getWellPlaced() + line.getWellPlaced() * 3;
-        }
+        MasterMindLine line=this.getMasterMindBoard().getLastLine();
+
+        this.score += line.getWellChosen() + line.getWellPlaced() * 3;
 
         if(this.cluesMode == CluesMode.CLASSIC_MODE)
         {
