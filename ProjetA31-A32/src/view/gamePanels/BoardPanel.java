@@ -60,6 +60,7 @@ public class BoardPanel extends JPanel
 
             comboBox.setSelectedIndex(-1);
 
+            //Events when we change the selected object
             comboBox.addItemListener(e -> {
                 int idx=comboBox.getSelectedIndex();
                 if(idx!=-1) {
