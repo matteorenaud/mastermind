@@ -1,18 +1,18 @@
 package view;
 
 import controller.GameMasterController;
-import model.CluesMode;
 import model.GameColor;
+import helpersLib.Helpers;
 import model.MasterMindGame;
-import model.MasterMindGameObserver;
-import view.GamePanels.*;
-
+import view.gamePanels.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class GameWindow extends JFrame implements MasterMindGameObserver
+public class GameWindow extends JFrame
 {
     //------------------------------------------------------------------
     private GameMasterController controller;
@@ -23,23 +23,26 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
     private int nbRound;
     private int activeLine;
     private String playerName;
-
     private JPanel boardPanel;
-    private JPanel pnlModeIndice;
-    private JPanel pnlIndice;
-    private JPanel pnlNumeric;
-    private JPanel pnlEasyClassicMode;
-    private JLabel lblRound;
+    private CluePanel pnlClue;
+    private Color originalCBOBackColor;
+    private Color originalColorButton;
     //------------------------------------------------------------------
 
     public GameWindow(GameMasterController controller,MasterMindGame game,String playerName,
                       int nbRound,int lineSize,int lineCount, int colorCount)
     {
         super("MasterMind");
-        setSize(1100,900);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setSize(1200,1000);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);//Spawn center screen
+        ImageIcon icon = new ImageIcon("./images/icon_mastermind.png");
+        this.setIconImage(icon.getImage());
 
+        //I have look to find the good default color
+        this.originalCBOBackColor=new Color(238,238,238);
+
+        //We put everything we need
         this.activeLine = lineCount-1;
         this.controller = controller;
         this.masterMindGame = game;
@@ -56,98 +59,171 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
-
-        //backPanel.add(pnlInfoPlayer);
         backPanel.add(new TopPanel(this.playerName,this.nbRound,this.masterMindGame));
         backPanel.add(mainPanel);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
 
-        boardPanel= new BoardPanel(this.lineCount,this.lineSize,this.controller);
+        boardPanel= new BoardPanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
         mainPanel.add(boardPanel,constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 0;
-        pnlIndice= new pnlIndice(this.lineCount,this.lineSize);
+        pnlClue = new CluePanel(this.lineCount,this.lineSize,this.controller,this.masterMindGame);
 
-        mainPanel.add(pnlIndice,constraints);
+        mainPanel.add(pnlClue,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
         JPanel pnlChoiceColor=new JPanel();
         pnlChoiceColor.setLayout(new FlowLayout());
+        pnlChoiceColor.setBackground(new Color(140, 218, 218));
 
         constructAvailableColor(pnlChoiceColor);
         mainPanel.add(pnlChoiceColor,constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        pnlModeIndice=new pnlIndiceMode();
-
-        mainPanel.add(pnlModeIndice,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;
         JButton btnValidate=new JButton("Valider");
         btnValidate.setMaximumSize(new Dimension(200,100));
-
+        btnValidate.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnValidate.addActionListener(ActionEvent->{
-            GameColor[] lineColor=colorOfTheLine();
-            System.out.println("Couleur récupére");
-            for (int i=0;i<lineColor.length;i++)
+            //Verify if all ComboBoxs of the line are filled
+            if(!activeLineFilled())
             {
-                System.out.print(lineColor[i]+" ");
-                controller.setCurrentLineCellColor(lineColor[i],i);
-            }
-            System.out.println();
-
-            controller.verifyCurrentLine();
-
-            if(controller.nextLine() == false)
-            {
-                newGame();
                 return;
             }
 
-            updateCombBox();
-            updateAllIndicesMode();
+            GameColor[] lineColor=colorOfTheLine();
+            for (int i=0;i<lineColor.length;i++)
+            {
+                masterMindGame.getMasterMindBoard().getCurrentLine().setCellColor(lineColor[i],i);
+            }
+            controller.verifyCurrentLine();
         });
+        this.originalColorButton=btnValidate.getBackground();
+        createMyGameButtonMouseHoverEvent(btnValidate);
         mainPanel.add(btnValidate,constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 3;
         JButton btnReset=new JButton("Réinitialiser");
+        btnReset.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnReset.setMaximumSize(new Dimension(200,100));
+        btnReset.addActionListener(ActiveEvent->{
+            //Event of the button to reset all ComboBox of the current line
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous réinitialiser la ligne ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                resetComboBox();
+        });
+        createMyGameButtonMouseHoverEvent(btnReset);
         mainPanel.add(btnReset,constraints);
 
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        JButton btnRestart=new JButton("Relancer une nouvelle partie");
-        mainPanel.add(btnRestart,constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        JButton btnPassTurn=new JButton("Abandonner la manche actulle");
+        JButton btnPassTurn=new JButton("Abandonner la manche actuelle");
+        btnPassTurn.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
+        btnPassTurn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnPassTurn.addActionListener(ActionEvent->{
-            newGame();
+            //Event of the button to abandon the round
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous abandonner la manche ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                newRound();
         });
-        mainPanel.add(btnPassTurn,constraints);
+        createMyGameButtonMouseHoverEvent(btnPassTurn);
+        backPanel.add(Box.createVerticalStrut(15));
 
+        backPanel.add(btnPassTurn);
 
-        add(backPanel);
-        setVisible(true);
+        backPanel.add(Box.createVerticalStrut(15));
+
+        JButton btnRestart=new JButton("Relancer une nouvelle partie");
+        btnRestart.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
+        btnRestart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnRestart.addActionListener(ActiveEvent->{
+            //Event of the button to restart a game with the same game options
+            int choice=JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous relancer une partie ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+            if(choice==JOptionPane.YES_OPTION)
+                controller.launchGame(this.playerName,this.nbRound,this.lineSize,this.lineCount,this.colorCount,this.masterMindGame.getCluesMode());
+        });
+        createMyGameButtonMouseHoverEvent(btnRestart);
+        backPanel.add(btnRestart);
+        backPanel.add(Box.createVerticalStrut(15));
+
+        backPanel.setBackground(new Color(216, 222, 152));
+
+        this.add(backPanel);
+        this.setVisible(true);
     }
+
+    //Construct the panel with all the available colors
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
-        List<GameColor>lstAvailableColor=this.controller.getAvailableColors();
+        List<GameColor>lstAvailableColor=this.masterMindGame.getAvailableColors();
+        JLabel lblInfoColor=new JLabel("Couleurs disponibles :");
+        lblInfoColor.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
+        pnlChoiceColor.add(lblInfoColor);
         for(int i=0;i<this.colorCount;i++)
         {
-            JLabel lblOneColor=new JLabel("Color "+lstAvailableColor.get(i).toString());
+            JLabel lblOneColor=new JLabel(" "+
+                    Helpers.translateColorToFrench(lstAvailableColor.get(i)).toUpperCase());
+            lblOneColor.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
             pnlChoiceColor.add(lblOneColor);
         }
     }
-    private void updateCombBox()
+
+    //Put the hand's cursor and that the button changes colors when its hover by the mouse
+    private void createMyGameButtonMouseHoverEvent(JButton button)
+    {
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(new Color(201, 246, 117));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(originalColorButton);
+            }
+        });
+    }
+
+    //Check if all the ComboBox of the current line are filled
+    private boolean activeLineFilled()
+    {
+        for(Component component : boardPanel.getComponents())
+        {
+            LinePanel linePanel = (LinePanel) component;
+
+            if(linePanel.getTag() == activeLine)
+            {
+                for (Component component1 : linePanel.getComponents())
+                {
+                    JComboBox comboBox = (JComboBox) component1;
+                    if(comboBox.getSelectedIndex() < 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    //Update ComboBox
+    //Set active the current line and copy all precedent colors in the ComboBox of this line
+    public void updateCombBox()
     {
         for(Component pnl:boardPanel.getComponents())
         {
@@ -160,7 +236,10 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 }
             }
         }
+        GameColor[] lineColor=colorOfTheLine();
+
         this.activeLine--;
+        int i=0;
         for(Component pnl:boardPanel.getComponents())
         {
             if(pnl.getClass()== LinePanel.class)
@@ -168,13 +247,20 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
                 LinePanel pnlTheTry=(LinePanel) pnl;
                 if(pnlTheTry.getTag()==activeLine) {
 
-                    for (Component cbo : pnlTheTry.getComponents()) {
+                    for (Component cbo : pnlTheTry.getComponents())
+                    {
                         cbo.setEnabled(true);
+                        //On fait en sorte de remplir les ComboBox de l'essai prochain avec celles qu'il vient de mettre
+                        JComboBox the_cbo=(JComboBox)cbo;
+                        the_cbo.setSelectedIndex(masterMindGame.getAvailableColors().indexOf(lineColor[i]));
+                        i++;
                     }
                 }
             }
         }
     }
+
+    //Return an array with the colors of the current line
     private GameColor[] colorOfTheLine()
     {
         GameColor[] lineColor=new GameColor[this.lineSize];
@@ -199,25 +285,53 @@ public class GameWindow extends JFrame implements MasterMindGameObserver
         return lineColor;
     }
 
-    private void updateAllIndicesMode()
+    //Launch a new round
+    private void newRound()
     {
-
+        this.controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount,true);
     }
 
-    private void newGame()
+    //Update clue's panel
+    public void updateClues()
     {
-        controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+        pnlClue.updateClues(activeLine);
     }
 
-
-    @Override
-    public void updateActualRound(int actualRound)
+    //Reset the ComboBoxs of the current line
+    private void resetComboBox()
     {
-        //controller.newRound(this.playerName, this.nbRound, this.lineSize, this.lineCount, this.colorCount);
+        for(Component c:this.boardPanel.getComponents())
+        {
+            if (c.getClass() == LinePanel.class) {
+                LinePanel panel = (LinePanel) c;
+                if (panel.getTag() == activeLine) {
+                    for(Component cc : panel.getComponents())
+                    {
+                        JComboBox cbo=(JComboBox) cc;
+                        cbo.setSelectedIndex(-1);
+                        cbo.setBackground(this.originalCBOBackColor);
+                    }
+                }
+            }
+        }
     }
-    @Override
-    public void updateEndGame(int score)
+
+    //Print a message when the player found the secret combination
+    public void showFoundToPlayer()
     {
-        controller.endGame();
+        JOptionPane.showMessageDialog(null,
+        "Bravo !\nLa combinaison secrète était bien : "+
+                masterMindGame.getMasterMindBoard().secretCombinaisonToString(),
+                "Trouver",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    //Print a message when the player fail to found the secret combination
+    public void showFailToPlayer()
+    {
+        JOptionPane.showMessageDialog(null,
+                "Dommage !\nLa combinaison secrète était : "+
+                        masterMindGame.getMasterMindBoard().secretCombinaisonToString(),
+                "Perdu !",
+                JOptionPane.OK_OPTION);
     }
 }

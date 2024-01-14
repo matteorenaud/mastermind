@@ -1,4 +1,4 @@
-#Le .gitiignore avec ce que propose la liste du GitHub
+#Le .gitignore avec ce que propose la liste du GitHub
 
 # Compiled class file
 *.class
@@ -13,11 +13,11 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar #On a besoin du JAR
 *.war
 *.nar
 *.ear
-*.zip
+#*.zip #On a aussi besoin du ZIP
 *.tar.gz
 *.rar
 
@@ -25,6 +25,13 @@
 hs_err_pid*
 replay_pid*
 
-*/.idea
+#On ne veut pas le .idea
+/.idea/
+#Ceci non plus
+/META-INF/
 
-*/META-INF
+#Et le .iml
+a31-mastermind.iml
+ProjetA31-A32.iml
+#Le dossier out
+/out/

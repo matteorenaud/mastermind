@@ -1,8 +1,8 @@
 package model;
 
-import java.awt.*;
+import helpersLib.Helpers;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MasterMindBoard
@@ -27,6 +27,36 @@ public class MasterMindBoard
         generateSecretCombination();
 
         //printSecretCombination();
+    }
+
+    //Getters
+    //The current line
+    public MasterMindLine getCurrentLine()
+    {
+        return this.board.get(this.currentLine);
+    }
+    //The index of the current line
+    public int getIndexCurrentLine()
+    {
+        return this.currentLine;
+    }
+    //The secret combination
+    public MasterMindLine getSecretCombination()
+    {
+        return this.secretCombination;
+    }
+    //The board
+    public ArrayList<MasterMindLine> getBoard()
+    {
+        return this.board;
+    }
+    //Get the last line (the last of the board or the last with the combination found)
+    public MasterMindLine getLastLine()
+    {
+        int index=this.currentLine;
+        if(currentLine>=this.board.size())
+            index=this.board.size()-1;
+        return this.board.get(index);
     }
 
     //Function that select the next line of the board
@@ -69,13 +99,6 @@ public class MasterMindBoard
         return this.board.get(currentLine).verify(this.secretCombination);
     }
 
-    //Function that returns the current line of the board
-    public MasterMindLine getCurrentLine()
-    {
-        return this.board.get(this.currentLine);
-    }
-    public int getIndexCurrentLine(){return this.currentLine;}
-
     //Method that prints the secret combination in the terminal
     public void printSecretCombination()
     {
@@ -86,14 +109,13 @@ public class MasterMindBoard
 
         System.out.println();
     }
-    public MasterMindLine getSecretCombination()
-    {
-        return this.secretCombination;
-    }
 
-    public ArrayList<MasterMindLine> getBoard()
+    //Method that returns a String with the color of the secret combination in french separate by space
+    public String secretCombinaisonToString()
     {
-        return this.board;
+        String secret="";
+        for(GameColor c : this.secretCombination.getCells())
+            secret+= Helpers.translateColorToFrench(c).toUpperCase()+" ";
+        return secret;
     }
-
 }
