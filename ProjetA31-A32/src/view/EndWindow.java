@@ -24,7 +24,7 @@ public class EndWindow extends JFrame
     {
         super("Fin de la partie");
         this.setSize(700,950);
-        this.setResizable(false);//No size modification of the window
+        this.setResizable(false);//Cannot resize window in order to avoid strange display (like StartWindows)
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         ImageIcon icon = new ImageIcon("./images/icon_end_game.png");
