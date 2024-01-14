@@ -13,7 +13,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar #On a besoin du JAR
 *.war
 *.nar
 *.ear
@@ -25,16 +25,13 @@
 hs_err_pid*
 replay_pid*
 
-*/.idea
-
+#On ne veut pas le .idea
+/.idea/
+#Ceci non plus
 /META-INF/
 
-#Le .idea est toujours pris, donc on va empêcher chaque fichier
-.idea/misc.xml
-.idea/modules.xml
-.idea/uiDesigner.xml
-.idea/vcs.xml
-.idea/workspace.xml
 #Et le .iml
 a31-mastermind.iml
 ProjetA31-A32.iml
+#Le dossier out
+/out/
