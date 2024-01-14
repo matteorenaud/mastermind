@@ -32,16 +32,12 @@ Ce dossier contient l'archive JAR et le dossier avec les images.
 Double cliquer sur le JAR
 ```
 
-- **Linux (x64) :**
+- **Linux (x64) et MacOS (ARM) :**
 ```|
 Une fois l'exécutable téléchargé ouvrez un terminal et effectuez les commandes suivantes pour pouvoir jouer au jeu :
 
 - chmod u+x ./a31-mastermind.jar (accord du droit d'exécution sur le système)
 - java -jar a31-mastermind.jar
-```
-- **MacOS (ARM) :**
-```|
-Double cliquer sur le JAR
 ```
 
 Une fois ceci fait, choisisez vos options de jeu et vous pouvez jouer au MasterMind !
