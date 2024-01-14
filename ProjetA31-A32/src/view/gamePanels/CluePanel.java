@@ -33,14 +33,14 @@ public class CluePanel extends JPanel
                 lbl.setOpaque(true);
                 lbl.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,30));
                 lbl.setAlignmentX(CENTER_ALIGNMENT);
-                this.add(Box.createVerticalStrut(10));//Empty vertcal space between
+                this.add(Box.createVerticalStrut(10));//Empty vertical space between
 
                 clues.add(lbl);
                 this.add(lbl);
             }
         }
         //Else (classic mode or easy mode)
-        //We create small label but with an emty texte that we color in black or white for the clues
+        //We create small label but with an empty text that we color in black or white for the clues
         else
         {
             for (int i = 0; i < lineCount; i++)

@@ -27,7 +27,7 @@ public class EndWindow extends JFrame
         this.setResizable(false);//No size modification of the window
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_end_game.png");
+        ImageIcon icon = new ImageIcon("./images/icon_end_game.png");
         this.setIconImage(icon.getImage());
 
         this.game = game;
@@ -58,7 +58,7 @@ public class EndWindow extends JFrame
 
         try
         {
-            BufferedImage myPicture = ImageIO.read(new File("./ProjetA31-A32/images/homer_simpson.png"));
+            BufferedImage myPicture = ImageIO.read(new File("./images/homer_simpson.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
             picLabel.setMaximumSize(new Dimension(500,400));
             picLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -80,7 +80,7 @@ public class EndWindow extends JFrame
         this.setVisible(true);
     }
 
-    //Put the hand's cursor and that the button changes colors its hover by the mouse
+    //Put the hand's cursor and that the button changes colors when its hover by the mouse
     private void createMyEndGameButtonMouseHoverEvent(JButton button)
     {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -151,7 +151,7 @@ public class EndWindow extends JFrame
         backPanel.add(Box.createVerticalStrut(15));
     }
 
-    //Construct the quit button
+    //Construct the exit button
     private void constructQuitButton()
     {
         JButton btnExit=new JButton("Quitter");

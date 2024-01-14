@@ -51,7 +51,7 @@ public class MasterMindGame
     public int getNbTry(){
         return this.nbTry;
     }
-    //Le lenght of a line (= size the combinaison)
+    //Le lenght of a line (= size the combination)
     public int getLineSize() {
         return lineSize;
     }
@@ -134,7 +134,7 @@ public class MasterMindGame
         printAvailableColor();
     }
 
-    //Méthode that print all the available color on the terminal
+    //Method that print all the available color on the terminal
     public void printAvailableColor()
     {
         System.out.println("Couleur disponible : ");

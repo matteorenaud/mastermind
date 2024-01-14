@@ -55,7 +55,7 @@ public class TopPanel extends JPanel
         this.add(pnlInfoGame);
     }
 
-    //Consruct a big label with the texte in parmeter
+    //Construct a big label with the text in parameter
     private JLabel constructTopBigLabel(String texte)
     {
         JLabel bigLabel=new JLabel(texte);
@@ -67,7 +67,7 @@ public class TopPanel extends JPanel
         return bigLabel;
     }
 
-    //Construct a small Label wuth the texte in parameter
+    //Construct a small Label with the text in parameter
     private JLabel constructTopSmallLabel(String texte)
     {
         JLabel smallLabel=new JLabel(texte);

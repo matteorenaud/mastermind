@@ -29,7 +29,7 @@ public class MasterMindLine {
     {
         return cells;
     }
-    //Getters for the list of informations of the cells
+    //Getters for the list of information of the cells
     public ArrayList<CellInfo> getCellInfos()
     {
         return this.cellInfos;
@@ -98,11 +98,11 @@ public class MasterMindLine {
         return true;
     }
 
-    //Method that check if all the color are already well placed
+    //Method that check if all the color are already well-placed
     private boolean allColorAlreadyWellPlaced(GameColor c,MasterMindLine secretCombination)
     {
-        int nbColor=0;//Number of this color in the secret combinaison
-        int nbWellPlaced=0;//Number of well placed of this color
+        int nbColor=0;//Number of this color in the secret combination
+        int nbWellPlaced=0;//Number of well-placed of this color
         for(int i=0;i<this.size;i++)
             if(secretCombination.getCellColor(i)==c)
                 nbColor++;
@@ -135,7 +135,7 @@ public class MasterMindLine {
         this.cells.set(index,color);
     }
 
-    //Function that returns the number of well placed cells
+    //Function that returns the number of well-placed cells
     public int getWellPlaced()
     {
         int nb = 0;
@@ -150,7 +150,7 @@ public class MasterMindLine {
         return nb;
     }
 
-    //Function that returns the number of well chosen cells
+    //Function that returns the number of well-chosen cells
     public int getWellChosen()
     {
         int nb = 0;

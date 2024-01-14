@@ -17,7 +17,7 @@ public class StartWindow extends JFrame//Remember to extend JFrame
         this.setSize( 600, 920 );
         this.setLocationRelativeTo(null);//Window spawn in center screen
         //Change default icone of the window
-        ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_start_game.png");
+        ImageIcon icon = new ImageIcon("./images/icon_start_game.png");
         this.setIconImage(icon.getImage());
 
         this.controller=gmc;

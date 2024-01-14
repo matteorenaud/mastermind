@@ -36,7 +36,7 @@ public class GameWindow extends JFrame
         this.setSize(1200,1000);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);//Spawn center screen
-        ImageIcon icon = new ImageIcon("./ProjetA31-A32/images/icon_mastermind.png");
+        ImageIcon icon = new ImageIcon("./images/icon_mastermind.png");
         this.setIconImage(icon.getImage());
 
         //I have look to find the good default color
@@ -112,7 +112,7 @@ public class GameWindow extends JFrame
         btnReset.setFont(new Font(Font.SANS_SERIF,Font.BOLD,40));
         btnReset.setMaximumSize(new Dimension(200,100));
         btnReset.addActionListener(ActiveEvent->{
-
+            //Event of the button to reset all ComboBox of the current line
             int choice=JOptionPane.showConfirmDialog(null,
                     "Voulez-vous réinitialiser la ligne ?",
                     "Confirmation",
@@ -128,6 +128,7 @@ public class GameWindow extends JFrame
         btnPassTurn.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
         btnPassTurn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnPassTurn.addActionListener(ActionEvent->{
+            //Event of the button to abandon the round
             int choice=JOptionPane.showConfirmDialog(null,
                     "Voulez-vous abandonner la manche ?",
                     "Confirmation",
@@ -147,6 +148,7 @@ public class GameWindow extends JFrame
         btnRestart.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
         btnRestart.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnRestart.addActionListener(ActiveEvent->{
+            //Event of the button to restart a game with the same game options
             int choice=JOptionPane.showConfirmDialog(null,
                     "Voulez-vous relancer une partie ?",
                     "Confirmation",
@@ -165,7 +167,7 @@ public class GameWindow extends JFrame
         this.setVisible(true);
     }
 
-    //Construct the panel with all the availaible colors
+    //Construct the panel with all the available colors
     private void constructAvailableColor(JPanel pnlChoiceColor)
     {
         List<GameColor>lstAvailableColor=this.masterMindGame.getAvailableColors();
@@ -181,7 +183,7 @@ public class GameWindow extends JFrame
         }
     }
 
-    //Put the hand's cursor and that the button changes colors its hover by the mouse
+    //Put the hand's cursor and that the button changes colors when its hover by the mouse
     private void createMyGameButtonMouseHoverEvent(JButton button)
     {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -219,7 +221,7 @@ public class GameWindow extends JFrame
         return true;
     }
 
-    //Update ComboBoxs
+    //Update ComboBox
     //Set active the current line and copy all precedent colors in the ComboBox of this line
     public void updateCombBox()
     {

@@ -82,7 +82,7 @@ public class StartPanel extends JPanel
 
         this.add(Box.createVerticalStrut(20));
 
-        constructExitButton();//Button to quit
+        constructExitButton();//Button to exit
 
         this.add(Box.createVerticalStrut(10));
     }
@@ -109,7 +109,7 @@ public class StartPanel extends JPanel
         this.add(lblTitle);
     }
 
-    //Contruct player name text box
+    //Construct player name text box
     private void constructPlayerTextBox()
     {
         txtPlayerName=new JTextArea();
@@ -141,7 +141,7 @@ public class StartPanel extends JPanel
         this.add(txtPlayerName);
     }
 
-    //Consruct a Label with the texte in parameter and add it to the panel
+    //Construct a Label with the text in parameter and add it to the panel
     private void constructMyLabel(String text)
     {
         JLabel lblNbRound=new JLabel(text);
@@ -150,15 +150,15 @@ public class StartPanel extends JPanel
         this.add(lblNbRound);
     }
 
-    //Construct lauch game button
+    //Construct launch game button
     private void constructLaunchGameButton()
     {
         JButton btnLaunchGame=new JButton("Lancer le jeu !");
-        this.originalColorButton=btnLaunchGame.getBackground();//On récupère la couleur par défaut
+        this.originalColorButton=btnLaunchGame.getBackground();//We collect the default button color
 
         createMyStartButtonMouseHoverEvent(btnLaunchGame);
         btnLaunchGame.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
-        btnLaunchGame.setAlignmentX(Component.CENTER_ALIGNMENT);//Aligner au milieu
+        btnLaunchGame.setAlignmentX(Component.CENTER_ALIGNMENT);//Center alignment
 
         btnLaunchGame.addActionListener(actionEvent -> {
             startTheGame();
@@ -187,11 +187,11 @@ public class StartPanel extends JPanel
         try
         {
             //Load picture
-            BufferedImage myPicture = ImageIO.read(new File("./ProjetA31-A32/images/mastermind_title.png"));
+            BufferedImage myPicture = ImageIO.read(new File("./images/mastermind_title.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
             //size
             picLabel.setMaximumSize(new Dimension(415,225));
-            //Aloignement
+            //Alignment
             picLabel.setHorizontalAlignment(SwingConstants.CENTER);
             picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             this.add(picLabel);
@@ -203,7 +203,7 @@ public class StartPanel extends JPanel
         }
     }
 
-    //Put the hand's cursor and that the button changes colors its hover by the mouse
+    //Put the hand's cursor and that the button changes colors when its hover by the mouse
     private void createMyStartButtonMouseHoverEvent(JButton button)
     {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));//Hand cursor
@@ -219,7 +219,7 @@ public class StartPanel extends JPanel
         });
     }
 
-    //Metho when we click on the button "Lancer le jeu"
+    //Method when we click on the button "Lancer le jeu"
     private void startTheGame()
     {
         String playerName=txtPlayerName.getText();
