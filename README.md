@@ -7,7 +7,7 @@ Projet de réalisation d'un jeu de Mastermind en JAVA sur une durée de 2 mois e
 
 ## Installation
 
-Le document INSTALL.md indique les étapes d'installation de l'application.
+Le document [INSTALL.md](https://github.com/matteorenaud/mastermind/blob/main/INSTALL.md) indique les étapes d'installation de l'application.
 
 ## Fonctionnalités
 
