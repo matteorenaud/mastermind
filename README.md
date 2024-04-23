@@ -11,7 +11,7 @@ Le document [INSTALL.md](https://github.com/matteorenaud/mastermind/blob/main/IN
 
 ## Fonctionnalités
 
-Le jeu permet de jouer au Mastemind selon 3 mode de jeu :
+Le jeu permet de jouer au Mastemind selon 3 modes de jeu :
 - Mode facile
 - Mode classique
 - Mode numérique
@@ -22,25 +22,25 @@ L'interface graphique du jeu est très simple.
 ## Exemple du déroulement d'une partie
 
 L'application se compose de 3 écrans :
-- Selection des paramêtres
+- Sélection des paramêtres
 - Jeu
 - Fin de partie
 
-Lors du lancement de l'application, le joueur arrive sur l'écran de séléction des paramêtres.
+Lors du lancement de l'application, le joueur arrive sur l'écran de sélection des paramêtres.
 
-![Écran d'acceuil du jeu](imagesReadme/ecran_accueil.png)
+![Écran d'accuuil du jeu](imagesReadme/ecran_accueil.png)
 
-Le joueur entre son pseudo, le nombre de manche, le nombre de couleurs, le nombre de pions d'une combinaison, le nombre de tentative par manche et le mode d'affichage des indices.
+Le joueur entre son pseudo, le nombre de manches, le nombre de couleurs, le nombre de pions d'une combinaison, le nombre de tentatives par manche et le mode d'affichage des indices.
 
-Une fois la sélection des paramêtres par le joueur, celui-ci arrive sur le plateau de jeu.
+Une fois la sélection des paramêtres faite par le joueur, celui-ci arrive sur le plateau de jeu.
 
-![Plateau du jeu](imagesReadme/ecran_jeu.png)
+![Plateau de jeu](imagesReadme/ecran_jeu.png)
 
-Le jeu se joue avec des ComboBox. Cela est très simple à comprendre et à utiliser pour le joueur. 
+Le jeu se joue avec des ComboBox. Leur utilisation est très simple à comprendre pour le joueur. 
 
-A tout moment dans la partie, le joueur peut valider sa combinaison, abandonner la manche ou relancer une partie avec les même paramêtres.
+A tout moment dans la partie, le joueur peut valider sa combinaison, abandonner la manche ou relancer une partie avec les mêmes paramêtres.
 
-Quand, toutes les manches on été jouées, une écran de fin récapitule le score et les informations de la partie.
+Quand toutes les manches ont été jouées, un écran de fin récapitule le score et les informations de la partie.
 
 ![Écran de fin du jeu](imagesReadme/ecran_fin.png)
 
